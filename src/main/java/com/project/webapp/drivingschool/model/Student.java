@@ -10,6 +10,9 @@ import javax.validation.constraints.Pattern;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Klasa reprezentująca kursanta (klienta szkoły nauki jazdy)
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,8 +43,8 @@ public class Student {
     /**
      * Data urodzenia
      */
-    @Temporal(TemporalType.DATE)
     @NotNull
+    @Temporal(TemporalType.DATE)
     private Date birthDate;
 
     /**
@@ -68,8 +71,8 @@ public class Student {
      * składające się min. 8 znaków w tym: 1 cyfry,
      * 1 dużej litery, 1 małej litery, 1 znaku specjalnego
      */
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")
     @NotNull
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")
     private String password;
 
     /**
@@ -77,11 +80,13 @@ public class Student {
      * true - w trakcie odbywania kursu,
      * false - po jego zakończeniu
      */
+    @NotNull
     private Boolean status = true;
 
     /**
      * Data rejestracji
      */
+    @NotNull
     @Temporal(TemporalType.DATE)
     private Date registrationDate = new Date();
 

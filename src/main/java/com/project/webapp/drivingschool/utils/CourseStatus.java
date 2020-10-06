@@ -1,5 +1,8 @@
 package com.project.webapp.drivingschool.utils;
 
+/**
+ * Status procesu przebiegu kursu
+ */
 public enum CourseStatus {
 
     /**
@@ -13,7 +16,7 @@ public enum CourseStatus {
     DOCUMENTS_SUBMISSION,
 
     /**
-     * Zajęcia teoretyczne - wykłady
+     * Zajęcia teoretyczne (wykłady)
      */
     LECTURES,
 
@@ -23,7 +26,7 @@ public enum CourseStatus {
     THEORY_INTERNAL_EXAM,
 
     /**
-     * Zajęcia praktyczne - jazdy szkoleniowe
+     * Zajęcia praktyczne (jazdy szkoleniowe)
      */
     DRIVING_TRAININGS,
 
