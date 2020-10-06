@@ -37,7 +37,7 @@ public class Student {
      * składający się z 20 cyfr
      */
     @Pattern(regexp = "^d{20}$")
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String pkk;
 
     /**
@@ -56,7 +56,7 @@ public class Student {
      * Numer telefonu komórkowego
      */
     @Pattern(regexp = "^[1-9]d{2}-d{3}-d{3}$")
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String phoneNumber;
 
     /**
