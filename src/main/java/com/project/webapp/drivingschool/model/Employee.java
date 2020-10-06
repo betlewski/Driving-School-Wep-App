@@ -1,14 +1,16 @@
 package com.project.webapp.drivingschool.model;
 
-import com.project.webapp.drivingschool.utils.EmployeeType;
+import com.project.webapp.drivingschool.utils.EmployeeRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
@@ -53,11 +55,12 @@ public class Employee {
     private String password;
 
     /**
-     * Typ pracownika:
-     * wykładowca, instruktor jazd, administrator
+     * Rola pracownika:
+     * wykładowca, instruktor jazdy, administrator
      */
-    @NotNull
+    @NotEmpty
     @Enumerated(EnumType.STRING)
-    private EmployeeType employeeType;
+    @ElementCollection(targetClass = EmployeeRole.class)
+    private Set<EmployeeRole> employeeRoles;
 
 }
