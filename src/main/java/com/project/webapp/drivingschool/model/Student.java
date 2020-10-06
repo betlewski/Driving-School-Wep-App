@@ -76,14 +76,6 @@ public class Student {
     private String password;
 
     /**
-     * Status kursanta,
-     * true - w trakcie odbywania kursu,
-     * false - po jego zakończeniu
-     */
-    @NotNull
-    private Boolean status = true;
-
-    /**
      * Data rejestracji
      */
     @NotNull
