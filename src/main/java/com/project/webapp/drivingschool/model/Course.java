@@ -47,6 +47,18 @@ public class Course {
     private CourseStatus courseStatus;
 
     /**
+     * Dokumenty wymagane w ramach kursu
+     */
+    @OneToMany
+    private Set<Document> documents;
+
+    /**
+     * Płatności w ramach kursu
+     */
+    @OneToMany
+    private Set<Payment> payments;
+
+    /**
      * Zajęcia teoretyczne (wykłady) przypisane do kursu
      */
     @OneToOne
@@ -69,12 +81,6 @@ public class Course {
      */
     @OneToOne
     private InternalExam practicalInternalExam;
-
-    /**
-     * Płatności w ramach kursu
-     */
-    @OneToMany
-    private Set<Payment> payments;
 
     /**
      * Czy kurs jest aktywny?
