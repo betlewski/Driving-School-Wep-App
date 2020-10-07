@@ -14,7 +14,7 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "theory_lessons")
 public class TheoryLessons {
 
     /**
