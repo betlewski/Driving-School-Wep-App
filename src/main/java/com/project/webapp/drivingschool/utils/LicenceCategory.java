@@ -47,11 +47,13 @@ public enum LicenceCategory {
 
     /**
      * Liczba godzin zajęć teoretycznych (wykładów)
+     * Godzina rozumiana jako 45 minut
      */
     public final Integer theoryHours;
 
     /**
      * Liczba godzin zajęć praktycznych (jazd szkoleniowych)
+     * Godzina rozumiana jako 60 minut
      */
     public final Integer practiceHours;
 

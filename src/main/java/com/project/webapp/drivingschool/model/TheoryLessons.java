@@ -1,6 +1,6 @@
 package com.project.webapp.drivingschool.model;
 
-import com.project.webapp.drivingschool.utils.ProcessingStatus;
+import com.project.webapp.drivingschool.utils.LessonStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,6 +36,6 @@ public class TheoryLessons {
      */
     @NotNull
     @Enumerated(EnumType.STRING)
-    private ProcessingStatus processingStatus;
+    private LessonStatus lessonStatus;
 
 }

@@ -11,7 +11,7 @@ public enum CourseStatus {
     MEDICAL_EXAMS,
 
     /**
-     * Złożenie dokumentu PKK
+     * Złożenie dokumentu PKK i pisemnej zgody rodziców (opcjonalnie)
      */
     DOCUMENTS_SUBMISSION,
 
@@ -43,6 +43,6 @@ public enum CourseStatus {
     /**
      * Odebranie prawa jazdy i zakończenie kursu
      */
-    COURSE_ENDING
+    COURSE_FINISHED
 
 }
