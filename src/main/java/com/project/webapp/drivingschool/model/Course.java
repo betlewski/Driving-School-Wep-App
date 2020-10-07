@@ -71,6 +71,12 @@ public class Course {
     private InternalExam practicalInternalExam;
 
     /**
+     * Płatności w ramach kursu
+     */
+    @OneToMany
+    private Set<Payment> payments;
+
+    /**
      * Czy kurs jest aktywny?
      * Jeden kursant może mieć przypisanych wiele kursów,
      * ale tylko jeden z nich może być aktywny.
