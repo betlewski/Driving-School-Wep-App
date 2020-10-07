@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 /**
  * Klasa reprezentująca kurs nauki jazdy
@@ -35,19 +36,33 @@ public class Course {
     /**
      * Kursant przypisany do kursu
      */
+    @NotNull
     @ManyToOne
     private Student student;
 
     /**
-     * Status procesu przebiegu kursu
+     * Status przebiegu kursu
      */
     @NotNull
     private CourseStatus courseStatus;
 
     /**
+     * Zajęcia teoretyczne (wykłady) przypisane do kursu
+     */
+    @OneToOne
+    private TheoryLessons theoryLessons;
+
+    /**
+     * Zajęcia praktyczne (jazdy szkoleniowe) przypisane do kursu
+     */
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<DrivingLesson> drivingLessons;
+
+    /**
      * Czy kurs jest aktywny?
      * Jeden kursant może mieć przypisanych wiele kursów,
-     * ale tylko jeden z nich może być aktywny
+     * ale tylko jeden z nich może być aktywny.
+     * Kurs jest aktywny od momentu rozpoczęcia do jego zakończenia
      */
     @NotNull
     private boolean isActive = true;

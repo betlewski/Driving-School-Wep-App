@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
- * Klasa reprezentująca zajęcia praktyczne (jazdy szkoleniowe)
+ * Klasa reprezentująca zajęcia praktyczne (jazdy szkoleniowe) przypisane do kursu
  */
 @Data
 @AllArgsConstructor

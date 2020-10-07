@@ -1,7 +1,7 @@
 package com.project.webapp.drivingschool.utils;
 
 /**
- * Status procesu przebiegu kursu
+ * Status przebiegu kursu nauki jazdy
  */
 public enum CourseStatus {
 
