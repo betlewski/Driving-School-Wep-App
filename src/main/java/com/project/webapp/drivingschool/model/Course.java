@@ -59,6 +59,18 @@ public class Course {
     private Set<DrivingLesson> drivingLessons;
 
     /**
+     * Wewnętrzny egzamin teoretyczny
+     */
+    @OneToOne
+    private InternalExam theoryInternalExam;
+
+    /**
+     * Wewnętrzny egzamin praktyczny
+     */
+    @OneToOne
+    private InternalExam practicalInternalExam;
+
+    /**
      * Czy kurs jest aktywny?
      * Jeden kursant może mieć przypisanych wiele kursów,
      * ale tylko jeden z nich może być aktywny.
