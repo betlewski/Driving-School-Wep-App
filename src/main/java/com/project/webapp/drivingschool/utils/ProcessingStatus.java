@@ -1,38 +1,26 @@
 package com.project.webapp.drivingschool.utils;
 
 /**
- * Status przebiegu dowolnych zajęć w ramach kursu nauki jazdy
+ * Status przetworzenia dokumentów / zgłoszeń / płatności
  */
 public enum ProcessingStatus {
 
     /**
      * Etap pierwszy:
-     * zgłoszenie prośby o akceptację przez prowadzącego
+     * status nieuregulowany (do wykonania)
      */
-    REQUESTED,
+    TO_COMPLETE,
 
     /**
      * Etap drugi:
-     * zgłoszenie zostaje przyjęte i czeka na realizację
+     * zgłoszenie uregulowania
      */
-    ACCEPTED,
-
-    /**
-     * Etap drugi:
-     * zgłoszenie zostaje odrzucone
-     */
-    REJECTED,
+    COMPLETED,
 
     /**
      * Etap trzeci:
-     * zgłoszenie zostaje zrealizowane (zajęcia odbywają się)
+     * status uregulowany (wykonany)
      */
-    PASSED,
-
-    /**
-     * Etap trzeci:
-     * zgłoszenie nie zostaje zrealizowane (zajęcia nie odbywają się)
-     */
-    FAILED
+    ACCEPTED
 
 }

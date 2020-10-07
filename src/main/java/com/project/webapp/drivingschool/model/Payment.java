@@ -1,11 +1,12 @@
 package com.project.webapp.drivingschool.model;
 
-import com.project.webapp.drivingschool.utils.PaymentStatus;
+import com.project.webapp.drivingschool.utils.ProcessingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 
@@ -26,17 +27,24 @@ public class Payment {
     private Long id;
 
     /**
+     * Kwota obejmująca płatność
+     */
+    @NotNull
+    @Min(0)
+    private Integer price;
+
+    /**
      * Status przetworzenia płatności
      */
     @NotNull
     @Enumerated(EnumType.STRING)
-    private PaymentStatus paymentStatus;
+    private ProcessingStatus processingStatus;
 
     /**
-     * Data i godzina ostatniej modyfikacji statusu przetworzenia
+     * Data i godzina zgłoszenia zapłaty
      */
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    private Date paymentTime;
 
 }
