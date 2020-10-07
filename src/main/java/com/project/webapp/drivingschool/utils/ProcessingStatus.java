@@ -1,9 +1,9 @@
 package com.project.webapp.drivingschool.utils;
 
 /**
- * Status przebiegu zajęć w ramach kursu nauki jazdy
+ * Status przebiegu dowolnych zajęć w ramach kursu nauki jazdy
  */
-public enum LessonStatus {
+public enum ProcessingStatus {
 
     /**
      * Etap pierwszy:
@@ -25,13 +25,13 @@ public enum LessonStatus {
 
     /**
      * Etap trzeci:
-     * zgłoszenie zostaje zrealizowane (zajęcia ukończone w ramach kursu)
+     * zgłoszenie zostaje zrealizowane (zajęcia odbywają się)
      */
     PASSED,
 
     /**
      * Etap trzeci:
-     * zgłoszenie nie zostaje zrealizowane (nieodbycie zajęć, brak obecności)
+     * zgłoszenie nie zostaje zrealizowane (zajęcia nie odbywają się)
      */
     FAILED
 

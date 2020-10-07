@@ -33,7 +33,7 @@ public enum CourseStatus {
     /**
      * Praktyczny egzamin wewnętrzny
      */
-    PRACTICE_INTERNAL_EXAM,
+    PRACTICAL_INTERNAL_EXAM,
 
     /**
      * Egzaminy państwowe
