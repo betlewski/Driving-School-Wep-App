@@ -71,16 +71,10 @@ public class Course {
     private Set<DrivingLesson> drivingLessons;
 
     /**
-     * Wewnętrzny egzamin teoretyczny
+     * Egzaminy wewnętrzne
      */
-    @OneToOne
-    private InternalExam theoryInternalExam;
-
-    /**
-     * Wewnętrzny egzamin praktyczny
-     */
-    @OneToOne
-    private InternalExam practicalInternalExam;
+    @OneToMany(fetch = FetchType.EAGER)
+    private Set<InternalExam> internalExams;
 
     /**
      * Czy kurs jest aktywny?
