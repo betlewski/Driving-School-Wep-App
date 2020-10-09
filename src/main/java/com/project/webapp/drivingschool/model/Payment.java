@@ -1,5 +1,6 @@
 package com.project.webapp.drivingschool.model;
 
+import com.project.webapp.drivingschool.utils.PaymentType;
 import com.project.webapp.drivingschool.utils.ProcessingStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,13 @@ public class Payment {
     private Long id;
 
     /**
+     * Typ płatności
+     */
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
+
+    /**
      * Kwota obejmująca płatność
      */
     @NotNull
@@ -43,7 +51,6 @@ public class Payment {
     /**
      * Data i godzina zgłoszenia zapłaty
      */
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date paymentTime;
 

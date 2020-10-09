@@ -43,7 +43,6 @@ public class Document {
     /**
      * Data i godzina zgłoszenia dostarczenia dokumentu
      */
-    @NotNull
     @Temporal(TemporalType.TIMESTAMP)
     private Date submissionTime;
 
