@@ -23,6 +23,11 @@ public enum EmployeeRole {
     /**
      * Wykładowca, prowadzący zajęcia teoretyczne dla wszystkich kategorii
      */
-    LECTURER
+    LECTURER,
+
+    /**
+     * Pracownik usunięty
+     */
+    DELETED
 
 }
