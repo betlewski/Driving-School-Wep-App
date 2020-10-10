@@ -26,6 +26,7 @@ public class StudentService {
      * Pobranie aktywnego kursu dla kursanta o podanym ID.
      * Jeśli aktywnych kursów jest wiele (sytuacja nie powinna wystąpić),
      * pobierany jest ten, który został najwcześniej rozpoczęty.
+     *
      * @param id ID kursanta
      * @return aktywny kurs
      */

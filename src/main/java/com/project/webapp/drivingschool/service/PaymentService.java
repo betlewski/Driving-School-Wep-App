@@ -37,6 +37,7 @@ public class PaymentService {
 
     /**
      * Pobranie wszystkich płatności związanych z aktywnym kursem dla kursanta o podanym ID.
+     *
      * @param id ID kursanta
      * @return zbiór płatności
      */
@@ -48,7 +49,8 @@ public class PaymentService {
     /**
      * Pobranie płatności o podanym statusie przetworzenia
      * związanych z aktywnym kursem dla kursanta o podanym ID.
-     * @param id ID kursanta
+     *
+     * @param id     ID kursanta
      * @param status status przetworzenia płatności
      * @return zbiór płatności o podanym statusie
      */
@@ -61,19 +63,20 @@ public class PaymentService {
 
     /**
      * Dodanie płatności do aktywnego kursu dla kursanta o podanym ID.
+     *
      * @param payment płatność do dodania
-     * @param id ID kursanta
+     * @param id      ID kursanta
      * @return dodana płatność lub błąd
      */
     public ResponseEntity<Payment> addPayment(Payment payment, Long id) {
         Optional<Course> optionalCourse = studentService.getActiveCourseByStudentId(id);
-        if(optionalCourse.isPresent()) {
+        if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {
                 payment = paymentRepository.save(payment);
                 course.getPayments().add(payment);
                 courseRepository.save(course);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>(payment, HttpStatus.OK);
@@ -84,18 +87,19 @@ public class PaymentService {
 
     /**
      * Zmiana statusu przetworzenia płatności o podanym ID
-     * @param id ID płatności
+     *
+     * @param id     ID płatności
      * @param status status przetworzenia płatności
      * @return edytowana płatność lub błąd
      */
     public ResponseEntity<Payment> changeProcessingStatusByPaymentId(Long id, ProcessingStatus status) {
         Optional<Payment> paymentOptional = paymentRepository.findById(id);
-        if(paymentOptional.isPresent()) {
+        if (paymentOptional.isPresent()) {
             Payment payment = paymentOptional.get();
             try {
                 payment.setProcessingStatus(status);
                 payment = paymentRepository.save(payment);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>(payment, HttpStatus.OK);
@@ -107,6 +111,7 @@ public class PaymentService {
     /**
      * Sprawdzenie, czy uregulowano wszystkie płatności
      * związane z aktywnym kursem dla kursanta o podanym ID.
+     *
      * @param id ID kursanta
      * @return true - jeśli uregulowano wszystkie płatności, false - w przeciwnym razie
      */

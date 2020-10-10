@@ -45,6 +45,7 @@ public class DocumentService {
 
     /**
      * Pobranie wszystkich dokumentów związanych z aktywnym kursem dla kursanta o podanym ID.
+     *
      * @param id ID kursanta
      * @return zbiór dokumentów
      */
@@ -56,7 +57,8 @@ public class DocumentService {
     /**
      * Pobranie dokumentów o podanym statusie przetworzenia
      * związanych z aktywnym kursem dla kursanta o podanym ID.
-     * @param id ID kursanta
+     *
+     * @param id     ID kursanta
      * @param status status przetworzenia dokumentu
      * @return zbiór dokumentów o podanym statusie
      */
@@ -69,19 +71,20 @@ public class DocumentService {
 
     /**
      * Dodanie dokumentu do aktywnego kursu dla kursanta o podanym ID.
+     *
      * @param document dokument do dodania
-     * @param id ID kursanta
+     * @param id       ID kursanta
      * @return dodany dokument lub błąd
      */
     public ResponseEntity<Document> addDocument(Document document, Long id) {
         Optional<Course> optionalCourse = studentService.getActiveCourseByStudentId(id);
-        if(optionalCourse.isPresent()) {
+        if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {
                 document = documentRepository.save(document);
                 course.getDocuments().add(document);
                 courseRepository.save(course);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>(document, HttpStatus.OK);
@@ -92,18 +95,19 @@ public class DocumentService {
 
     /**
      * Zmiana statusu przetworzenia dokumentu o podanym ID
-     * @param id ID dokumentu
+     *
+     * @param id     ID dokumentu
      * @param status status przetworzenia dokumentu
      * @return edytowany dokument lub błąd
      */
     public ResponseEntity<Document> changeProcessingStatusByDocumentId(Long id, ProcessingStatus status) {
         Optional<Document> documentOptional = documentRepository.findById(id);
-        if(documentOptional.isPresent()) {
+        if (documentOptional.isPresent()) {
             Document document = documentOptional.get();
             try {
                 document.setProcessingStatus(status);
                 document = documentRepository.save(document);
-            } catch(Exception e) {
+            } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>(document, HttpStatus.OK);
