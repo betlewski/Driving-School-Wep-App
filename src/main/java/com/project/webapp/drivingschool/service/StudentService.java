@@ -59,7 +59,7 @@ public class StudentService {
      * @return dodany kursant
      */
     public ResponseEntity<Student> addStudent(Student student) {
-        if (studentRepository.findByEmail(student.getEmail()).isPresent()) {
+        if (emailExisting(student.getEmail())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         } else {
             try {
