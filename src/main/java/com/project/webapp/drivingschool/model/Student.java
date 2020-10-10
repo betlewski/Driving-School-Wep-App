@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.persistence.*;
 import java.util.Date;
+import java.util.Set;
 
 /**
  * Klasa reprezentująca kursanta (klienta szkoły nauki jazdy)
@@ -81,5 +82,11 @@ public class Student {
     @NotNull
     @Temporal(TemporalType.DATE)
     private Date registrationDate = new Date();
+
+    /**
+     * Kursy przypisane do kursanta
+     */
+    @OneToMany
+    private Set<Course> courses;
 
 }

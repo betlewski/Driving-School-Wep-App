@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -32,13 +33,6 @@ public class Course {
     @NotNull
     @Enumerated(EnumType.STRING)
     private LicenceCategory licenseCategory;
-
-    /**
-     * Kursant przypisany do kursu
-     */
-    @NotNull
-    @ManyToOne
-    private Student student;
 
     /**
      * Status przebiegu kursu
@@ -75,6 +69,20 @@ public class Course {
      */
     @OneToMany(fetch = FetchType.EAGER)
     private Set<InternalExam> internalExams;
+
+    /**
+     * Data rozpoczęcia kursu
+     */
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date startDate;
+
+    /**
+     * Data zakończenia kursu
+     */
+    @NotNull
+    @Temporal(TemporalType.DATE)
+    private Date endDate;
 
     /**
      * Czy kurs jest aktywny?

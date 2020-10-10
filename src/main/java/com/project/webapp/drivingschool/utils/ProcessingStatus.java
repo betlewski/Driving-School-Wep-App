@@ -15,12 +15,12 @@ public enum ProcessingStatus {
      * Etap drugi:
      * zgłoszenie uregulowania
      */
-    COMPLETED,
+    REQUESTED,
 
     /**
      * Etap trzeci:
      * status uregulowany (wykonany)
      */
-    ACCEPTED
+    COMPLETED
 
 }
