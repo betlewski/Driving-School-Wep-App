@@ -73,6 +73,7 @@ public class PaymentService {
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {
+                payment.setProcessingStatus(ProcessingStatus.TO_COMPLETE);
                 payment = paymentRepository.save(payment);
                 course.getPayments().add(payment);
                 courseRepository.save(course);

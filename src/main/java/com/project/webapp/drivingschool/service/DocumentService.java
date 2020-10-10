@@ -81,6 +81,7 @@ public class DocumentService {
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {
+                document.setProcessingStatus(ProcessingStatus.TO_COMPLETE);
                 document = documentRepository.save(document);
                 course.getDocuments().add(document);
                 courseRepository.save(course);

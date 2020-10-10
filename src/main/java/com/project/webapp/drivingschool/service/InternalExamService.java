@@ -1,8 +1,19 @@
 package com.project.webapp.drivingschool.service;
 
+import com.project.webapp.drivingschool.model.Course;
+import com.project.webapp.drivingschool.model.InternalExam;
+import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.InternalExamRepository;
+import com.project.webapp.drivingschool.utils.ExamType;
+import com.project.webapp.drivingschool.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 /**
  * Serwis dla egzaminów wewnętrznych w trakcie kursu
@@ -11,10 +22,132 @@ import org.springframework.stereotype.Service;
 public class InternalExamService {
 
     private InternalExamRepository internalExamRepository;
+    private CourseRepository courseRepository;
+    private CourseService courseService;
 
     @Autowired
-    public InternalExamService(InternalExamRepository internalExamRepository) {
+    public InternalExamService(InternalExamRepository internalExamRepository,
+                               CourseRepository courseRepository,
+                               CourseService courseService) {
         this.internalExamRepository = internalExamRepository;
+        this.courseRepository = courseRepository;
+        this.courseService = courseService;
+    }
+
+    /**
+     * Pobranie egzaminów wewnętrznych o podanym typie
+     * w ramach aktywnego kursu dla kursanta o podanym ID.
+     *
+     * @param id   ID kursanta
+     * @param type typ egzaminu
+     * @return lista egzaminów
+     */
+    public Set<InternalExam> getAllInternalExamsByStudentIdAndExamType(Long id, ExamType type) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+        return activeCourse.map(Course::getInternalExams).orElse(new HashSet<>());
+    }
+
+    /**
+     * Pobranie wszystkich egzaminów wewnętrznych
+     * przeprowadzanych przez pracownika o podanym ID.
+     *
+     * @param id ID pracownika
+     * @return lista egzaminów
+     */
+    public Set<InternalExam> getAllInternalExamsByEmployeeId(Long id) {
+        return internalExamRepository.findAllByEmployeeId(id);
+    }
+
+    /**
+     * Sprawdzenie, czy kursant o podanym ID zaliczył egzamin wewnętrzny
+     * o podanym typie w ramach aktywnego kursu.
+     *
+     * @param id   ID kursanta
+     * @param type typ egzaminu
+     * @return true - jeśli zaliczył, false - w przeciwnym razie
+     */
+    public Boolean isInternalExamPassedByStudentIdAndExamType(Long id, ExamType type) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+        if (activeCourse.isPresent()) {
+            return activeCourse.get().getInternalExams().stream()
+                    .filter(exam -> exam.getExamType().equals(type))
+                    .anyMatch(InternalExam::getIsPassed);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Dodanie egzaminu do aktywnego kursu dla kursanta o podanym ID
+     *
+     * @param exam egzamin do dodania
+     * @param id   ID kursanta
+     * @return dodany egzamin
+     */
+    public ResponseEntity<InternalExam> addExam(InternalExam exam, Long id) {
+        Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(id);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            try {
+                exam.setLessonStatus(LessonStatus.REQUESTED);
+                exam = internalExamRepository.save(exam);
+                course.getInternalExams().add(exam);
+                courseRepository.save(course);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(exam, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Edycja danych egzaminu o podanym ID
+     *
+     * @param id      ID egzaminu
+     * @param newExam egzamin z nowymi danymi
+     * @return edytowany egzamin
+     */
+    public ResponseEntity<InternalExam> editExam(Long id, InternalExam newExam) {
+        Optional<InternalExam> oldExam = internalExamRepository.findById(id);
+        if (oldExam.isPresent()) {
+            InternalExam exam = oldExam.get();
+            try {
+                exam.setLessonStatus(newExam.getLessonStatus());
+                exam.setResult(newExam.getResult());
+                exam.setIsPassed(newExam.getIsPassed());
+                exam = internalExamRepository.save(exam);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(exam, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Zmiana statusu przebiegu egzaminu o podanym ID
+     *
+     * @param id     ID egzaminu
+     * @param status status przebiegu egzaminu
+     * @return edytowany egzamin lub błąd
+     */
+    public ResponseEntity<InternalExam> changeLessonStatusByExamId(Long id, LessonStatus status) {
+        Optional<InternalExam> optionalExam = internalExamRepository.findById(id);
+        if (optionalExam.isPresent()) {
+            InternalExam exam = optionalExam.get();
+            try {
+                exam.setLessonStatus(status);
+                exam = internalExamRepository.save(exam);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(exam, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }
