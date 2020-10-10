@@ -7,10 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Set;
 
 /**
  * Klasa reprezentująca pracownika szkoły nauki jazdy
@@ -27,6 +25,14 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    /**
+     * Rola pracownika:
+     * wykładowca, instruktor jazdy lub administrator
+     */
+    @NotNull
+    @Enumerated(EnumType.STRING)
+    private EmployeeRole employeeRole;
 
     /**
      * Imię i nazwisko
@@ -56,14 +62,5 @@ public class Employee {
     @NotNull
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")
     private String password;
-
-    /**
-     * Rola pracownika:
-     * wykładowca, instruktor jazdy, administrator
-     */
-    @NotEmpty
-    @Enumerated(EnumType.STRING)
-    @ElementCollection(targetClass = EmployeeRole.class)
-    private Set<EmployeeRole> employeeRoles;
 
 }
