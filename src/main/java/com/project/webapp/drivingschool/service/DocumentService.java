@@ -30,17 +30,17 @@ public class DocumentService {
     private DocumentRepository documentRepository;
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
-    private StudentService studentService;
+    private CourseService courseService;
 
     @Autowired
     public DocumentService(DocumentRepository documentRepository,
                            StudentRepository studentRepository,
                            CourseRepository courseRepository,
-                           StudentService studentService) {
+                           CourseService courseService) {
         this.documentRepository = documentRepository;
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
-        this.studentService = studentService;
+        this.courseService = courseService;
     }
 
     /**
@@ -50,7 +50,7 @@ public class DocumentService {
      * @return zbiór dokumentów
      */
     public Set<Document> getAllDocumentsForActiveCourseByStudentId(Long id) {
-        Optional<Course> activeCourse = studentService.getActiveCourseByStudentId(id);
+        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
         return activeCourse.map(Course::getDocuments).orElse(new HashSet<>());
     }
 
@@ -77,7 +77,7 @@ public class DocumentService {
      * @return dodany dokument lub błąd
      */
     public ResponseEntity<Document> addDocument(Document document, Long id) {
-        Optional<Course> optionalCourse = studentService.getActiveCourseByStudentId(id);
+        Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(id);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {
@@ -134,7 +134,7 @@ public class DocumentService {
         if (!notCompleted.isEmpty()) {
             answer = Boolean.FALSE;
         } else {
-            Optional<Course> activeCourse = studentService.getActiveCourseByStudentId(id);
+            Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
             if (activeCourse.isPresent()) {
                 boolean medicalCompleted = allDocuments.stream()
                         .filter(document -> !document.getDocumentType().equals(DocumentType.MEDICAL_EXAMS))

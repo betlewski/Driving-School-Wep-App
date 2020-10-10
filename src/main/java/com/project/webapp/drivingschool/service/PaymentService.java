@@ -24,15 +24,15 @@ public class PaymentService {
 
     private PaymentRepository paymentRepository;
     private CourseRepository courseRepository;
-    private StudentService studentService;
+    private CourseService courseService;
 
     @Autowired
     public PaymentService(PaymentRepository paymentRepository,
                           CourseRepository courseRepository,
-                          StudentService studentService) {
+                          CourseService courseService) {
         this.paymentRepository = paymentRepository;
         this.courseRepository = courseRepository;
-        this.studentService = studentService;
+        this.courseService = courseService;
     }
 
     /**
@@ -42,7 +42,7 @@ public class PaymentService {
      * @return zbiór płatności
      */
     public Set<Payment> getAllPaymentsForActiveCourseByStudentId(Long id) {
-        Optional<Course> activeCourse = studentService.getActiveCourseByStudentId(id);
+        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
         return activeCourse.map(Course::getPayments).orElse(new HashSet<>());
     }
 
@@ -69,7 +69,7 @@ public class PaymentService {
      * @return dodana płatność lub błąd
      */
     public ResponseEntity<Payment> addPayment(Payment payment, Long id) {
-        Optional<Course> optionalCourse = studentService.getActiveCourseByStudentId(id);
+        Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(id);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {
@@ -126,7 +126,7 @@ public class PaymentService {
         if (!notCompleted.isEmpty()) {
             answer = Boolean.FALSE;
         } else {
-            Optional<Course> activeCourse = studentService.getActiveCourseByStudentId(id);
+            Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
             if (activeCourse.isPresent()) {
                 Integer coursePrice = activeCourse.get().getLicenseCategory().price;
                 int courseFees = allPayments.stream()
