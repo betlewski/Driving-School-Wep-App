@@ -2,7 +2,7 @@ package com.project.webapp.drivingschool.service;
 
 import com.project.webapp.drivingschool.model.*;
 import com.project.webapp.drivingschool.repository.CourseRepository;
-import com.project.webapp.drivingschool.repository.EmployeeRepository;
+import com.project.webapp.drivingschool.repository.LectureSeriesRepository;
 import com.project.webapp.drivingschool.repository.TheoryLessonsRepository;
 import com.project.webapp.drivingschool.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +22,22 @@ import java.util.stream.Collectors;
 public class TheoryLessonsService {
 
     private TheoryLessonsRepository theoryLessonsRepository;
+    private LectureSeriesRepository lectureSeriesRepository;
     private CourseRepository courseRepository;
-    private EmployeeRepository employeeRepository;
     private CourseService courseService;
+    private LectureService lectureService;
 
     @Autowired
     public TheoryLessonsService(TheoryLessonsRepository theoryLessonsRepository,
+                                LectureSeriesRepository lectureSeriesRepository,
                                 CourseRepository courseRepository,
-                                EmployeeRepository employeeRepository,
-                                CourseService courseService) {
+                                CourseService courseService,
+                                LectureService lectureService) {
         this.theoryLessonsRepository = theoryLessonsRepository;
+        this.lectureSeriesRepository = lectureSeriesRepository;
         this.courseRepository = courseRepository;
-        this.employeeRepository = employeeRepository;
         this.courseService = courseService;
+        this.lectureService = lectureService;
     }
 
     /**
@@ -80,9 +83,7 @@ public class TheoryLessonsService {
                     .findFirst();
             if (acceptedLessons.isPresent()) {
                 Long acceptedSeriesId = acceptedLessons.get().getLectureSeries().getId();
-                // TODO: pobranie liczby godzin obecnie ukończonych zajęć teoretycznych
-                // return getCurrentlyPassedHoursOfLecturesByLectureSeriesId(acceptedSeriesId);
-                return 1;
+                return lectureService.getCurrentlyPassedHoursOfLecturesByLectureSeriesId(acceptedSeriesId);
             }
         }
         return 0;
@@ -96,14 +97,9 @@ public class TheoryLessonsService {
      * @return lista zajęć teoretycznych
      */
     public Set<TheoryLessons> getAllTheoryLessonsByEmployeeId(Long id) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        if (optionalEmployee.isPresent()) {
-            Employee employee = optionalEmployee.get();
-            return theoryLessonsRepository.findAll().stream()
-                    .filter(lesson -> lesson.getLectureSeries().getEmployee().equals(employee))
-                    .collect(Collectors.toSet());
-        }
-        return new HashSet<>();
+        return theoryLessonsRepository.findAll().stream()
+                .filter(lesson -> lesson.getLectureSeries().getEmployee().getId().equals(id))
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -122,8 +118,7 @@ public class TheoryLessonsService {
                     .findFirst();
             if (passedLessons.isPresent()) {
                 Long passedSeriesId = passedLessons.get().getLectureSeries().getId();
-                // TODO: pobranie liczby godzin w ukończonym cyklu wykładów
-                Integer passedHours = 0; // = getAllHoursOfLecturesByLectureSeriesId(passedSeriesId);
+                Integer passedHours = lectureService.getAllHoursOfLecturesByLectureSeriesId(passedSeriesId);
                 Integer requiredHours = activeCourse.get().getLicenseCategory().theoryHours;
                 if (passedHours < requiredHours) {
                     answer = Boolean.FALSE;
@@ -154,16 +149,20 @@ public class TheoryLessonsService {
     /**
      * Dodanie zajęć teoretycznych do aktywnego kursu dla kursanta o podanym ID
      *
-     * @param lesson zajęcia do dodania
-     * @param id     ID kursanta
+     * @param studentId       ID kursanta
+     * @param lectureSeriesId ID cyklu wykładów
      * @return dodane zajęcia
      */
-    public ResponseEntity<TheoryLessons> addTheoryLessons(TheoryLessons lesson, Long id) {
-        if (!isTheoryLessonsActiveByStudentId(id)) {
-            Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(id);
-            if (optionalCourse.isPresent()) {
+    public ResponseEntity<TheoryLessons> addTheoryLessons(Long studentId, Long lectureSeriesId) {
+        if (!isTheoryLessonsActiveByStudentId(studentId)) {
+            Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(studentId);
+            Optional<LectureSeries> seriesOptional = lectureSeriesRepository.findById(lectureSeriesId);
+            if (optionalCourse.isPresent() && seriesOptional.isPresent()) {
                 Course course = optionalCourse.get();
+                LectureSeries series = seriesOptional.get();
+                TheoryLessons lesson = new TheoryLessons();
                 try {
+                    lesson.setLectureSeries(series);
                     lesson.setLessonStatus(LessonStatus.REQUESTED);
                     lesson = theoryLessonsRepository.save(lesson);
                     course.getTheoryLessons().add(lesson);
