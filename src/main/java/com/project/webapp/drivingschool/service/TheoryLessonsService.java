@@ -38,8 +38,8 @@ public class TheoryLessonsService {
     }
 
     /**
-     * Pobranie zajęć teoretycznych w ramach aktywnego kursu
-     * dla kursanta o podanym ID.
+     * Pobranie wszystkich zajęć teoretycznych
+     * w ramach aktywnego kursu dla kursanta o podanym ID.
      *
      * @param id ID kursanta
      * @return lista zajęć teoretycznych
@@ -47,6 +47,22 @@ public class TheoryLessonsService {
     public Set<TheoryLessons> getAllTheoryLessonsByStudentId(Long id) {
         Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
         return activeCourse.map(Course::getTheoryLessons).orElse(new HashSet<>());
+    }
+
+    /**
+     * Pobranie na podstawie podanego statusu przebiegu zajęć teoretycznych
+     * w ramach aktywnego kursu dla kursanta o podanym ID.
+     *
+     * @param id     ID kursanta
+     * @param status status przebiegu
+     * @return zajęcia teoretyczne
+     */
+    public Set<TheoryLessons> getTheoryLessonsByStudentIdAndLessonStatus(Long id, LessonStatus status) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+        return activeCourse.map(course -> course.getTheoryLessons().stream()
+                .filter(lesson -> lesson.getLessonStatus().equals(status))
+                .collect(Collectors.toSet()))
+                .orElseGet(HashSet::new);
     }
 
     /**

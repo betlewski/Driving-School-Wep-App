@@ -32,7 +32,7 @@ public class TheoryLessons {
     private LectureSeries lectureSeries;
 
     /**
-     * Status przebiegu zajęć
+     * Status zaliczenia zajęć
      */
     @NotNull
     @Enumerated(EnumType.STRING)

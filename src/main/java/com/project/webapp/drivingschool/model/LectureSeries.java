@@ -1,6 +1,6 @@
 package com.project.webapp.drivingschool.model;
 
-import com.project.webapp.drivingschool.utils.ProcessingStatus;
+import com.project.webapp.drivingschool.utils.LectureSeriesStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +36,7 @@ public class LectureSeries {
      * Status przebiegu cyklu
      */
     @NotNull
-    private ProcessingStatus processingStatus;
+    private LectureSeriesStatus status;
 
     /**
      * Lista wykładów odbywanych w ramach cyklu
