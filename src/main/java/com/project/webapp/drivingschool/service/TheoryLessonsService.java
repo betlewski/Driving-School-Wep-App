@@ -50,6 +50,29 @@ public class TheoryLessonsService {
     }
 
     /**
+     * Pobranie liczby godzin obecnie ukończonych zajęć teoretycznych
+     * w ramach aktywnego kursu dla kursanta o podanym ID.
+     *
+     * @param id ID kursanta
+     * @return liczba godzin ukończonych zajęć teoretycznych
+     */
+    public Integer getCurrentlyPassedHoursOfTheoryLessonsByStudentId(Long id) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+        if (activeCourse.isPresent()) {
+            Optional<TheoryLessons> acceptedLessons = activeCourse.get().getTheoryLessons().stream()
+                    .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.ACCEPTED))
+                    .findFirst();
+            if (acceptedLessons.isPresent()) {
+                Long acceptedSeriesId = acceptedLessons.get().getLectureSeries().getId();
+                // TODO: pobranie liczby godzin obecnie ukończonych zajęć teoretycznych
+                // return getCurrentlyPassedHoursOfLecturesByLectureSeriesId(acceptedSeriesId);
+                return 1;
+            }
+        }
+        return 0;
+    }
+
+    /**
      * Pobranie wszystkich zajęć teoretycznych
      * przeprowadzanych przez pracownika o podanym ID.
      *
@@ -81,9 +104,7 @@ public class TheoryLessonsService {
             Optional<TheoryLessons> passedLessons = activeCourse.get().getTheoryLessons().stream()
                     .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.PASSED))
                     .findFirst();
-            if (passedLessons.isEmpty()) {
-                answer = Boolean.FALSE;
-            } else {
+            if (passedLessons.isPresent()) {
                 Long passedSeriesId = passedLessons.get().getLectureSeries().getId();
                 // TODO: pobranie liczby godzin w ukończonym cyklu wykładów
                 Integer passedHours = 0; // = getAllHoursOfLecturesByLectureSeriesId(passedSeriesId);
@@ -91,6 +112,8 @@ public class TheoryLessonsService {
                 if (passedHours < requiredHours) {
                     answer = Boolean.FALSE;
                 }
+            } else {
+                answer = Boolean.FALSE;
             }
         }
         return answer;
