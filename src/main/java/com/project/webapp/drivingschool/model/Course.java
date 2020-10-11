@@ -55,8 +55,8 @@ public class Course {
     /**
      * Zajęcia teoretyczne (wykłady) przypisane do kursu
      */
-    @OneToOne
-    private TheoryLessons theoryLessons;
+    @OneToMany
+    private Set<TheoryLessons> theoryLessons;
 
     /**
      * Zajęcia praktyczne (jazdy szkoleniowe) przypisane do kursu
