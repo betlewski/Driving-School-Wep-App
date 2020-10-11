@@ -70,6 +70,21 @@ public class TheoryLessonsService {
     }
 
     /**
+     * Pobranie obecnie trwających wykładów
+     * w ramach aktywnego kursu dla kursanta o podanym ID
+     *
+     * @param id ID kursanta
+     * @return lista wykładów
+     */
+    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentId(Long id) {
+        Set<TheoryLessons> theoryLessonsSet = getTheoryLessonsByStudentIdAndLessonStatus(id, LessonStatus.ACCEPTED);
+        if (!theoryLessonsSet.isEmpty()) {
+            return theoryLessonsSet.iterator().next().getLectureSeries().getLectures();
+        }
+        return new HashSet<>();
+    }
+
+    /**
      * Pobranie liczby godzin obecnie ukończonych zajęć teoretycznych
      * w ramach aktywnego kursu dla kursanta o podanym ID.
      *

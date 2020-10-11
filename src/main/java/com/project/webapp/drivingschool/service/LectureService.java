@@ -4,14 +4,12 @@ import com.project.webapp.drivingschool.model.*;
 import com.project.webapp.drivingschool.repository.LectureRepository;
 import com.project.webapp.drivingschool.repository.LectureSeriesRepository;
 import com.project.webapp.drivingschool.utils.LectureSeriesStatus;
-import com.project.webapp.drivingschool.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
@@ -25,31 +23,12 @@ public class LectureService {
 
     private LectureRepository lectureRepository;
     private LectureSeriesRepository lectureSeriesRepository;
-    private TheoryLessonsService theoryLessonsService;
 
     @Autowired
     public LectureService(LectureRepository lectureRepository,
-                          LectureSeriesRepository lectureSeriesRepository,
-                          TheoryLessonsService theoryLessonsService) {
+                          LectureSeriesRepository lectureSeriesRepository) {
         this.lectureRepository = lectureRepository;
         this.lectureSeriesRepository = lectureSeriesRepository;
-        this.theoryLessonsService = theoryLessonsService;
-    }
-
-    /**
-     * Pobranie obecnie trwających wykładów
-     * w ramach aktywnego kursu dla kursanta o podanym ID
-     *
-     * @param id ID kursanta
-     * @return lista wykładów
-     */
-    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentId(Long id) {
-        Set<TheoryLessons> theoryLessonsSet =
-                theoryLessonsService.getTheoryLessonsByStudentIdAndLessonStatus(id, LessonStatus.ACCEPTED);
-        if (!theoryLessonsSet.isEmpty()) {
-            return theoryLessonsSet.iterator().next().getLectureSeries().getLectures();
-        }
-        return new HashSet<>();
     }
 
     /**
