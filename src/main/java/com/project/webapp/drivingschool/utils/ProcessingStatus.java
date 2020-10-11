@@ -1,7 +1,7 @@
 package com.project.webapp.drivingschool.utils;
 
 /**
- * Status przetworzenia dokumentów / płatności
+ * Status przetworzenia dokumentów / płatności / wykładów
  */
 public enum ProcessingStatus {
 
