@@ -4,6 +4,7 @@ import com.project.webapp.drivingschool.model.*;
 import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.LectureSeriesRepository;
 import com.project.webapp.drivingschool.repository.TheoryLessonsRepository;
+import com.project.webapp.drivingschool.utils.Constants;
 import com.project.webapp.drivingschool.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -119,7 +120,7 @@ public class TheoryLessonsService {
             if (passedLessons.isPresent()) {
                 Long passedSeriesId = passedLessons.get().getLectureSeries().getId();
                 Integer passedHours = lectureService.getAllHoursOfLecturesByLectureSeriesId(passedSeriesId);
-                Integer requiredHours = activeCourse.get().getLicenseCategory().theoryHours;
+                Integer requiredHours = Constants.REQUIRED_THEORY_HOURS;
                 if (passedHours < requiredHours) {
                     answer = Boolean.FALSE;
                 }
