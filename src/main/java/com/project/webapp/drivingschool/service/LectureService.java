@@ -3,15 +3,14 @@ package com.project.webapp.drivingschool.service;
 import com.project.webapp.drivingschool.model.*;
 import com.project.webapp.drivingschool.repository.LectureRepository;
 import com.project.webapp.drivingschool.repository.LectureSeriesRepository;
+import com.project.webapp.drivingschool.utils.Constants;
 import com.project.webapp.drivingschool.utils.LectureSeriesStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -43,6 +42,44 @@ public class LectureService {
                 .map(LectureSeries::getLectures)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Pobranie wszystkich wykładów
+     * w ramach cyklu wykładów o podanym ID.
+     *
+     * @param id ID cyklu wykładów
+     * @return lista wykładów
+     */
+    public Set<Lecture> getAllLecturesByLectureSeriesId(Long id) {
+        Optional<LectureSeries> seriesOptional = lectureSeriesRepository.findById(id);
+        return seriesOptional.map(LectureSeries::getLectures).orElse(new HashSet<>());
+    }
+
+    /**
+     * Pobranie zbioru wolnych wykładów
+     * tzn. nieprzypisanych do żadnego cyklu wykładów.
+     *
+     * @return zbiór wolnych wykładów
+     */
+    public Set<Lecture> getAllFreeLectures() {
+        return lectureRepository.findAll().stream()
+                .filter(lecture -> !checkExistingInLectureSeriesByLectureId(lecture.getId()))
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Sprawdzenie, czy istnieje cykl wykładów,
+     * do którego jest przypisany wykład o podanym ID.
+     *
+     * @param id ID wykładu
+     * @return true - jeśli istnieje taki cykl, false - w przeciwnym razie
+     */
+    public Boolean checkExistingInLectureSeriesByLectureId(Long id) {
+        Optional<Lecture> optionalLecture = lectureRepository.findById(id);
+        return optionalLecture.filter(lecture -> lectureSeriesRepository.findAll().stream()
+                .anyMatch(series -> series.getLectures().contains(lecture)))
+                .isPresent();
     }
 
     /**
@@ -91,6 +128,21 @@ public class LectureService {
                         lecture.getEndTime().getTime() - lecture.getStartTime().getTime()))
                 .sum())
                 .orElse(0);
+    }
+
+    /**
+     * Sprawdzenie, czy suma godzin podanych wykładów
+     * jest równa wymaganej liczbie godzin zajęć teoretycznych.
+     *
+     * @param lectures zbiór wykładów
+     * @return true - jeśli jest warunek jest spełniony, false - w przeciwnym razie
+     */
+    public Boolean checkIfSumEqualsRequiredTheoryHoursForLecturesSet(Set<Lecture> lectures) {
+        Integer theoryHoursSum = lectures.stream()
+                .mapToInt(lecture -> (int) TimeUnit.MILLISECONDS.toHours(
+                        lecture.getEndTime().getTime() - lecture.getStartTime().getTime()))
+                .sum();
+        return theoryHoursSum.equals(Constants.REQUIRED_THEORY_HOURS);
     }
 
     /**
