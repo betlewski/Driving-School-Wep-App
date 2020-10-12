@@ -1,6 +1,7 @@
 package com.project.webapp.drivingschool.repository;
 
 import com.project.webapp.drivingschool.model.LectureSeries;
+import com.project.webapp.drivingschool.utils.LectureSeriesStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -13,12 +14,20 @@ import java.util.List;
 public interface LectureSeriesRepository extends JpaRepository<LectureSeries, Long> {
 
     /**
-     * Pobranie wszystkich wykładów prowadzonych
+     * Pobranie wszystkich cyklów wykładów prowadzonych
      * przez pracownika o podanym ID.
      *
      * @param id ID pracownika
-     * @return lista wykładów
+     * @return lista cyklów wykładów
      */
     List<LectureSeries> findAllByEmployeeId(Long id);
+
+    /**
+     * Pobranie cyklów wykładów o podanym statusie przebiegu
+     *
+     * @param status status przebiegu cyklu wykładów
+     * @return lista cyklów wykładów
+     */
+    List<LectureSeries> findAllByStatus(LectureSeriesStatus status);
 
 }
