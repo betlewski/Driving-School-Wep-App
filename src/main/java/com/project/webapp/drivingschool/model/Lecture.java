@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Klasa reprezentująca pojedynczy wykład prowadzony w ramach cyklu wykładów
@@ -25,18 +25,16 @@ public class Lecture {
     private Long id;
 
     /**
-     * Data i godzina rozpoczęcia wykładu
+     * Czas rozpoczęcia wykładu
      */
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    private LocalDateTime startTime;
 
     /**
-     * Data i godzina zakończenia wykładu
+     * Czas zakończenia wykładu
      */
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private LocalDateTime endTime;
 
     /**
      * Dodatkowe informacje

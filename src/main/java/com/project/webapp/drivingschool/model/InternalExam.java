@@ -10,7 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Klasa reprezentująca egzamin wewnętrzny przypisany do kursu
@@ -43,18 +43,16 @@ public class InternalExam {
     private Employee employee;
 
     /**
-     * Data i godzina rozpoczęcia egzaminu
+     * Czas rozpoczęcia egzaminu
      */
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    private LocalDateTime startTime;
 
     /**
-     * Data i godzina zakończenia egzaminu
+     * Czas zakończenia egzaminu
      */
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private LocalDateTime endTime;
 
     /**
      * Status przebiegu egzaminu

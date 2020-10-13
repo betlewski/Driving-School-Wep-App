@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Klasa reprezentująca dokumenty wymagane w ramach kursu nauki jazdy
@@ -41,9 +41,8 @@ public class Document {
     private ProcessingStatus processingStatus;
 
     /**
-     * Data i godzina zgłoszenia dostarczenia dokumentu
+     * Czas zgłoszenia dostarczenia dokumentu
      */
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date submissionTime;
+    private LocalDateTime submissionTime;
 
 }

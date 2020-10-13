@@ -9,7 +9,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Klasa reprezentująca pracownika szkoły nauki jazdy
@@ -68,7 +68,6 @@ public class Employee {
      * Data rejestracji
      */
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date registrationDate = new Date();
+    private LocalDate registrationDate = LocalDate.now();
 
 }

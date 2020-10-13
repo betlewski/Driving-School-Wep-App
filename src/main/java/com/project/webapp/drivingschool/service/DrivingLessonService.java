@@ -10,10 +10,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Serwis dla zajęć praktycznych (jazd szkoleniowych)
@@ -68,8 +68,8 @@ public class DrivingLessonService {
         Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
         return activeCourse.map(course -> course.getDrivingLessons().stream()
                 .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.PASSED))
-                .mapToInt(lesson -> (int) TimeUnit.MILLISECONDS.toHours(
-                        lesson.getEndTime().getTime() - lesson.getStartTime().getTime()))
+                .mapToInt(lesson -> (int) ChronoUnit.HOURS.between(
+                        lesson.getStartTime(), lesson.getEndTime()))
                 .sum())
                 .orElse(0);
     }

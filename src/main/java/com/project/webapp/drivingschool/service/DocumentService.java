@@ -14,8 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.time.Period;
-import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -151,9 +150,8 @@ public class DocumentService {
                     } else {
                         Optional<Student> student = studentRepository.findById(id);
                         if (student.isPresent()) {
-                            LocalDate birthDate = student.get().getBirthDate()
-                                    .toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                            boolean parentRequired = Period.between(birthDate, LocalDate.now()).getYears() < 18;
+                            LocalDate birthDate = student.get().getBirthDate();
+                            boolean parentRequired = (int) ChronoUnit.YEARS.between(birthDate, LocalDate.now()) < 18;
                             boolean parentCompleted = allDocuments.stream()
                                     .filter(document -> !document.getDocumentType().equals(DocumentType.PARENT_PERMISSION))
                                     .anyMatch(document -> !document.getProcessingStatus().equals(ProcessingStatus.COMPLETED));

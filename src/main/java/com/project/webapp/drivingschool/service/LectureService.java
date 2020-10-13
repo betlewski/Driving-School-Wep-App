@@ -10,8 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -107,8 +108,8 @@ public class LectureService {
     public Integer getAllHoursOfLecturesByLectureSeriesId(Long id) {
         Optional<LectureSeries> seriesOptional = lectureSeriesRepository.findById(id);
         return seriesOptional.map(lectureSeries -> lectureSeries.getLectures().stream()
-                .mapToInt(lecture -> (int) TimeUnit.MILLISECONDS.toHours(
-                        lecture.getEndTime().getTime() - lecture.getStartTime().getTime()))
+                .mapToInt(lecture -> (int) ChronoUnit.HOURS.between(
+                        lecture.getStartTime(), lecture.getEndTime()))
                 .sum())
                 .orElse(0);
     }
@@ -123,9 +124,9 @@ public class LectureService {
     public Integer getCurrentlyPassedHoursOfLecturesByLectureSeriesId(Long id) {
         Optional<LectureSeries> seriesOptional = lectureSeriesRepository.findById(id);
         return seriesOptional.map(lectureSeries -> lectureSeries.getLectures().stream()
-                .filter(lecture -> lecture.getEndTime().before(new Date()))
-                .mapToInt(lecture -> (int) TimeUnit.MILLISECONDS.toHours(
-                        lecture.getEndTime().getTime() - lecture.getStartTime().getTime()))
+                .filter(lecture -> lecture.getEndTime().isBefore(LocalDateTime.now()))
+                .mapToInt(lecture -> (int) ChronoUnit.HOURS.between(
+                        lecture.getStartTime(), lecture.getEndTime()))
                 .sum())
                 .orElse(0);
     }
@@ -139,8 +140,8 @@ public class LectureService {
      */
     public Boolean checkIfSumEqualsRequiredTheoryHoursForLecturesSet(Set<Lecture> lectures) {
         Integer theoryHoursSum = lectures.stream()
-                .mapToInt(lecture -> (int) TimeUnit.MILLISECONDS.toHours(
-                        lecture.getEndTime().getTime() - lecture.getStartTime().getTime()))
+                .mapToInt(lecture -> (int) ChronoUnit.HOURS.between(
+                        lecture.getStartTime(), lecture.getEndTime()))
                 .sum();
         return theoryHoursSum.equals(Constants.REQUIRED_THEORY_HOURS);
     }
@@ -197,9 +198,9 @@ public class LectureService {
      * @param endTime   godzina zakończenia
      * @return true - jeśli godziny są prawidłowe, false - w przeciwnym razie
      */
-    public Boolean checkIfStartTimeIsBeforeEndTime(Date startTime, Date endTime) {
+    public Boolean checkIfStartTimeIsBeforeEndTime(LocalDateTime startTime, LocalDateTime endTime) {
         if (startTime != null && endTime != null) {
-            return startTime.before(endTime);
+            return startTime.isBefore(endTime);
         } else {
             return Boolean.FALSE;
         }

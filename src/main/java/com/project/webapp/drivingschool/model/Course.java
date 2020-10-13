@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 /**
@@ -74,15 +74,12 @@ public class Course {
      * Data rozpoczęcia kursu
      */
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date startDate;
+    private LocalDate startDate = LocalDate.now();
 
     /**
      * Data zakończenia kursu
      */
-    @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date endDate;
+    private LocalDate endDate;
 
     /**
      * Czy kurs jest aktywny?

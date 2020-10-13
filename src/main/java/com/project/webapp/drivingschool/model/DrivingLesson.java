@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * Klasa reprezentująca zajęcia praktyczne (jazdy szkoleniowe) przypisane do kursu
@@ -40,17 +40,15 @@ public class DrivingLesson {
     private LessonStatus lessonStatus;
 
     /**
-     * Data i godzina rozpoczęcia jazdy
+     * Czas rozpoczęcia jazdy
      */
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    private LocalDateTime startTime;
 
     /**
-     * Data i godzina zakończenia jazdy
+     * Czas zakończenia jazdy
      */
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private LocalDateTime endTime;
 
 }

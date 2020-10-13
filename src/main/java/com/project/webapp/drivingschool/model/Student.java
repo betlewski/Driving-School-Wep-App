@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 /**
@@ -45,8 +45,7 @@ public class Student {
      * Data urodzenia
      */
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date birthDate;
+    private LocalDate birthDate;
 
     /**
      * Adres zamieszkania
@@ -80,8 +79,7 @@ public class Student {
      * Data rejestracji
      */
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date registrationDate = new Date();
+    private LocalDate registrationDate = LocalDate.now();
 
     /**
      * Kursy przypisane do kursanta
