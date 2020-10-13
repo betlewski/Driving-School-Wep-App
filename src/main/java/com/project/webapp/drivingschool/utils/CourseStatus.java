@@ -28,7 +28,7 @@ public enum CourseStatus {
     /**
      * Zajęcia praktyczne (jazdy szkoleniowe)
      */
-    DRIVING_TRAININGS,
+    DRIVING_LESSONS,
 
     /**
      * Praktyczny egzamin wewnętrzny
@@ -43,6 +43,6 @@ public enum CourseStatus {
     /**
      * Odebranie prawa jazdy i zakończenie kursu
      */
-    COURSE_FINISHED
+    FINISHED
 
 }
