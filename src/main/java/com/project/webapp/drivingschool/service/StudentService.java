@@ -1,5 +1,6 @@
 package com.project.webapp.drivingschool.service;
 
+import com.project.webapp.drivingschool.model.Course;
 import com.project.webapp.drivingschool.model.Student;
 import com.project.webapp.drivingschool.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,18 @@ public class StudentService {
     public Student getStudentByEmail(String email) {
         Optional<Student> student = studentRepository.findByEmail(email);
         return student.orElse(null);
+    }
+
+    /**
+     * Szukanie studenta, do którego został przypisany podany kurs
+     *
+     * @param course kurs
+     * @return znaleziony student
+     */
+    public Optional<Student> findStudentByCourse(Course course) {
+        return studentRepository.findAll().stream()
+                .filter(student -> student.getCourses().contains(course))
+                .findFirst();
     }
 
     /**

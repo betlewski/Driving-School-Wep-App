@@ -59,36 +59,33 @@ public class DrivingLessonService {
 
     /**
      * Pobranie łącznej liczby godzin jazd,
-     * które zaliczył kursant o podanym ID w ramach aktywnego kursu.
+     * które zaliczono w ramach podanego kursu.
      *
-     * @param id ID kursanta
+     * @param course kurs
      * @return liczba godzin zaliczonych jazd
      */
-    public Integer getAllPassedHoursOfDrivingLessonsByStudentId(Long id) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
-        return activeCourse.map(course -> course.getDrivingLessons().stream()
+    public Integer getAllPassedHoursOfDrivingLessonsByCourse(Course course) {
+        return course.getDrivingLessons().stream()
                 .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.PASSED))
                 .mapToInt(lesson -> (int) ChronoUnit.HOURS.between(
                         lesson.getStartTime(), lesson.getEndTime()))
-                .sum())
-                .orElse(0);
+                .sum();
     }
 
     /**
-     * Sprawdzenie, czy kursant o podanym ID
-     * zaliczył zajęcia praktyczne w ramach aktywnego kursu.
+     * Sprawdzenie, czy w ramach podanego kursu
+     * zaliczono zajęcia praktyczne.
      *
-     * @param id ID kursanta
-     * @return true - jeśli zaliczył, false - w przeciwnym razie
+     * @param course kurs
+     * @return true - jeśli zaliczono, false - w przeciwnym razie
      */
-    public Boolean isDrivingLessonsPassedByStudentId(Long id) {
-        Boolean answer = Boolean.TRUE;
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
-        if (activeCourse.isPresent()) {
-            Integer passedHours = getAllPassedHoursOfDrivingLessonsByStudentId(id);
-            Integer requiredHours = activeCourse.get().getLicenseCategory().practiceHours;
-            if (passedHours < requiredHours) {
-                answer = Boolean.FALSE;
+    public Boolean isDrivingLessonsPassedByCourse(Course course) {
+        Boolean answer = Boolean.FALSE;
+        if (course != null) {
+            Integer passedHours = getAllPassedHoursOfDrivingLessonsByCourse(course);
+            Integer requiredHours = course.getLicenseCategory().practiceHours;
+            if (passedHours >= requiredHours) {
+                answer = Boolean.TRUE;
             }
         }
         return answer;

@@ -110,32 +110,28 @@ public class PaymentService {
     }
 
     /**
-     * Sprawdzenie, czy uregulowano wszystkie płatności
-     * związane z aktywnym kursem dla kursanta o podanym ID.
+     * Sprawdzenie, czy w ramach podanego kursu
+     * uregulowano wszystkie płatności.
      *
-     * @param id ID kursanta
+     * @param course kurs
      * @return true - jeśli uregulowano wszystkie płatności, false - w przeciwnym razie
      */
-    public Boolean checkIfAllPaymentsCompleted(Long id) {
-        Boolean answer = Boolean.TRUE;
+    public Boolean checkIfAllPaymentsCompleted(Course course) {
+        Boolean answer = Boolean.FALSE;
+        if (course != null) {
+            Set<Payment> allPayments = course.getPayments();
+            Set<Payment> notCompleted = allPayments.stream()
+                    .filter(payment -> !payment.getProcessingStatus().equals(ProcessingStatus.COMPLETED))
+                    .collect(Collectors.toSet());
 
-        Set<Payment> allPayments = getAllPaymentsForActiveCourseByStudentId(id);
-        Set<Payment> notCompleted = allPayments.stream()
-                .filter(payment -> !payment.getProcessingStatus().equals(ProcessingStatus.COMPLETED))
-                .collect(Collectors.toSet());
-
-        if (!notCompleted.isEmpty()) {
-            answer = Boolean.FALSE;
-        } else {
-            Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
-            if (activeCourse.isPresent()) {
-                Integer coursePrice = activeCourse.get().getLicenseCategory().price;
+            if (notCompleted.isEmpty()) {
+                Integer coursePrice = course.getLicenseCategory().price;
                 int courseFees = allPayments.stream()
                         .filter(payment -> payment.getProcessingStatus().equals(ProcessingStatus.COMPLETED))
                         .filter(payment -> payment.getPaymentType().equals(PaymentType.COURSE_FEE))
                         .mapToInt(Payment::getPrice).sum();
-                if (courseFees < coursePrice) {
-                    answer = Boolean.FALSE;
+                if (courseFees >= coursePrice) {
+                    answer = Boolean.TRUE;
                 }
             }
         }

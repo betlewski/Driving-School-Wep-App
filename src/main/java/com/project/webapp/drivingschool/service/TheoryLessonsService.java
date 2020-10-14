@@ -119,28 +119,24 @@ public class TheoryLessonsService {
     }
 
     /**
-     * Sprawdzenie, czy kursant o podanym ID
-     * zaliczył zajęcia teoretyczne w ramach aktywnego kursu.
+     * Sprawdzenie, czy w ramach podanego kursu zaliczono zajęcia teoretyczne
      *
-     * @param id ID kursanta
-     * @return true - jeśli zaliczył, false - w przeciwnym razie
+     * @param course kurs
+     * @return true - jeśli zaliczono, false - w przeciwnym razie
      */
-    public Boolean isTheoryLessonsPassedByStudentId(Long id) {
-        Boolean answer = Boolean.TRUE;
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
-        if (activeCourse.isPresent()) {
-            Optional<TheoryLessons> passedLessons = activeCourse.get().getTheoryLessons().stream()
+    public Boolean isTheoryLessonsPassedByCourse(Course course) {
+        Boolean answer = Boolean.FALSE;
+        if (course != null) {
+            Optional<TheoryLessons> passedLessons = course.getTheoryLessons().stream()
                     .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.PASSED))
                     .findFirst();
             if (passedLessons.isPresent()) {
                 Long passedSeriesId = passedLessons.get().getLectureSeries().getId();
                 Integer passedHours = lectureService.getAllHoursOfLecturesByLectureSeriesId(passedSeriesId);
                 Integer requiredHours = Constants.REQUIRED_THEORY_HOURS;
-                if (passedHours < requiredHours) {
-                    answer = Boolean.FALSE;
+                if (passedHours >= requiredHours) {
+                    answer = Boolean.TRUE;
                 }
-            } else {
-                answer = Boolean.FALSE;
             }
         }
         return answer;

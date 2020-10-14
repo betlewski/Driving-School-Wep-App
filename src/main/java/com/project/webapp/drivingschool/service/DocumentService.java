@@ -5,7 +5,6 @@ import com.project.webapp.drivingschool.model.Document;
 import com.project.webapp.drivingschool.model.Student;
 import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.DocumentRepository;
-import com.project.webapp.drivingschool.repository.StudentRepository;
 import com.project.webapp.drivingschool.utils.DocumentType;
 import com.project.webapp.drivingschool.utils.ProcessingStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,19 +26,19 @@ import java.util.stream.Collectors;
 public class DocumentService {
 
     private DocumentRepository documentRepository;
-    private StudentRepository studentRepository;
     private CourseRepository courseRepository;
     private CourseService courseService;
+    private StudentService studentService;
 
     @Autowired
     public DocumentService(DocumentRepository documentRepository,
-                           StudentRepository studentRepository,
                            CourseRepository courseRepository,
-                           CourseService courseService) {
+                           CourseService courseService,
+                           StudentService studentService) {
         this.documentRepository = documentRepository;
-        this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.courseService = courseService;
+        this.studentService = studentService;
     }
 
     /**
@@ -117,47 +116,45 @@ public class DocumentService {
     }
 
     /**
-     * Sprawdzenie, czy dostarczono wszystkie dokumenty
-     * związane z aktywnym kursem dla kursanta o podanym ID.
+     * Sprawdzenie, czy w ramach kursu o podanym ID dostarczono badania lekarskie.
      *
-     * @param id ID kursanta
+     * @param course kurs do sprawdzenia
+     * @return true - jeśli dostarczono badania lekarskie, false - w przeciwnym razie
+     */
+    public Boolean checkIfMedicalExamsCompleted(Course course) {
+        return course.getDocuments().stream()
+                .filter(document -> document.getDocumentType().equals(DocumentType.MEDICAL_EXAMS))
+                .anyMatch(document -> document.getProcessingStatus().equals(ProcessingStatus.COMPLETED));
+    }
+
+    /**
+     * Sprawdzenie, czy w ramach kursu o podanym ID dostarczono wszystkie dokumenty.
+     *
+     * @param course kurs do sprawdzenia
      * @return true - jeśli dostarczono wszystkie dokumenty, false - w przeciwnym razie
      */
-    public Boolean checkIfAllDocumentsCompleted(Long id) {
-        Boolean answer = Boolean.TRUE;
+    public Boolean checkIfAllDocumentsCompleted(Course course) {
+        Boolean answer = Boolean.FALSE;
+        if (course != null) {
+            Set<Document> allDocuments = course.getDocuments();
+            Set<Document> notCompleted = allDocuments.stream()
+                    .filter(document -> !document.getProcessingStatus().equals(ProcessingStatus.COMPLETED))
+                    .collect(Collectors.toSet());
 
-        Set<Document> allDocuments = getAllDocumentsForActiveCourseByStudentId(id);
-        Set<Document> notCompleted = allDocuments.stream()
-                .filter(document -> !document.getProcessingStatus().equals(ProcessingStatus.COMPLETED))
-                .collect(Collectors.toSet());
-
-        if (!notCompleted.isEmpty()) {
-            answer = Boolean.FALSE;
-        } else {
-            Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
-            if (activeCourse.isPresent()) {
-                boolean medicalCompleted = allDocuments.stream()
-                        .filter(document -> !document.getDocumentType().equals(DocumentType.MEDICAL_EXAMS))
-                        .anyMatch(document -> !document.getProcessingStatus().equals(ProcessingStatus.COMPLETED));
-                if (!medicalCompleted) {
-                    answer = Boolean.FALSE;
-                } else {
-                    boolean pkkCompleted = allDocuments.stream()
-                            .filter(document -> !document.getDocumentType().equals(DocumentType.DOCUMENT_PKK))
-                            .anyMatch(document -> !document.getProcessingStatus().equals(ProcessingStatus.COMPLETED));
-                    if (!pkkCompleted) {
-                        answer = Boolean.FALSE;
-                    } else {
-                        Optional<Student> student = studentRepository.findById(id);
-                        if (student.isPresent()) {
-                            LocalDate birthDate = student.get().getBirthDate();
-                            boolean parentRequired = (int) ChronoUnit.YEARS.between(birthDate, LocalDate.now()) < 18;
-                            boolean parentCompleted = allDocuments.stream()
-                                    .filter(document -> !document.getDocumentType().equals(DocumentType.PARENT_PERMISSION))
-                                    .anyMatch(document -> !document.getProcessingStatus().equals(ProcessingStatus.COMPLETED));
-                            if (parentRequired && !parentCompleted) {
-                                answer = Boolean.FALSE;
-                            }
+            if (notCompleted.isEmpty()) {
+                boolean pkkCompleted = allDocuments.stream()
+                        .filter(document -> document.getDocumentType().equals(DocumentType.DOCUMENT_PKK))
+                        .anyMatch(document -> document.getProcessingStatus().equals(ProcessingStatus.COMPLETED));
+                if (pkkCompleted) {
+                    Optional<Student> student = studentService.findStudentByCourse(course);
+                    if (student.isPresent()) {
+                        LocalDate birthDate = student.get().getBirthDate();
+                        boolean parentRequired = (int) ChronoUnit.YEARS.between(birthDate, LocalDate.now()) < 18;
+                        boolean parentCompleted = allDocuments.stream()
+                                .filter(document -> document.getDocumentType().equals(DocumentType.PARENT_PERMISSION))
+                                .anyMatch(document -> document.getProcessingStatus().equals(ProcessingStatus.COMPLETED));
+                        if (!parentRequired || parentCompleted) {
+                            answer = Boolean.TRUE;
                         }
                     }
                 }

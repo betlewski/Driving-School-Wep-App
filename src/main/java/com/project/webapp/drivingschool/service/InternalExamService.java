@@ -59,21 +59,20 @@ public class InternalExamService {
     }
 
     /**
-     * Sprawdzenie, czy kursant o podanym ID zaliczył egzamin wewnętrzny
-     * o podanym typie w ramach aktywnego kursu.
+     * Sprawdzenie, czy w ramach podanego kursu zaliczono
+     * egzamin wewnętrzny o podanym typie.
      *
-     * @param id   ID kursanta
-     * @param type typ egzaminu
-     * @return true - jeśli zaliczył, false - w przeciwnym razie
+     * @param course kurs
+     * @param type   typ egzaminu
+     * @return true - jeśli zaliczono, false - w przeciwnym razie
      */
-    public Boolean isInternalExamPassedByStudentIdAndExamType(Long id, ExamType type) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
-        if (activeCourse.isPresent()) {
-            return activeCourse.get().getInternalExams().stream()
+    public Boolean isInternalExamPassedByCourseAndExamType(Course course, ExamType type) {
+        if (course != null) {
+            return course.getInternalExams().stream()
                     .filter(exam -> exam.getExamType().equals(type))
                     .anyMatch(InternalExam::getIsPassed);
         } else {
-            return null;
+            return Boolean.FALSE;
         }
     }
 
