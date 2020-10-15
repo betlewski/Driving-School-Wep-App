@@ -108,6 +108,33 @@ public class PaymentService {
     }
 
     /**
+     * Usuwanie płatności o podanym ID.
+     *
+     * @param id ID płatności
+     * @return usunięta płatność
+     */
+    public ResponseEntity<Boolean> deletePayment(Long id) {
+        Optional<Payment> optionalPayment = paymentRepository.findById(id);
+        if (optionalPayment.isPresent()) {
+            Payment payment = optionalPayment.get();
+            Optional<Course> optionalCourse = findCourseByPaymentId(id);
+            try {
+                if (optionalCourse.isPresent()) {
+                    Course course = optionalCourse.get();
+                    course.getPayments().remove(payment);
+                    courseRepository.save(course);
+                }
+                paymentRepository.delete(payment);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
      * Zmiana statusu przetworzenia płatności o podanym ID
      *
      * @param id     ID płatności

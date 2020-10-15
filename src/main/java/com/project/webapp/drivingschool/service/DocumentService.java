@@ -110,6 +110,33 @@ public class DocumentService {
     }
 
     /**
+     * Usuwanie dokumentu o podanym ID.
+     *
+     * @param id ID dokumentu
+     * @return usunięty dokument
+     */
+    public ResponseEntity<Boolean> deleteDocument(Long id) {
+        Optional<Document> optionalDocument = documentRepository.findById(id);
+        if (optionalDocument.isPresent()) {
+            Document document = optionalDocument.get();
+            Optional<Course> optionalCourse = findCourseByDocumentId(id);
+            try {
+                if (optionalCourse.isPresent()) {
+                    Course course = optionalCourse.get();
+                    course.getDocuments().remove(document);
+                    courseRepository.save(course);
+                }
+                documentRepository.delete(document);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
      * Zmiana statusu przetworzenia dokumentu o podanym ID
      *
      * @param id     ID dokumentu
