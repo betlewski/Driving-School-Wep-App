@@ -5,6 +5,7 @@ import com.project.webapp.drivingschool.model.Document;
 import com.project.webapp.drivingschool.model.Student;
 import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.DocumentRepository;
+import com.project.webapp.drivingschool.utils.CourseStatus;
 import com.project.webapp.drivingschool.utils.DocumentType;
 import com.project.webapp.drivingschool.utils.ProcessingStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,8 @@ public class DocumentService {
     }
 
     /**
-     * Pobranie wszystkich dokumentów związanych z aktywnym kursem dla kursanta o podanym ID.
+     * Pobranie wszystkich dokumentów związanych
+     * z aktywnym kursem dla kursanta o podanym ID.
      *
      * @param id ID kursanta
      * @return zbiór dokumentów
@@ -65,6 +67,21 @@ public class DocumentService {
         return allDocuments.stream()
                 .filter(document -> document.getProcessingStatus().equals(status))
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Szukanie kursu zawierającego dokument o podanym ID.
+     *
+     * @param id ID dokumentu
+     * @return znaleziony kurs
+     */
+    public Optional<Course> findCourseByDocumentId(Long id) {
+        return courseRepository.findAll().stream()
+                .filter(course -> course.getDocuments().stream()
+                        .map(Document::getId)
+                        .collect(Collectors.toList())
+                        .contains(id))
+                .findFirst();
     }
 
     /**
@@ -105,6 +122,7 @@ public class DocumentService {
             Document document = documentOptional.get();
             try {
                 document.setProcessingStatus(status);
+                checkStatusAfterDocumentChangedByDocumentId(id);
                 document = documentRepository.save(document);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -116,7 +134,47 @@ public class DocumentService {
     }
 
     /**
-     * Sprawdzenie, czy w ramach kursu o podanym ID dostarczono badania lekarskie.
+     * Sprawdzenie, czy kurs zawierający dokument o podanym ID
+     * spełnia wymagania, aby zmienić swój status.
+     *
+     * @param id ID dokumentu
+     */
+    private void checkStatusAfterDocumentChangedByDocumentId(Long id) {
+        Optional<Course> optionalCourse = findCourseByDocumentId(id);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            checkStatusAfterDocumentChanged(course);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy podany kurs spełnia wymagania, aby zmienić swój status.
+     *
+     * @param course sprawdzany kurs
+     */
+    private void checkStatusAfterDocumentChanged(Course course) {
+        if (course != null) {
+            CourseStatus status = course.getCourseStatus();
+            switch (status) {
+                case MEDICAL_EXAMS:
+                    if (checkIfMedicalExamsCompleted(course)) {
+                        course.setCourseStatus(CourseStatus.DOCUMENTS_SUBMISSION);
+                    }
+                    break;
+                case DOCUMENTS_SUBMISSION:
+                    if (checkIfAllDocumentsCompleted(course)) {
+                        course.setCourseStatus(CourseStatus.LECTURES);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy w ramach kursu o podanym ID
+     * dostarczono badania lekarskie.
      *
      * @param course kurs do sprawdzenia
      * @return true - jeśli dostarczono badania lekarskie, false - w przeciwnym razie

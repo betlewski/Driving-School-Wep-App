@@ -4,9 +4,12 @@ import com.project.webapp.drivingschool.model.Course;
 import com.project.webapp.drivingschool.model.Payment;
 import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.PaymentRepository;
+import com.project.webapp.drivingschool.utils.CourseStatus;
+import com.project.webapp.drivingschool.utils.ExamType;
 import com.project.webapp.drivingschool.utils.PaymentType;
 import com.project.webapp.drivingschool.utils.ProcessingStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,14 +28,17 @@ public class PaymentService {
     private PaymentRepository paymentRepository;
     private CourseRepository courseRepository;
     private CourseService courseService;
+    private InternalExamService internalExamService;
 
     @Autowired
     public PaymentService(PaymentRepository paymentRepository,
                           CourseRepository courseRepository,
-                          CourseService courseService) {
+                          CourseService courseService,
+                          @Lazy InternalExamService internalExamService) {
         this.paymentRepository = paymentRepository;
         this.courseRepository = courseRepository;
         this.courseService = courseService;
+        this.internalExamService = internalExamService;
     }
 
     /**
@@ -59,6 +65,21 @@ public class PaymentService {
         return allPayments.stream()
                 .filter(payment -> payment.getProcessingStatus().equals(status))
                 .collect(Collectors.toSet());
+    }
+
+    /**
+     * Szukanie kursu zawierającego płatność o podanym ID.
+     *
+     * @param id ID płatności
+     * @return znaleziony kurs
+     */
+    public Optional<Course> findCourseByPaymentId(Long id) {
+        return courseRepository.findAll().stream()
+                .filter(course -> course.getPayments().stream()
+                        .map(Payment::getId)
+                        .collect(Collectors.toList())
+                        .contains(id))
+                .findFirst();
     }
 
     /**
@@ -99,6 +120,7 @@ public class PaymentService {
             Payment payment = paymentOptional.get();
             try {
                 payment.setProcessingStatus(status);
+                checkStatusAfterPaymentChangedByPaymentId(id);
                 payment = paymentRepository.save(payment);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -106,6 +128,36 @@ public class PaymentService {
             return new ResponseEntity<>(payment, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy kurs zawierający płatność o podanym ID
+     * spełnia wymagania, aby zmienić swój status.
+     *
+     * @param id ID płatności
+     */
+    private void checkStatusAfterPaymentChangedByPaymentId(Long id) {
+        Optional<Course> optionalCourse = findCourseByPaymentId(id);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            checkStatusAfterPaymentChanged(course);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy podany kurs spełnia wymagania, aby zmienić swój status.
+     *
+     * @param course sprawdzany kurs
+     */
+    private void checkStatusAfterPaymentChanged(Course course) {
+        if (course != null) {
+            CourseStatus status = course.getCourseStatus();
+            if (status.equals(CourseStatus.PRACTICAL_INTERNAL_EXAM)
+                    && checkIfAllPaymentsCompleted(course)
+                    && internalExamService.isInternalExamPassedByCourseAndExamType(course, ExamType.PRACTICAL)) {
+                course.setCourseStatus(CourseStatus.STATE_EXAMS);
+            }
         }
     }
 

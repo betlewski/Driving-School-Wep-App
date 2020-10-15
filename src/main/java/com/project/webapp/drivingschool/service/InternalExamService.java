@@ -4,9 +4,11 @@ import com.project.webapp.drivingschool.model.Course;
 import com.project.webapp.drivingschool.model.InternalExam;
 import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.InternalExamRepository;
+import com.project.webapp.drivingschool.utils.CourseStatus;
 import com.project.webapp.drivingschool.utils.ExamType;
 import com.project.webapp.drivingschool.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Serwis dla egzaminów wewnętrznych w trakcie kursu
@@ -24,14 +27,17 @@ public class InternalExamService {
     private InternalExamRepository internalExamRepository;
     private CourseRepository courseRepository;
     private CourseService courseService;
+    private PaymentService paymentService;
 
     @Autowired
     public InternalExamService(InternalExamRepository internalExamRepository,
                                CourseRepository courseRepository,
-                               CourseService courseService) {
+                               CourseService courseService,
+                               @Lazy PaymentService paymentService) {
         this.internalExamRepository = internalExamRepository;
         this.courseRepository = courseRepository;
         this.courseService = courseService;
+        this.paymentService = paymentService;
     }
 
     /**
@@ -56,6 +62,21 @@ public class InternalExamService {
      */
     public Set<InternalExam> getAllInternalExamsByEmployeeId(Long id) {
         return internalExamRepository.findAllByEmployeeId(id);
+    }
+
+    /**
+     * Szukanie kursu zawierającego egzamin wewnętrzny o podanym ID.
+     *
+     * @param id ID egzaminu
+     * @return znaleziony kurs
+     */
+    public Optional<Course> findCourseByInternalExamId(Long id) {
+        return courseRepository.findAll().stream()
+                .filter(course -> course.getInternalExams().stream()
+                        .map(InternalExam::getId)
+                        .collect(Collectors.toList())
+                        .contains(id))
+                .findFirst();
     }
 
     /**
@@ -139,6 +160,7 @@ public class InternalExamService {
             InternalExam exam = optionalExam.get();
             try {
                 exam.setLessonStatus(status);
+                checkStatusAfterInternalExamChangedByInternalExamId(id);
                 exam = internalExamRepository.save(exam);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -146,6 +168,46 @@ public class InternalExamService {
             return new ResponseEntity<>(exam, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy kurs zawierający egzamin wewnętrzny o podanym ID
+     * spełnia wymagania, aby zmienić swój status.
+     *
+     * @param id ID egzaminu
+     */
+    private void checkStatusAfterInternalExamChangedByInternalExamId(Long id) {
+        Optional<Course> optionalCourse = findCourseByInternalExamId(id);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            checkStatusAfterInternalExamChanged(course);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy podany kurs spełnia wymagania, aby zmienić swój status.
+     *
+     * @param course sprawdzany kurs
+     */
+    private void checkStatusAfterInternalExamChanged(Course course) {
+        if (course != null) {
+            CourseStatus status = course.getCourseStatus();
+            switch (status) {
+                case THEORY_INTERNAL_EXAM:
+                    if (isInternalExamPassedByCourseAndExamType(course, ExamType.THEORETICAL)) {
+                        course.setCourseStatus(CourseStatus.DRIVING_LESSONS);
+                    }
+                    break;
+                case PRACTICAL_INTERNAL_EXAM:
+                    if (isInternalExamPassedByCourseAndExamType(course, ExamType.PRACTICAL) &&
+                            paymentService.checkIfAllPaymentsCompleted(course)) {
+                        course.setCourseStatus(CourseStatus.STATE_EXAMS);
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
     }
 

@@ -4,6 +4,7 @@ import com.project.webapp.drivingschool.model.Course;
 import com.project.webapp.drivingschool.model.DrivingLesson;
 import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.DrivingLessonRepository;
+import com.project.webapp.drivingschool.utils.CourseStatus;
 import com.project.webapp.drivingschool.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Serwis dla zajęć praktycznych (jazd szkoleniowych)
@@ -73,6 +75,21 @@ public class DrivingLessonService {
     }
 
     /**
+     * Szukanie kursu zawierającego jazdy szkoleniowe o podanym ID.
+     *
+     * @param id ID jazd
+     * @return znaleziony kurs
+     */
+    public Optional<Course> findCourseByDrivingLessonId(Long id) {
+        return courseRepository.findAll().stream()
+                .filter(course -> course.getDrivingLessons().stream()
+                        .map(DrivingLesson::getId)
+                        .collect(Collectors.toList())
+                        .contains(id))
+                .findFirst();
+    }
+
+    /**
      * Sprawdzenie, czy w ramach podanego kursu
      * zaliczono zajęcia praktyczne.
      *
@@ -129,6 +146,7 @@ public class DrivingLessonService {
             DrivingLesson lesson = optionalLesson.get();
             try {
                 lesson.setLessonStatus(status);
+                checkStatusAfterDrivingLessonChangedByDrivingLessonId(id);
                 lesson = drivingLessonRepository.save(lesson);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -136,6 +154,34 @@ public class DrivingLessonService {
             return new ResponseEntity<>(lesson, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy kurs zawierający jazdy szkoleniowe
+     * o podanym ID spełnia wymagania, aby zmienić swój status.
+     *
+     * @param id ID jazd
+     */
+    private void checkStatusAfterDrivingLessonChangedByDrivingLessonId(Long id) {
+        Optional<Course> optionalCourse = findCourseByDrivingLessonId(id);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            checkStatusAfterDrivingLessonChanged(course);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy podany kurs spełnia wymagania, aby zmienić swój status.
+     *
+     * @param course sprawdzany kurs
+     */
+    private void checkStatusAfterDrivingLessonChanged(Course course) {
+        if (course != null) {
+            CourseStatus status = course.getCourseStatus();
+            if (status.equals(CourseStatus.DRIVING_LESSONS) && isDrivingLessonsPassedByCourse(course)) {
+                course.setCourseStatus(CourseStatus.PRACTICAL_INTERNAL_EXAM);
+            }
         }
     }
 

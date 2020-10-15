@@ -5,6 +5,7 @@ import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.LectureSeriesRepository;
 import com.project.webapp.drivingschool.repository.TheoryLessonsRepository;
 import com.project.webapp.drivingschool.utils.Constants;
+import com.project.webapp.drivingschool.utils.CourseStatus;
 import com.project.webapp.drivingschool.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -119,6 +120,21 @@ public class TheoryLessonsService {
     }
 
     /**
+     * Szukanie kursu zawierającego zajęcia teoretyczne o podanym ID.
+     *
+     * @param id ID zajęć
+     * @return znaleziony kurs
+     */
+    public Optional<Course> findCourseByTheoryLessonsId(Long id) {
+        return courseRepository.findAll().stream()
+                .filter(course -> course.getTheoryLessons().stream()
+                        .map(TheoryLessons::getId)
+                        .collect(Collectors.toList())
+                        .contains(id))
+                .findFirst();
+    }
+
+    /**
      * Sprawdzenie, czy w ramach podanego kursu zaliczono zajęcia teoretyczne
      *
      * @param course kurs
@@ -203,6 +219,7 @@ public class TheoryLessonsService {
             TheoryLessons lesson = optionalLesson.get();
             try {
                 lesson.setLessonStatus(status);
+                checkStatusAfterTheoryLessonsChangedByTheoryLessonId(id);
                 lesson = theoryLessonsRepository.save(lesson);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -210,6 +227,34 @@ public class TheoryLessonsService {
             return new ResponseEntity<>(lesson, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy kurs zawierający zajęcia teoretyczne
+     * o podanym ID spełnia wymagania, aby zmienić swój status.
+     *
+     * @param id ID zajęć
+     */
+    private void checkStatusAfterTheoryLessonsChangedByTheoryLessonId(Long id) {
+        Optional<Course> optionalCourse = findCourseByTheoryLessonsId(id);
+        if (optionalCourse.isPresent()) {
+            Course course = optionalCourse.get();
+            checkStatusAfterTheoryLessonsChanged(course);
+        }
+    }
+
+    /**
+     * Sprawdzenie, czy podany kurs spełnia wymagania, aby zmienić swój status.
+     *
+     * @param course sprawdzany kurs
+     */
+    private void checkStatusAfterTheoryLessonsChanged(Course course) {
+        if (course != null) {
+            CourseStatus status = course.getCourseStatus();
+            if (status.equals(CourseStatus.LECTURES) && isTheoryLessonsPassedByCourse(course)) {
+                course.setCourseStatus(CourseStatus.THEORY_INTERNAL_EXAM);
+            }
         }
     }
 
