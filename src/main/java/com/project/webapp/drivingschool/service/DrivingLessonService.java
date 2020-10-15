@@ -2,10 +2,11 @@ package com.project.webapp.drivingschool.service;
 
 import com.project.webapp.drivingschool.model.Course;
 import com.project.webapp.drivingschool.model.DrivingLesson;
+import com.project.webapp.drivingschool.model.Payment;
 import com.project.webapp.drivingschool.repository.CourseRepository;
 import com.project.webapp.drivingschool.repository.DrivingLessonRepository;
-import com.project.webapp.drivingschool.utils.CourseStatus;
-import com.project.webapp.drivingschool.utils.LessonStatus;
+import com.project.webapp.drivingschool.repository.PaymentRepository;
+import com.project.webapp.drivingschool.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +26,17 @@ public class DrivingLessonService {
 
     private DrivingLessonRepository drivingLessonRepository;
     private CourseRepository courseRepository;
+    private PaymentRepository paymentRepository;
     private CourseService courseService;
 
     @Autowired
     public DrivingLessonService(DrivingLessonRepository drivingLessonRepository,
                                 CourseRepository courseRepository,
+                                PaymentRepository paymentRepository,
                                 CourseService courseService) {
         this.drivingLessonRepository = drivingLessonRepository;
         this.courseRepository = courseRepository;
+        this.paymentRepository = paymentRepository;
         this.courseService = courseService;
     }
 
@@ -148,6 +152,7 @@ public class DrivingLessonService {
                 lesson.setLessonStatus(status);
                 checkStatusAfterDrivingLessonChangedByDrivingLessonId(id);
                 lesson = drivingLessonRepository.save(lesson);
+                checkExtraDrivingLessonPayments(lesson);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -181,6 +186,35 @@ public class DrivingLessonService {
             CourseStatus status = course.getCourseStatus();
             if (status.equals(CourseStatus.DRIVING_LESSONS) && isDrivingLessonsPassedByCourse(course)) {
                 course.setCourseStatus(CourseStatus.PRACTICAL_INTERNAL_EXAM);
+            }
+        }
+    }
+
+    /**
+     * Naliczenie dodatkowej opłaty, jeśli podana jazda szkoleniowa
+     * przekroczyła limit wymaganej liczby godzin jazd w kursie.
+     *
+     * @param lesson jazda szkoleniowa
+     */
+    private void checkExtraDrivingLessonPayments(DrivingLesson lesson) throws Exception {
+        if (lesson != null && lesson.getLessonStatus().equals(LessonStatus.PASSED)) {
+            Optional<Course> optionalCourse = findCourseByDrivingLessonId(lesson.getId());
+            if (optionalCourse.isPresent()) {
+                Course course = optionalCourse.get();
+                Integer sum = getAllPassedHoursOfDrivingLessonsByCourse(course);
+                if (sum > course.getLicenseCategory().practiceHours) {
+                    Payment payment = new Payment();
+                    payment.setPaymentType(PaymentType.EXTRA_DRIVING_LESSON);
+                    payment.setPrice(Constants.EXTRA_DRIVING_LESSON_FEE);
+                    payment.setProcessingStatus(ProcessingStatus.TO_COMPLETE);
+                    try {
+                        payment = paymentRepository.save(payment);
+                        course.getPayments().add(payment);
+                        courseRepository.save(course);
+                    } catch (Exception e) {
+                        throw new Exception(e);
+                    }
+                }
             }
         }
     }
