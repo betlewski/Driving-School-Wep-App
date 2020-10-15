@@ -1,11 +1,14 @@
 package com.project.webapp.drivingschool.service;
 
 import com.project.webapp.drivingschool.model.Course;
+import com.project.webapp.drivingschool.model.Document;
+import com.project.webapp.drivingschool.model.Payment;
 import com.project.webapp.drivingschool.model.Student;
 import com.project.webapp.drivingschool.repository.CourseRepository;
+import com.project.webapp.drivingschool.repository.DocumentRepository;
+import com.project.webapp.drivingschool.repository.PaymentRepository;
 import com.project.webapp.drivingschool.repository.StudentRepository;
-import com.project.webapp.drivingschool.utils.CourseStatus;
-import com.project.webapp.drivingschool.utils.LicenceCategory;
+import com.project.webapp.drivingschool.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.Comparator;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Serwis dla kursu nauki jazdy
@@ -24,12 +26,18 @@ public class CourseService {
 
     private CourseRepository courseRepository;
     private StudentRepository studentRepository;
+    private PaymentRepository paymentRepository;
+    private DocumentRepository documentRepository;
 
     @Autowired
     public CourseService(CourseRepository courseRepository,
-                         StudentRepository studentRepository) {
+                         StudentRepository studentRepository,
+                         PaymentRepository paymentRepository,
+                         DocumentRepository documentRepository) {
         this.courseRepository = courseRepository;
         this.studentRepository = studentRepository;
+        this.paymentRepository = paymentRepository;
+        this.documentRepository = documentRepository;
     }
 
     /**
@@ -97,6 +105,8 @@ public class CourseService {
                 try {
                     course.setLicenseCategory(category);
                     course.setCourseStatus(CourseStatus.MEDICAL_EXAMS);
+                    initDocumentsForNewCourse(course, student);
+                    initPaymentsForNewCourse(course);
                     course = courseRepository.save(course);
                     student.getCourses().add(course);
                     studentRepository.save(student);
@@ -152,6 +162,63 @@ public class CourseService {
             return new ResponseEntity<>(course, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Inicjalizacja dokumentów do dostarczenia dla podanego kursu i kursanta.
+     *
+     * @param course  nowy kurs
+     * @param student kursant
+     */
+    private void initDocumentsForNewCourse(Course course, Student student) {
+        if (course != null) {
+            Document medicalExams = new Document();
+            medicalExams.setDocumentType(DocumentType.MEDICAL_EXAMS);
+            medicalExams.setProcessingStatus(ProcessingStatus.TO_COMPLETE);
+
+            Document documentPkk = new Document();
+            documentPkk.setDocumentType(DocumentType.DOCUMENT_PKK);
+            documentPkk.setProcessingStatus(ProcessingStatus.TO_COMPLETE);
+            Set<Document> documents = new HashSet<>(Arrays.asList(medicalExams, documentPkk));
+
+            int studentAge = (int) ChronoUnit.YEARS.between(student.getBirthDate(), LocalDate.now());
+            if (studentAge < 18) {
+                Document parentPermission = new Document();
+                parentPermission.setDocumentType(DocumentType.PARENT_PERMISSION);
+                parentPermission.setProcessingStatus(ProcessingStatus.TO_COMPLETE);
+                documents.add(parentPermission);
+            }
+            try {
+                documentRepository.saveAll(documents);
+            } finally {
+                course.setDocuments(documents);
+            }
+        }
+    }
+
+    /**
+     * Inicjalizacja płatności do uregulowania dla podanego kursu.
+     *
+     * @param course nowy kurs
+     */
+    private void initPaymentsForNewCourse(Course course) {
+        if (course != null) {
+            Integer instalmentsNumber = Constants.DEFAULT_INSTALMENTS_NUMBER;
+            Integer instalmentPrice = course.getLicenseCategory().price / instalmentsNumber;
+            Set<Payment> payments = new HashSet<>();
+            for (int i = 0; i < instalmentsNumber; i++) {
+                Payment payment = new Payment();
+                payment.setPaymentType(PaymentType.COURSE_FEE);
+                payment.setPrice(instalmentPrice);
+                payment.setProcessingStatus(ProcessingStatus.TO_COMPLETE);
+                payments.add(payment);
+            }
+            try {
+                paymentRepository.saveAll(payments);
+            } finally {
+                course.setPayments(payments);
+            }
+        }
     }
 
 }
