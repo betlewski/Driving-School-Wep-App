@@ -69,6 +69,11 @@ public class CourseReport {
     private ProcessingStatus paymentStatus;
 
     /**
+     * Liczba godzin dodatkowych jazd
+     */
+    private Integer extraDrivingLessonsHours;
+
+    /**
      * Data rozpoczęcia kursu
      */
     private LocalDate startDate;

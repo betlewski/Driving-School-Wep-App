@@ -99,6 +99,7 @@ public class CourseReportService {
             report.setPassedTheoryPercent(calculatePassedTheoryPercent(course));
             report.setPassedPracticePercent(calculatePassedPracticePercent(course));
             report.setPaymentStatus(getReportedPaymentStatus(course));
+            report.setExtraDrivingLessonsHours(calculateExtraDrivingLessonsHours(course));
             report.setStartDate(course.getStartDate());
             report.setEndTime(course.getEndDate());
         }
@@ -188,6 +189,21 @@ public class CourseReportService {
             return ProcessingStatus.COMPLETED;
         }
         return ProcessingStatus.TO_COMPLETE;
+    }
+
+    /**
+     * Obliczenie liczby godzin dodatkowych jazd
+     * szkoleniowych dla podanego kursu.
+     *
+     * @param course kurs
+     * @return obliczona liczba godzin
+     */
+    private Integer calculateExtraDrivingLessonsHours(Course course) {
+        Integer passedHours = drivingLessonService
+                .getAllPassedHoursOfDrivingLessonsByCourse(course);
+        Integer courseHours = course.getLicenseCategory().practiceHours;
+        int extraHours = passedHours - courseHours;
+        return Math.max(extraHours, 0);
     }
 
     /**
