@@ -86,22 +86,19 @@ public class TheoryLessonsService {
     }
 
     /**
-     * Pobranie liczby godzin obecnie ukończonych zajęć teoretycznych
-     * w ramach aktywnego kursu dla kursanta o podanym ID.
+     * Pobranie liczby godzin obecnie ukończonych
+     * zajęć teoretycznych w ramach podanego kursu.
      *
-     * @param id ID kursanta
+     * @param course kurs
      * @return liczba godzin ukończonych zajęć teoretycznych
      */
-    public Integer getCurrentlyPassedHoursOfTheoryLessonsByStudentId(Long id) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
-        if (activeCourse.isPresent()) {
-            Optional<TheoryLessons> acceptedLessons = activeCourse.get().getTheoryLessons().stream()
-                    .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.ACCEPTED))
-                    .findFirst();
-            if (acceptedLessons.isPresent()) {
-                Long acceptedSeriesId = acceptedLessons.get().getLectureSeries().getId();
-                return lectureService.getCurrentlyPassedHoursOfLecturesByLectureSeriesId(acceptedSeriesId);
-            }
+    public Integer getCurrentlyPassedHoursOfTheoryLessonsByCourse(Course course) {
+        Optional<TheoryLessons> acceptedLessons = course.getTheoryLessons().stream()
+                .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.ACCEPTED))
+                .findFirst();
+        if (acceptedLessons.isPresent()) {
+            Long acceptedSeriesId = acceptedLessons.get().getLectureSeries().getId();
+            return lectureService.getCurrentlyPassedHoursOfLecturesByLectureSeriesId(acceptedSeriesId);
         }
         return 0;
     }

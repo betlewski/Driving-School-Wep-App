@@ -3,13 +3,19 @@ package com.project.webapp.drivingschool.report;
 import com.project.webapp.drivingschool.utils.CourseStatus;
 import com.project.webapp.drivingschool.utils.LicenceCategory;
 import com.project.webapp.drivingschool.utils.ProcessingStatus;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 /**
- * Klasa do generowania raportu z kursu.
+ * Klasa do generowania raportu dla kursu.
  * Zawiera podstawowe dane, statystyki i statusy przebiegu.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CourseReport {
 
     /**
@@ -71,5 +77,10 @@ public class CourseReport {
      * Data zakończenia kursu
      */
     private LocalDate endTime;
+
+    /**
+     * Komentarz
+     */
+    private String comment;
 
 }
