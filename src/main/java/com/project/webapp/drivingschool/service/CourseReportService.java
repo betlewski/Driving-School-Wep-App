@@ -2,10 +2,7 @@ package com.project.webapp.drivingschool.service;
 
 import com.project.webapp.drivingschool.model.Course;
 import com.project.webapp.drivingschool.report.CourseReport;
-import com.project.webapp.drivingschool.utils.Constants;
-import com.project.webapp.drivingschool.utils.CourseStatus;
-import com.project.webapp.drivingschool.utils.LicenceCategory;
-import com.project.webapp.drivingschool.utils.ProcessingStatus;
+import com.project.webapp.drivingschool.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,15 +29,6 @@ public class CourseReportService {
         this.drivingLessonService = drivingLessonService;
         this.paymentService = paymentService;
     }
-
-    /**
-     * Komentarze pobierane podczas generowania raportu.
-     */
-    private static final String FIRST_COMMENT = "Przed Tobą długa droga, ale wierzymy, że sobie poradzisz. Powodzenia!";
-    private static final String SECOND_COMMENT = "Dobrze Ci idzie, ale czeka Cię jeszcze trochę pracy. Nie poddawaj się!";
-    private static final String THIRD_COMMENT = "Jesteś coraz bliżej celu. Pracuj dalej, a na pewno osiągniesz sukces!";
-    private static final String FOURTH_COMMENT = "Ostatnia prosta. Już niedługo zostaniesz pełnoprawnym uczestnikiem ruchu drogowego!";
-    private static final String FIFTH_COMMENT = "Ogromnie Ci gratulujemy i dziękujemy, że mogliśmy Ci towarzyszyć w drodze do sukcesu!";
 
     /**
      * Pobranie raportu dla aktywnego kursu
@@ -216,15 +204,15 @@ public class CourseReportService {
         String comment;
         Integer passedCoursePercent = report.getPassedCoursePercent();
         if (passedCoursePercent < 25) {
-            comment = FIRST_COMMENT;
+            comment = Messages.FIRST_REPORT_COMMENT;
         } else if (passedCoursePercent < 50) {
-            comment = SECOND_COMMENT;
+            comment = Messages.SECOND_REPORT_COMMENT;
         } else if (passedCoursePercent < 75) {
-            comment = THIRD_COMMENT;
+            comment = Messages.THIRD_REPORT_COMMENT;
         } else if (passedCoursePercent < 100) {
-            comment = FOURTH_COMMENT;
+            comment = Messages.FOURTH_REPORT_COMMENT;
         } else {
-            comment = FIFTH_COMMENT;
+            comment = Messages.FIFTH_REPORT_COMMENT;
         }
         report.setComment(comment);
     }
