@@ -45,13 +45,13 @@ public class DocumentController {
         return documentService.findCourseByDocumentId(id);
     }
 
-    @GetMapping("/check/medicalExams")
+    @GetMapping("/checkMedicalExams")
     @ResponseBody
     public Boolean checkIfMedicalExamsCompleted(@RequestBody Course course) {
         return documentService.checkIfMedicalExamsCompleted(course);
     }
 
-    @GetMapping("/check/all")
+    @GetMapping("/checkAll")
     @ResponseBody
     public Boolean checkIfAllDocumentsCompleted(@RequestBody Course course) {
         return documentService.checkIfAllDocumentsCompleted(course);
