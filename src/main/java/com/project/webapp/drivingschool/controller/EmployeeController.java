@@ -14,7 +14,7 @@ import java.util.List;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/employee")
+@RequestMapping("/rest/employee")
 public class EmployeeController {
 
     private EmployeeService employeeService;
@@ -24,7 +24,7 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @GetMapping("/allActual")
+    @GetMapping("/all/actual")
     @ResponseBody
     public List<Employee> getAllActualEmployees() {
         return employeeService.getAllActualEmployees();
@@ -36,13 +36,13 @@ public class EmployeeController {
         return employeeService.getAllEmployees();
     }
 
-    @GetMapping("/allNotAdmins")
+    @GetMapping("/all/notAdmins")
     @ResponseBody
     public List<Employee> getAllEmployeesNotAdmins() {
         return employeeService.getAllEmployeesNotAdmins();
     }
 
-    @GetMapping("/allByRole")
+    @GetMapping("/all/byRole")
     @ResponseBody
     public List<Employee> getAllEmployeesByEmployeeRole(@RequestParam("role") EmployeeRole role) {
         return employeeService.getAllEmployeesByEmployeeRole(role);
@@ -54,20 +54,20 @@ public class EmployeeController {
         return employeeService.getEmployeeByEmail(email);
     }
 
-    @GetMapping("/allRoles")
+    @GetMapping("/roles/all")
     @ResponseBody
     public List<EmployeeRole> getAllEmployeeRoles() {
         return employeeService.getAllEmployeeRoles();
     }
 
-    @GetMapping("/checkByEmployeeIdAndRole")
+    @GetMapping("/exist/byEmployeeId/byRole")
     @ResponseBody
     public Boolean checkExistingByEmployeeIdAndEmployeeRole(@RequestParam("id") Long id,
                                                             @RequestParam("role") EmployeeRole role) {
         return employeeService.checkExistingByEmployeeIdAndEmployeeRole(id, role);
     }
 
-    @GetMapping("/checkEmail")
+    @GetMapping("/email/exist")
     @ResponseBody
     public Boolean emailExisting(@RequestParam("email") String email) {
         return employeeService.emailExisting(email);
@@ -84,13 +84,13 @@ public class EmployeeController {
         return employeeService.editEmployee(email, newEmployee);
     }
 
-    @PutMapping("/changePassword")
+    @PutMapping("/edit/password")
     public ResponseEntity<Employee> changePassword(@RequestParam("email") String email,
                                                    @RequestBody String newPassword) {
         return employeeService.changePassword(email, newPassword);
     }
 
-    @PutMapping("/changeRole")
+    @PutMapping("/edit/role")
     public ResponseEntity<Employee> changeEmployeeRole(@RequestParam("email") String email,
                                                        @RequestBody EmployeeRole newRole) {
         return employeeService.changeEmployeeRole(email, newRole);

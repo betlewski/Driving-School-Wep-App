@@ -16,7 +16,7 @@ import java.util.Set;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/driving")
+@RequestMapping("/rest/driving")
 public class DrivingLessonController {
 
     private DrivingLessonService drivingLessonService;
@@ -26,25 +26,25 @@ public class DrivingLessonController {
         this.drivingLessonService = drivingLessonService;
     }
 
-    @GetMapping("/all/studentId")
+    @GetMapping("/all/byStudentId")
     @ResponseBody
     public Set<DrivingLesson> getAllDrivingLessonsByStudentId(@RequestParam("id") Long id) {
         return drivingLessonService.getAllDrivingLessonsByStudentId(id);
     }
 
-    @GetMapping("/all/employeeId")
+    @GetMapping("/all/byEmployeeId")
     @ResponseBody
     public Set<DrivingLesson> getAllDrivingLessonsByEmployeeId(@RequestParam("id") Long id) {
         return drivingLessonService.getAllDrivingLessonsByEmployeeId(id);
     }
 
-    @GetMapping("/passedHours")
+    @GetMapping("/hours/passed/byCourse")
     @ResponseBody
     public Integer getAllPassedHoursOfDrivingLessonsByCourse(@RequestBody Course course) {
         return drivingLessonService.getAllPassedHoursOfDrivingLessonsByCourse(course);
     }
 
-    @GetMapping("/isPassed")
+    @GetMapping("/isPassed/byCourse")
     @ResponseBody
     public Boolean isDrivingLessonsPassedByCourse(@RequestBody Course course) {
         return drivingLessonService.isDrivingLessonsPassedByCourse(course);
@@ -62,7 +62,7 @@ public class DrivingLessonController {
         return drivingLessonService.addDrivingLesson(lesson, id);
     }
 
-    @PutMapping("/changeStatus")
+    @PutMapping("/edit/status")
     public ResponseEntity<DrivingLesson> changeLessonStatusByDrivingLessonId(@RequestParam("id") Long id,
                                                                              @RequestBody LessonStatus status) {
         return drivingLessonService.changeLessonStatusByDrivingLessonId(id, status);

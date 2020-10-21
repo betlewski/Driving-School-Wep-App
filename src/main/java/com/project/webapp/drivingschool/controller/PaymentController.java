@@ -16,7 +16,7 @@ import java.util.Set;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/payment")
+@RequestMapping("/rest/payment")
 public class PaymentController {
 
     private PaymentService paymentService;
@@ -26,13 +26,13 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @GetMapping("/all/studentId")
+    @GetMapping("/all/byStudentId")
     @ResponseBody
     public Set<Payment> getAllPaymentsForActiveCourseByStudentId(@RequestParam("id") Long id) {
         return paymentService.getAllPaymentsForActiveCourseByStudentId(id);
     }
 
-    @GetMapping("/all/studentIdAndStatus")
+    @GetMapping("/all/byStudentId/byStatus")
     @ResponseBody
     public Set<Payment> getPaymentsForActiveCourseByStudentIdAndProcessingStatus(@RequestParam("id") Long id,
                                                                                  @RequestParam("status") ProcessingStatus status) {
@@ -45,7 +45,7 @@ public class PaymentController {
         return paymentService.findCourseByPaymentId(id);
     }
 
-    @GetMapping("/checkAll")
+    @GetMapping("/isCompleted/byCourse")
     @ResponseBody
     public Boolean checkIfAllPaymentsCompleted(@RequestBody Course course) {
         return paymentService.checkIfAllPaymentsCompleted(course);
@@ -62,7 +62,7 @@ public class PaymentController {
         return paymentService.deletePayment(id);
     }
 
-    @PutMapping("/changeStatus")
+    @PutMapping("/edit/status")
     public ResponseEntity<Payment> changeProcessingStatusByPaymentId(@RequestParam("id") Long id,
                                                                      @RequestBody ProcessingStatus status) {
         return paymentService.changeProcessingStatusByPaymentId(id, status);

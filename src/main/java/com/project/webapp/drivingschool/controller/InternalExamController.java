@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/exam")
+@RequestMapping("/rest/exam")
 public class InternalExamController {
 
     private InternalExamService internalExamService;
@@ -27,14 +27,14 @@ public class InternalExamController {
         this.internalExamService = internalExamService;
     }
 
-    @GetMapping("/all/studentIdAndType")
+    @GetMapping("/all/byStudentId/byType")
     @ResponseBody
     public Set<InternalExam> getAllInternalExamsByStudentIdAndExamType(@RequestParam("id") Long id,
                                                                        @RequestParam("type") ExamType type) {
         return internalExamService.getAllInternalExamsByStudentIdAndExamType(id, type);
     }
 
-    @GetMapping("/all/employeeId")
+    @GetMapping("/all/byEmployeeId")
     @ResponseBody
     public Set<InternalExam> getAllInternalExamsByEmployeeId(@RequestParam("id") Long id) {
         return internalExamService.getAllInternalExamsByEmployeeId(id);
@@ -46,7 +46,7 @@ public class InternalExamController {
         return internalExamService.findCourseByInternalExamId(id);
     }
 
-    @GetMapping("/isPassedByType")
+    @GetMapping("/isPassed/byCourse/byType")
     @ResponseBody
     public Boolean isInternalExamPassedByCourseAndExamType(@RequestBody Course course,
                                                            @RequestParam("type") ExamType type) {
@@ -65,7 +65,7 @@ public class InternalExamController {
         return internalExamService.editExam(id, newExam);
     }
 
-    @PutMapping("/changeStatus")
+    @PutMapping("/edit/status")
     public ResponseEntity<InternalExam> changeLessonStatusByExamId(@RequestParam("id") Long id,
                                                                    @RequestBody LessonStatus status) {
         return internalExamService.changeLessonStatusByExamId(id, status);

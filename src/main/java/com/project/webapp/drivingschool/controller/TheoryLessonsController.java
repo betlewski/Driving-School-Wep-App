@@ -17,7 +17,7 @@ import java.util.Set;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/theory")
+@RequestMapping("/rest/theory")
 public class TheoryLessonsController {
 
     private TheoryLessonsService theoryLessonsService;
@@ -27,32 +27,32 @@ public class TheoryLessonsController {
         this.theoryLessonsService = theoryLessonsService;
     }
 
-    @GetMapping("/all/studentId")
+    @GetMapping("/all/byStudentId")
     @ResponseBody
     public Set<TheoryLessons> getAllTheoryLessonsByStudentId(@RequestParam("id") Long id) {
         return theoryLessonsService.getAllTheoryLessonsByStudentId(id);
     }
 
-    @GetMapping("/all/studentIdAndStatus")
+    @GetMapping("/all/byStudentId/byStatus")
     @ResponseBody
     public Set<TheoryLessons> getTheoryLessonsByStudentIdAndLessonStatus(@RequestParam("id") Long id,
                                                                          @RequestParam("status") LessonStatus status) {
         return theoryLessonsService.getTheoryLessonsByStudentIdAndLessonStatus(id, status);
     }
 
-    @GetMapping("/allLectures/studentId")
+    @GetMapping("/lectures/all/byStudentId")
     @ResponseBody
     public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentId(@RequestParam("id") Long id) {
         return theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByStudentId(id);
     }
 
-    @GetMapping("/passedHours")
+    @GetMapping("/hours/passed/byCourse")
     @ResponseBody
     public Integer getCurrentlyPassedHoursOfTheoryLessonsByCourse(@RequestBody Course course) {
         return theoryLessonsService.getCurrentlyPassedHoursOfTheoryLessonsByCourse(course);
     }
 
-    @GetMapping("/all/employeeId")
+    @GetMapping("/all/byEmployeeId")
     @ResponseBody
     public Set<TheoryLessons> getAllTheoryLessonsByEmployeeId(@RequestParam("id") Long id) {
         return theoryLessonsService.getAllTheoryLessonsByEmployeeId(id);
@@ -64,13 +64,13 @@ public class TheoryLessonsController {
         return theoryLessonsService.findCourseByTheoryLessonsId(id);
     }
 
-    @GetMapping("/isPassed/course")
+    @GetMapping("/isPassed/byCourse")
     @ResponseBody
     public Boolean isTheoryLessonsPassedByCourse(@RequestBody Course course) {
         return theoryLessonsService.isTheoryLessonsPassedByCourse(course);
     }
 
-    @GetMapping("/isPassed/studentId")
+    @GetMapping("/isPassed/byStudentId")
     @ResponseBody
     public Boolean isTheoryLessonsActiveByStudentId(@RequestParam("id") Long id) {
         return theoryLessonsService.isTheoryLessonsActiveByStudentId(id);
@@ -82,7 +82,7 @@ public class TheoryLessonsController {
         return theoryLessonsService.addTheoryLessons(studentId, lectureSeriesId);
     }
 
-    @PutMapping("/changeStatus")
+    @PutMapping("/edit/status")
     public ResponseEntity<TheoryLessons> changeLessonStatusByTheoryLessonsId(@RequestParam("id") Long id,
                                                                              @RequestBody LessonStatus status) {
         return theoryLessonsService.changeLessonStatusByTheoryLessonsId(id, status);

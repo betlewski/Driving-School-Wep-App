@@ -14,7 +14,7 @@ import java.util.Set;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/lecture")
+@RequestMapping("/rest/lecture")
 public class LectureController {
 
     private LectureService lectureService;
@@ -24,13 +24,13 @@ public class LectureController {
         this.lectureService = lectureService;
     }
 
-    @GetMapping("/all/employeeId")
+    @GetMapping("/all/byEmployeeId")
     @ResponseBody
     public Set<Lecture> getAllLecturesByEmployeeId(@RequestParam("id") Long id) {
         return lectureService.getAllLecturesByEmployeeId(id);
     }
 
-    @GetMapping("/all/seriesId")
+    @GetMapping("/all/bySeriesId")
     @ResponseBody
     public Set<Lecture> getAllLecturesByLectureSeriesId(@RequestParam("id") Long id) {
         return lectureService.getAllLecturesByLectureSeriesId(id);
@@ -42,37 +42,37 @@ public class LectureController {
         return lectureService.getAllFreeLectures();
     }
 
-    @GetMapping("/checkExisting/lectureId")
+    @GetMapping("/exist/byLectureId")
     @ResponseBody
     public Boolean checkExistingInLectureSeriesByLectureId(@RequestParam("id") Long id) {
         return lectureService.checkExistingInLectureSeriesByLectureId(id);
     }
 
-    @GetMapping("/newOrOngoing/employeeId")
+    @GetMapping("all/newOrOngoing/byEmployeeId")
     @ResponseBody
     public Set<Lecture> getAllNewOrOngoingLecturesByEmployeeId(@RequestParam("id") Long id) {
         return lectureService.getAllNewOrOngoingLecturesByEmployeeId(id);
     }
 
-    @GetMapping("/allHours/seriesId")
+    @GetMapping("/hours/all/bySeriesId")
     @ResponseBody
     public Integer getAllHoursOfLecturesByLectureSeriesId(@RequestParam("id") Long id) {
         return lectureService.getAllHoursOfLecturesByLectureSeriesId(id);
     }
 
-    @GetMapping("/passedHours/seriesId")
+    @GetMapping("/hours/passed/bySeriesId")
     @ResponseBody
     public Integer getCurrentlyPassedHoursOfLecturesByLectureSeriesId(@RequestParam("id") Long id) {
         return lectureService.getCurrentlyPassedHoursOfLecturesByLectureSeriesId(id);
     }
 
-    @GetMapping("/checkRequiredHours/lecturesSet")
+    @GetMapping("/hours/isEnough/byLecturesSet")
     @ResponseBody
     public Boolean checkIfSumEqualsRequiredTheoryHoursForLecturesSet(@RequestBody Set<Lecture> lectures) {
         return lectureService.checkIfSumEqualsRequiredTheoryHoursForLecturesSet(lectures);
     }
 
-    @GetMapping("/checkTimes")
+    @GetMapping("/isTimeCorrect")
     @ResponseBody
     public Boolean checkIfStartTimeIsBeforeEndTime(@RequestParam("start") LocalDateTime startTime,
                                                    @RequestParam("end") LocalDateTime endTime) {

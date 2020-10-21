@@ -16,7 +16,7 @@ import java.util.Set;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/document")
+@RequestMapping("/rest/document")
 public class DocumentController {
 
     private DocumentService documentService;
@@ -26,13 +26,13 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @GetMapping("/all/studentId")
+    @GetMapping("/all/byStudentId")
     @ResponseBody
     public Set<Document> getAllDocumentsForActiveCourseByStudentId(@RequestParam("id") Long id) {
         return documentService.getAllDocumentsForActiveCourseByStudentId(id);
     }
 
-    @GetMapping("/all/studentIdAndStatus")
+    @GetMapping("/all/byStudentId/byStatus")
     @ResponseBody
     public Set<Document> getDocumentsForActiveCourseByStudentIdAndProcessingStatus(@RequestParam("id") Long id,
                                                                                    @RequestParam("status") ProcessingStatus status) {
@@ -45,13 +45,13 @@ public class DocumentController {
         return documentService.findCourseByDocumentId(id);
     }
 
-    @GetMapping("/checkMedicalExams")
+    @GetMapping("/isCompleted/medicalExams/byCourse")
     @ResponseBody
     public Boolean checkIfMedicalExamsCompleted(@RequestBody Course course) {
         return documentService.checkIfMedicalExamsCompleted(course);
     }
 
-    @GetMapping("/checkAll")
+    @GetMapping("/isCompleted/all/byCourse")
     @ResponseBody
     public Boolean checkIfAllDocumentsCompleted(@RequestBody Course course) {
         return documentService.checkIfAllDocumentsCompleted(course);
@@ -68,7 +68,7 @@ public class DocumentController {
         return documentService.deleteDocument(id);
     }
 
-    @PutMapping("/changeStatus")
+    @PutMapping("/edit/status")
     public ResponseEntity<Document> changeProcessingStatusByDocumentId(@RequestParam("id") Long id,
                                                                        @RequestBody ProcessingStatus status) {
         return documentService.changeProcessingStatusByDocumentId(id, status);

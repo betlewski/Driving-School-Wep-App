@@ -15,7 +15,7 @@ import java.util.Optional;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/student")
+@RequestMapping("/rest/student")
 public class StudentController {
 
     private StudentService studentService;
@@ -43,7 +43,7 @@ public class StudentController {
         return studentService.findStudentByCourse(course);
     }
 
-    @GetMapping("/checkEmail")
+    @GetMapping("/email/exist")
     @ResponseBody
     public Boolean emailExisting(@RequestParam("email") String email) {
         return studentService.emailExisting(email);
@@ -60,7 +60,7 @@ public class StudentController {
         return studentService.editStudent(email, newStudent);
     }
 
-    @PutMapping("/setPkk")
+    @PutMapping("/edit/pkk")
     public ResponseEntity<Student> setStudentPkk(@RequestParam("email") String email,
                                                  @RequestBody String pkk) {
         return studentService.setStudentPkk(email, pkk);

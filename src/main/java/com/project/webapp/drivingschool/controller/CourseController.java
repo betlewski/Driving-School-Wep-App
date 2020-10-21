@@ -17,7 +17,7 @@ import java.util.Optional;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/course")
+@RequestMapping("/rest/course")
 public class CourseController {
 
     private CourseService courseService;
@@ -36,13 +36,13 @@ public class CourseController {
         return courseService.getActiveCourseByStudentId(id);
     }
 
-    @GetMapping("/checkExisting/byStudentId")
+    @GetMapping("/exist/active/byStudentId")
     @ResponseBody
     public Boolean checkExistingActiveCourseByStudentId(@RequestParam("id") Long id) {
         return courseService.checkExistingActiveCourseByStudentId(id);
     }
 
-    @GetMapping("/checkAge/byStudentIdAndCategory")
+    @GetMapping("/isAgeEnough/byStudentId/byCategory")
     @ResponseBody
     public Boolean checkRequiredAgeByStudentIdAndLicenceCategory(@RequestParam("id") Long id,
                                                                  @RequestParam("category") LicenceCategory category) {
@@ -60,7 +60,7 @@ public class CourseController {
         return courseService.finishCourseByCourseId(id);
     }
 
-    @PutMapping("/changeStatus")
+    @PutMapping("/edit/status")
     public ResponseEntity<Course> changeStatusByCourseId(@RequestParam("id") Long id,
                                                          @RequestBody CourseStatus status) {
         return courseService.changeStatusByCourseId(id, status);

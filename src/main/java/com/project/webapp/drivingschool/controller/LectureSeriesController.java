@@ -15,7 +15,7 @@ import java.util.Set;
  */
 @CrossOrigin
 @RestController
-@RequestMapping("/api/series")
+@RequestMapping("/rest/series")
 public class LectureSeriesController {
 
     private LectureSeriesService lectureSeriesService;
@@ -31,7 +31,7 @@ public class LectureSeriesController {
         return lectureSeriesService.getAllLectureSeriesPossibleToJoin();
     }
 
-    @GetMapping("/all/employeeId")
+    @GetMapping("/all/byEmployeeId")
     @ResponseBody
     public List<LectureSeries> getAllLectureSeriesByEmployeeId(@RequestParam("id") Long id) {
         return lectureSeriesService.getAllLectureSeriesByEmployeeId(id);
@@ -43,7 +43,7 @@ public class LectureSeriesController {
         return lectureSeriesService.addLectureSeries(employeeId, lecturesIds);
     }
 
-    @PutMapping("/changeStatus")
+    @PutMapping("/edit/status")
     public ResponseEntity<LectureSeries> changeStatusByLectureSeriesId(@RequestParam("id") Long id,
                                                                        @RequestBody LectureSeriesStatus status) {
         return lectureSeriesService.changeStatusByLectureSeriesId(id, status);
