@@ -4,12 +4,17 @@ import com.project.webapp.drivingschool.utils.EmployeeRole;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.Collections;
 
 /**
  * Klasa reprezentująca pracownika szkoły nauki jazdy
@@ -18,7 +23,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "employees")
-public class Employee {
+public class Employee implements UserDetails {
 
     /**
      * Identyfikator pracownika
@@ -69,5 +74,49 @@ public class Employee {
      */
     @NotNull
     private LocalDate registrationDate = LocalDate.now();
+
+    /**
+     * Pobranie roli użytkownika
+     *
+     * @return rola pracownika
+     */
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return Collections.singletonList(
+                new SimpleGrantedAuthority("ROLE_" + employeeRole));
+    }
+
+    /**
+     * Pobranie nazwy użytkownika
+     *
+     * @return adres email pracownika
+     */
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    /**
+     * Inne metody nadpisujące UserDetails
+     */
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }
