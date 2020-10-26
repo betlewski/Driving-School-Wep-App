@@ -73,8 +73,8 @@ public class Student implements UserDetails {
 
     /**
      * Hasło,
-     * składające się min. 8 znaków w tym: 1 cyfry,
-     * 1 dużej litery, 1 małej litery, 1 znaku specjalnego
+     * składające się z min. 8 znaków w tym: 1 cyfry,
+     * 1 dużej litery, 1 małej litery i 1 znaku specjalnego
      */
     @NotNull
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")
