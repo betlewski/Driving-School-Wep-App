@@ -3,9 +3,11 @@ package com.project.webapp.drivingschool.service;
 import com.project.webapp.drivingschool.model.Course;
 import com.project.webapp.drivingschool.model.Student;
 import com.project.webapp.drivingschool.repository.StudentRepository;
+import com.project.webapp.drivingschool.utils.DataUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,10 +19,13 @@ import java.util.*;
 public class StudentService {
 
     private StudentRepository studentRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public StudentService(StudentRepository studentRepository) {
+    public StudentService(StudentRepository studentRepository,
+                          PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -74,15 +79,16 @@ public class StudentService {
     public ResponseEntity<Student> addStudent(Student student) {
         if (emailExisting(student.getEmail())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
-        } else {
+        } else if (DataUtils.isPasswordCorrect(student.getPassword())) {
             try {
-                // TODO: kodowanie hasła
-                // student.setPassword(passwordEncoder.encode(student.getPassword()));
+                student.setPassword(passwordEncoder.encode(student.getPassword()));
                 student = studentRepository.save(student);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>(student, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

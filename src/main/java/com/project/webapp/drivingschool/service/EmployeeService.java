@@ -2,10 +2,12 @@ package com.project.webapp.drivingschool.service;
 
 import com.project.webapp.drivingschool.model.Employee;
 import com.project.webapp.drivingschool.repository.EmployeeRepository;
+import com.project.webapp.drivingschool.utils.DataUtils;
 import com.project.webapp.drivingschool.utils.EmployeeRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -20,10 +22,13 @@ import java.util.stream.Collectors;
 public class EmployeeService {
 
     private EmployeeRepository employeeRepository;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository,
+                           PasswordEncoder passwordEncoder) {
         this.employeeRepository = employeeRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     /**
@@ -120,15 +125,16 @@ public class EmployeeService {
     public ResponseEntity<Employee> addEmployee(Employee employee) {
         if (emailExisting(employee.getEmail())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
-        } else {
+        } else if (DataUtils.isPasswordCorrect(employee.getPassword())) {
             try {
-                // TODO: kodowanie hasła
-                // employee.setPassword(passwordEncoder.encode(employee.getPassword()));
+                employee.setPassword(passwordEncoder.encode(employee.getPassword()));
                 employee = employeeRepository.save(employee);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             return new ResponseEntity<>(employee, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
@@ -164,19 +170,22 @@ public class EmployeeService {
      * @return edytowany pracownik
      */
     public ResponseEntity<Employee> changePassword(String email, String newPassword) {
-        Optional<Employee> employee = employeeRepository.findByEmail(email);
-        if (employee.isPresent()) {
-            Employee employeeSave = employee.get();
-            try {
-                // TODO: kodowanie hasła
-                // employeeSave.setPassword(passwordEncoder.encode(newPassword));
-                employeeSave = employeeRepository.save(employeeSave);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (DataUtils.isPasswordCorrect(newPassword)) {
+            Optional<Employee> employee = employeeRepository.findByEmail(email);
+            if (employee.isPresent()) {
+                Employee employeeSave = employee.get();
+                try {
+                    employeeSave.setPassword(passwordEncoder.encode(newPassword));
+                    employeeSave = employeeRepository.save(employeeSave);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+                return new ResponseEntity<>(employeeSave, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(employeeSave, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
