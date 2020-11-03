@@ -8,8 +8,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,32 +37,35 @@ public class JwtAuthenticationController {
      * Pobranie tokenu JWT po pomyślnym uwierzytelnieniu.
      *
      * @param request zapytanie HTTP
-     * @return wygenerowany token
-     * @throws Exception w przypadku błędu uwierzytelnienia
+     * @return wygenerowany token lub błąd uwierzytelnienia
      */
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<String> createAuthenticationToken(@RequestBody JwtRequest request) throws Exception {
-        authenticate(request.getUsername(), request.getPassword());
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+    public ResponseEntity<String> createAuthenticationToken(@RequestBody JwtRequest request) {
+        UserDetails userDetails;
+        try {
+            authenticate(request.getUsername(), request.getPassword());
+            userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+        } catch (Exception e) {
+            System.out.println("ERROR | " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+        }
         String token = jwtTokenUtil.generateToken(userDetails);
         return new ResponseEntity<>(token, HttpStatus.OK);
     }
 
     /**
-     * Uwierzytelnienie użtykownia.
+     * Uwierzytelnienie użytkownika.
      *
      * @param username nazwa użytkownika (adres email)
      * @param password hasło
-     * @throws Exception w przypadku błędu uwierzytelnienia
+     * @throws AuthenticationException w przypadku błędu uwierzytelnienia
      */
-    private void authenticate(String username, String password) throws Exception {
+    private void authenticate(String username, String password) throws AuthenticationException {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("User disabled: ", e);
         } catch (BadCredentialsException e) {
-            throw new Exception("Invalid credentials: ", e);
+            throw new BadCredentialsException("Email: " + username + " and given password are not correct.");
         }
     }
 
