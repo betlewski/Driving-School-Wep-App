@@ -70,7 +70,7 @@ public class TheoryLessonsController {
         return theoryLessonsService.isTheoryLessonsPassedByCourse(course);
     }
 
-    @GetMapping("/isPassed/byStudentId")
+    @GetMapping("/isActive/byStudentId")
     @ResponseBody
     public Boolean isTheoryLessonsActiveByStudentId(@RequestParam("id") Long id) {
         return theoryLessonsService.isTheoryLessonsActiveByStudentId(id);
