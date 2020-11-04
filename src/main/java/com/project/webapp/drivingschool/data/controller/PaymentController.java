@@ -68,4 +68,9 @@ public class PaymentController {
         return paymentService.changeProcessingStatusByPaymentId(id, status);
     }
 
+    @PutMapping("/edit/request")
+    public ResponseEntity<Payment> requestPaymentByPaymentId(@RequestBody Long id) {
+        return paymentService.requestPaymentByPaymentId(id);
+    }
+
 }

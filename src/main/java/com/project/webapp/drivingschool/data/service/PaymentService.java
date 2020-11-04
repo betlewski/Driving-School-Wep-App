@@ -159,6 +159,16 @@ public class PaymentService {
     }
 
     /**
+     * Zgłoszenie uregulowania płatności o podanym ID
+     *
+     * @param id ID płatności
+     * @return zgłoszona płatność lub błąd
+     */
+    public ResponseEntity<Payment> requestPaymentByPaymentId(Long id) {
+        return changeProcessingStatusByPaymentId(id, ProcessingStatus.REQUESTED);
+    }
+
+    /**
      * Sprawdzenie, czy kurs zawierający płatność o podanym ID
      * spełnia wymagania, aby zmienić swój status.
      *

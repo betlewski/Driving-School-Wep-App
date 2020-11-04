@@ -74,4 +74,9 @@ public class DocumentController {
         return documentService.changeProcessingStatusByDocumentId(id, status);
     }
 
+    @PutMapping("/edit/request")
+    public ResponseEntity<Document> requestDocumentByDocumentId(@RequestBody Long id) {
+        return documentService.requestDocumentByDocumentId(id);
+    }
+
 }

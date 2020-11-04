@@ -161,6 +161,16 @@ public class DocumentService {
     }
 
     /**
+     * Zgłoszenie dostarczenia dokumentu o podanym ID
+     *
+     * @param id ID dokumentu
+     * @return zgłoszony dokument lub błąd
+     */
+    public ResponseEntity<Document> requestDocumentByDocumentId(Long id) {
+        return changeProcessingStatusByDocumentId(id, ProcessingStatus.REQUESTED);
+    }
+
+    /**
      * Sprawdzenie, czy kurs zawierający dokument o podanym ID
      * spełnia wymagania, aby zmienić swój status.
      *
