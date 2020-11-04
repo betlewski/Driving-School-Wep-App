@@ -82,8 +82,16 @@ public class Employee implements UserDetails {
      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        String roleName;
+        if (employeeRole.equals(EmployeeRole.ADMINISTRATOR)) {
+            roleName = "ADMINISTRATOR";
+        } else if (!employeeRole.equals(EmployeeRole.DELETED)) {
+            roleName = "EMPLOYEE";
+        } else {
+            roleName = "DELETED";
+        }
         return Collections.singletonList(
-                new SimpleGrantedAuthority("ROLE_" + employeeRole));
+                new SimpleGrantedAuthority("ROLE_" + roleName));
     }
 
     /**
