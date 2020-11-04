@@ -3,7 +3,6 @@ package com.project.webapp.drivingschool.data.service;
 import com.project.webapp.drivingschool.data.model.Course;
 import com.project.webapp.drivingschool.data.report.CourseReport;
 import com.project.webapp.drivingschool.data.utils.*;
-import com.project.webapp.drivingschool.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
