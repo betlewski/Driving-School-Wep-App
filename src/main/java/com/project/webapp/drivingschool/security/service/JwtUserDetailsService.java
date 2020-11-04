@@ -4,6 +4,7 @@ import com.project.webapp.drivingschool.data.model.Employee;
 import com.project.webapp.drivingschool.data.model.Student;
 import com.project.webapp.drivingschool.data.repository.EmployeeRepository;
 import com.project.webapp.drivingschool.data.repository.StudentRepository;
+import com.project.webapp.drivingschool.data.utils.EmployeeRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,10 +42,10 @@ public class JwtUserDetailsService implements UserDetailsService {
             return student;
         } else {
             Employee employee = employeeRepository.findByEmail(username).orElse(null);
-            if (employee != null) {
+            if (employee != null && !employee.getEmployeeRole().equals(EmployeeRole.DELETED)) {
                 return employee;
             } else {
-                throw new UsernameNotFoundException("User with email: " + username + " not found.");
+                throw new UsernameNotFoundException("Active user with email: " + username + " not found.");
             }
         }
     }
