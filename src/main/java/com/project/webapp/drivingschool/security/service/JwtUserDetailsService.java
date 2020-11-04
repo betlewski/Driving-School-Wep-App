@@ -1,9 +1,9 @@
 package com.project.webapp.drivingschool.security.service;
 
-import com.project.webapp.drivingschool.model.Employee;
-import com.project.webapp.drivingschool.model.Student;
-import com.project.webapp.drivingschool.repository.EmployeeRepository;
-import com.project.webapp.drivingschool.repository.StudentRepository;
+import com.project.webapp.drivingschool.data.model.Employee;
+import com.project.webapp.drivingschool.data.model.Student;
+import com.project.webapp.drivingschool.data.repository.EmployeeRepository;
+import com.project.webapp.drivingschool.data.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
