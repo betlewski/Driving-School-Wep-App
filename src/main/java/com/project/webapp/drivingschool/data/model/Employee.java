@@ -85,10 +85,8 @@ public class Employee implements UserDetails {
         String roleName;
         if (employeeRole.equals(EmployeeRole.ADMINISTRATOR)) {
             roleName = "ADMINISTRATOR";
-        } else if (!employeeRole.equals(EmployeeRole.DELETED)) {
-            roleName = "EMPLOYEE";
         } else {
-            roleName = "DELETED";
+            roleName = "EMPLOYEE";
         }
         return Collections.singletonList(
                 new SimpleGrantedAuthority("ROLE_" + roleName));
@@ -105,26 +103,33 @@ public class Employee implements UserDetails {
     }
 
     /**
-     * Inne metody nadpisujące UserDetails
+     * Sprawdzenie, czy pracownik jest aktywny
+     * tzn. czy jego rola jest różna od DELETED.
+     *
+     * @return true - jeśli pracownik jest aktywny, false - w przeciwnym razie
      */
+    public boolean isActive() {
+        return !employeeRole.equals(EmployeeRole.DELETED);
+    }
+
     @Override
     public boolean isAccountNonExpired() {
-        return true;
+        return isActive();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return isActive();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return isActive();
     }
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return isActive();
     }
 
 }

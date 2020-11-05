@@ -42,7 +42,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             return student;
         } else {
             Employee employee = employeeRepository.findByEmail(username).orElse(null);
-            if (employee != null && !employee.getEmployeeRole().equals(EmployeeRole.DELETED)) {
+            if (employee != null) {
                 return employee;
             } else {
                 throw new UsernameNotFoundException("Active user with email: " + username + " not found");
