@@ -3,6 +3,8 @@ package com.project.webapp.drivingschool.security.controller;
 import com.project.webapp.drivingschool.security.utils.JwtTokenUtil;
 import com.project.webapp.drivingschool.security.model.JwtRequest;
 import com.project.webapp.drivingschool.security.service.JwtUserDetailsService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 @RestController
 public class JwtAuthenticationController {
+
+    private final Log logger = LogFactory.getLog(this.getClass());
 
     private AuthenticationManager authenticationManager;
     private JwtTokenUtil jwtTokenUtil;
@@ -46,7 +50,7 @@ public class JwtAuthenticationController {
             authenticate(request.getUsername(), request.getPassword());
             userDetails = userDetailsService.loadUserByUsername(request.getUsername());
         } catch (Exception e) {
-            System.out.println("ERROR | " + e.getMessage());
+            logger.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         String token = jwtTokenUtil.generateToken(userDetails);
@@ -65,7 +69,7 @@ public class JwtAuthenticationController {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(username, password));
         } catch (BadCredentialsException e) {
-            throw new BadCredentialsException("Email: " + username + " and given password are not correct.");
+            throw new BadCredentialsException("Email: " + username + " and given password are not correct");
         }
     }
 

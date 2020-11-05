@@ -45,7 +45,7 @@ public class JwtUserDetailsService implements UserDetailsService {
             if (employee != null && !employee.getEmployeeRole().equals(EmployeeRole.DELETED)) {
                 return employee;
             } else {
-                throw new UsernameNotFoundException("Active user with email: " + username + " not found.");
+                throw new UsernameNotFoundException("Active user with email: " + username + " not found");
             }
         }
     }

@@ -41,17 +41,17 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
             } catch (IllegalArgumentException e) {
-                System.out.println("ERROR | Unable to get data from Json Web Token: " + jwtToken);
+                logger.error("Unable to get data from Json Web Token: " + jwtToken);
             }
         } else {
-            System.out.println("ERROR | Json Web Token: " + requestTokenHeader + " does not begin with Bearer header");
+            logger.warn("Json Web Token: " + requestTokenHeader + " does not begin with Bearer header");
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = null;
             try {
                 userDetails = userDetailsService.loadUserByUsername(username);
             } catch (Exception e) {
-                System.out.println("ERROR | " + e.getMessage());
+                logger.error(e.getMessage());
             }
             if (userDetails != null && jwtTokenUtil.validateToken(jwtToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authenticationToken =
