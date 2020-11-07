@@ -49,8 +49,8 @@ public class CourseService {
      * @return aktywny kurs
      */
     public Optional<Course> getActiveCourseByStudentId(Long id) {
-        Optional<Student> student = studentRepository.findById(id);
-        return student.flatMap(value -> value.getCourses()
+        Optional<Student> optionalStudent = studentRepository.findById(id);
+        return optionalStudent.flatMap(student -> student.getCourses()
                 .stream()
                 .filter(Course::isActive)
                 .min(Comparator.comparing(Course::getStartDate)));

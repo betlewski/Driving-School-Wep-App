@@ -11,6 +11,7 @@ import com.project.webapp.drivingschool.data.utils.Constants;
 import com.project.webapp.drivingschool.data.utils.CourseStatus;
 import com.project.webapp.drivingschool.data.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class TheoryLessonsService {
                                 LectureSeriesRepository lectureSeriesRepository,
                                 CourseRepository courseRepository,
                                 CourseService courseService,
-                                LectureService lectureService) {
+                                @Lazy LectureService lectureService) {
         this.theoryLessonsRepository = theoryLessonsRepository;
         this.lectureSeriesRepository = lectureSeriesRepository;
         this.courseRepository = courseRepository;
@@ -70,7 +71,7 @@ public class TheoryLessonsService {
         return activeCourse.map(course -> course.getTheoryLessons().stream()
                 .filter(lesson -> lesson.getLessonStatus().equals(status))
                 .collect(Collectors.toSet()))
-                .orElseGet(HashSet::new);
+                .orElse(new HashSet<>());
     }
 
     /**
