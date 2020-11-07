@@ -89,7 +89,7 @@ public class Student implements UserDetails {
     /**
      * Kursy przypisane do kursanta
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Course> courses;
 
     /**

@@ -41,7 +41,7 @@ public class LectureSeries {
     /**
      * Lista wykładów odbywanych w ramach cyklu
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Lecture> lectures;
 
 }

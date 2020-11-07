@@ -43,19 +43,19 @@ public class Course {
     /**
      * Dokumenty wymagane w ramach kursu
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Document> documents;
 
     /**
      * Płatności w ramach kursu
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<Payment> payments;
 
     /**
      * Zajęcia teoretyczne (wykłady) przypisane do kursu
      */
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private Set<TheoryLessons> theoryLessons;
 
     /**
