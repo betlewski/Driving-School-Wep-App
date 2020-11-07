@@ -28,7 +28,7 @@ public class TheoryLessons {
      * Cykl wykładów, w ramach których odbywane są zajęcia
      */
     @NotNull
-    @OneToOne
+    @ManyToOne
     private LectureSeries lectureSeries;
 
     /**
