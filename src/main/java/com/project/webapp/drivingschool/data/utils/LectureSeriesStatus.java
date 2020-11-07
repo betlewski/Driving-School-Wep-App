@@ -19,11 +19,6 @@ public enum LectureSeriesStatus {
     /**
      * Status ukończony
      */
-    FINISHED,
-
-    /**
-     * Status odwołany
-     */
-    CANCELED
+    FINISHED
 
 }
