@@ -25,6 +25,12 @@ public class Lecture {
     private Long id;
 
     /**
+     * Temat wykładu
+     */
+    @NotNull
+    private String subject;
+
+    /**
      * Czas rozpoczęcia wykładu
      */
     @NotNull
