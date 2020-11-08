@@ -1,16 +1,18 @@
 package com.project.webapp.drivingschool.data.service;
 
-import com.project.webapp.drivingschool.data.model.Lecture;
-import com.project.webapp.drivingschool.data.model.LectureSeries;
+import com.project.webapp.drivingschool.data.model.*;
 import com.project.webapp.drivingschool.data.repository.LectureRepository;
 import com.project.webapp.drivingschool.data.repository.LectureSeriesRepository;
+import com.project.webapp.drivingschool.data.repository.StudentRepository;
 import com.project.webapp.drivingschool.data.utils.Constants;
 import com.project.webapp.drivingschool.data.utils.LectureSeriesStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -24,12 +26,18 @@ public class LectureService {
 
     private LectureRepository lectureRepository;
     private LectureSeriesRepository lectureSeriesRepository;
+    private StudentRepository studentRepository;
+    private TheoryLessonsService theoryLessonsService;
 
     @Autowired
     public LectureService(LectureRepository lectureRepository,
-                          LectureSeriesRepository lectureSeriesRepository) {
+                          LectureSeriesRepository lectureSeriesRepository,
+                          StudentRepository studentRepository,
+                          @Lazy TheoryLessonsService theoryLessonsService) {
         this.lectureRepository = lectureRepository;
         this.lectureSeriesRepository = lectureSeriesRepository;
+        this.studentRepository = studentRepository;
+        this.theoryLessonsService = theoryLessonsService;
     }
 
     /**
@@ -145,6 +153,28 @@ public class LectureService {
                         lecture.getStartTime(), lecture.getEndTime()))
                 .sum();
         return theoryHoursSum.equals(Constants.REQUIRED_THEORY_HOURS);
+    }
+
+    /**
+     * Pobranie mapy studentów z listą wykładów
+     * o podanej dacie rozpoczęcia.
+     *
+     * @param startDate data rozpoczęcia wykładu
+     * @return mapa: student - lista wykładów
+     */
+    public Map<Student, List<Lecture>> getMapStudentsWithAcceptedLecturesByLectureStartDate(LocalDate startDate) {
+        Map<Student, List<Lecture>> resultMap = new HashMap<>();
+        studentRepository.findAll().forEach(student -> {
+            List<Lecture> lecturesToMap = new ArrayList<>();
+            Set<Lecture> allLectures = theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByStudentId(student.getId());
+            allLectures.stream()
+                    .filter(lecture -> lecture.getStartTime().toLocalDate().isEqual(startDate))
+                    .forEach(lecturesToMap::add);
+            if (!lecturesToMap.isEmpty()) {
+                resultMap.put(student, lecturesToMap);
+            }
+        });
+        return resultMap;
     }
 
     /**

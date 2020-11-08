@@ -1,21 +1,19 @@
 package com.project.webapp.drivingschool.data.service;
 
-import com.project.webapp.drivingschool.data.model.Course;
-import com.project.webapp.drivingschool.data.model.DrivingLesson;
-import com.project.webapp.drivingschool.data.model.Payment;
+import com.project.webapp.drivingschool.data.model.*;
 import com.project.webapp.drivingschool.data.repository.CourseRepository;
 import com.project.webapp.drivingschool.data.repository.DrivingLessonRepository;
 import com.project.webapp.drivingschool.data.repository.PaymentRepository;
+import com.project.webapp.drivingschool.data.repository.StudentRepository;
 import com.project.webapp.drivingschool.data.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -25,16 +23,19 @@ import java.util.stream.Collectors;
 public class DrivingLessonService {
 
     private DrivingLessonRepository drivingLessonRepository;
+    private StudentRepository studentRepository;
     private CourseRepository courseRepository;
     private PaymentRepository paymentRepository;
     private CourseService courseService;
 
     @Autowired
     public DrivingLessonService(DrivingLessonRepository drivingLessonRepository,
+                                StudentRepository studentRepository,
                                 CourseRepository courseRepository,
                                 PaymentRepository paymentRepository,
                                 CourseService courseService) {
         this.drivingLessonRepository = drivingLessonRepository;
+        this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.paymentRepository = paymentRepository;
         this.courseService = courseService;
@@ -76,6 +77,30 @@ public class DrivingLessonService {
                 .mapToInt(lesson -> (int) ChronoUnit.HOURS.between(
                         lesson.getStartTime(), lesson.getEndTime()))
                 .sum();
+    }
+
+    /**
+     * Pobranie mapy studentów z listą zaplanowanych
+     * jazd szkoleniowych o podanej dacie rozpoczęcia.
+     *
+     * @param startDate data rozpoczęcia jazdy
+     * @return mapa: student - lista zaplanowanych jazd
+     */
+    public Map<Student, List<DrivingLesson>> getMapStudentsWithAcceptedDrivingLessonsByLessonStartDate(LocalDate startDate) {
+        Map<Student, List<DrivingLesson>> resultMap = new HashMap<>();
+        studentRepository.findAll().forEach(student -> {
+            List<DrivingLesson> lessonsToMap = new ArrayList<>();
+            Set<DrivingLesson> allLessons = courseService.getActiveCourseByStudentId(student.getId())
+                    .map(Course::getDrivingLessons).orElse(new HashSet<>());
+            allLessons.stream()
+                    .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.ACCEPTED))
+                    .filter(lesson -> lesson.getStartTime().toLocalDate().isEqual(startDate))
+                    .forEach(lessonsToMap::add);
+            if (!lessonsToMap.isEmpty()) {
+                resultMap.put(student, lessonsToMap);
+            }
+        });
+        return resultMap;
     }
 
     /**

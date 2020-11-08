@@ -2,8 +2,10 @@ package com.project.webapp.drivingschool.data.service;
 
 import com.project.webapp.drivingschool.data.model.Course;
 import com.project.webapp.drivingschool.data.model.InternalExam;
+import com.project.webapp.drivingschool.data.model.Student;
 import com.project.webapp.drivingschool.data.repository.CourseRepository;
 import com.project.webapp.drivingschool.data.repository.InternalExamRepository;
+import com.project.webapp.drivingschool.data.repository.StudentRepository;
 import com.project.webapp.drivingschool.data.utils.CourseStatus;
 import com.project.webapp.drivingschool.data.utils.ExamType;
 import com.project.webapp.drivingschool.data.utils.LessonStatus;
@@ -13,9 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -25,16 +26,19 @@ import java.util.stream.Collectors;
 public class InternalExamService {
 
     private InternalExamRepository internalExamRepository;
+    private StudentRepository studentRepository;
     private CourseRepository courseRepository;
     private CourseService courseService;
     private PaymentService paymentService;
 
     @Autowired
     public InternalExamService(InternalExamRepository internalExamRepository,
+                               StudentRepository studentRepository,
                                CourseRepository courseRepository,
                                CourseService courseService,
                                @Lazy PaymentService paymentService) {
         this.internalExamRepository = internalExamRepository;
+        this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.courseService = courseService;
         this.paymentService = paymentService;
@@ -50,7 +54,10 @@ public class InternalExamService {
      */
     public Set<InternalExam> getAllInternalExamsByStudentIdAndExamType(Long id, ExamType type) {
         Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
-        return activeCourse.map(Course::getInternalExams).orElse(new HashSet<>());
+        return activeCourse.map(course -> course.getInternalExams().stream()
+                .filter(exam -> exam.getExamType().equals(type))
+                .collect(Collectors.toSet()))
+                .orElse(new HashSet<>());
     }
 
     /**
@@ -62,6 +69,30 @@ public class InternalExamService {
      */
     public Set<InternalExam> getAllInternalExamsByEmployeeId(Long id) {
         return internalExamRepository.findAllByEmployeeId(id);
+    }
+
+    /**
+     * Pobranie mapy studentów z listą zaplanowanych
+     * egzaminów wewnętrznych o podanej dacie rozpoczęcia.
+     *
+     * @param startDate data rozpoczęcia egzaminu
+     * @return mapa: student - lista zaplanowanych egzaminów
+     */
+    public Map<Student, List<InternalExam>> getMapStudentsWithAcceptedInternalExamsByExamStartDate(LocalDate startDate) {
+        Map<Student, List<InternalExam>> resultMap = new HashMap<>();
+        studentRepository.findAll().forEach(student -> {
+            List<InternalExam> examsToMap = new ArrayList<>();
+            Set<InternalExam> allExams = courseService.getActiveCourseByStudentId(student.getId())
+                    .map(Course::getInternalExams).orElse(new HashSet<>());
+            allExams.stream()
+                    .filter(exam -> exam.getLessonStatus().equals(LessonStatus.ACCEPTED))
+                    .filter(exam -> exam.getStartTime().toLocalDate().isEqual(startDate))
+                    .forEach(examsToMap::add);
+            if (!examsToMap.isEmpty()) {
+                resultMap.put(student, examsToMap);
+            }
+        });
+        return resultMap;
     }
 
     /**
