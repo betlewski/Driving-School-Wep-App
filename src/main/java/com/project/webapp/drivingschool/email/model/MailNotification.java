@@ -23,7 +23,7 @@ public class MailNotification {
     private String subject;
 
     /**
-     * Tekst wiadomości
+     * Treść powiadomienia
      */
     private String text;
 

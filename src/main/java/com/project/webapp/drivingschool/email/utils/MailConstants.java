@@ -1,9 +1,17 @@
 package com.project.webapp.drivingschool.email.utils;
 
 /**
- * Klasa definiująca teksty wykorzystywane w powiadomieniach mailowych
+ * Klasa definiująca wyrażenia stałe
+ * związane z powiadomieniami mailowymi
  */
-public final class MailMessages {
+public final class MailConstants {
+
+    /**
+     * Wyrażenie określające czas uruchomienia zadania cyklicznego
+     * generującego wysyłkę powiadomień mailowych
+     * (domyślnie: codziennie o godz. 06:00)
+     */
+    public static final String SEND_MAIL_JOB_CRON = "0 0 6 * * ?";
 
     /**
      * Adres URL aplikacji
@@ -16,7 +24,7 @@ public final class MailMessages {
     public static final String SUBJECT = "Przypomnienie o zbliżającym się wydarzeniu: #eventType";
 
     /**
-     * Tekst wiadomości
+     * Treść powiadomienia
      */
     public static final String TEXT = "Witamy!<br>" +
             "Pragniemy przypomnieć o zbliżającym się wydarzeniu, w którym bierzesz udział.<br><br>" +
