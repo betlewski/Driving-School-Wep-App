@@ -40,8 +40,9 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             jwtToken = requestTokenHeader.substring(7);
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwtToken);
-            } catch (IllegalArgumentException e) {
+            } catch (Exception e) {
                 logger.error("Unable to get data from Json Web Token: " + jwtToken);
+                logger.error(e.toString());
             }
         } else {
             logger.warn("Json Web Token: " + requestTokenHeader + " does not begin with Bearer header");
