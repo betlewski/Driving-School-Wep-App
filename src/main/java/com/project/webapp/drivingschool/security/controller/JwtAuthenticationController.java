@@ -1,5 +1,6 @@
 package com.project.webapp.drivingschool.security.controller;
 
+import com.project.webapp.drivingschool.security.model.JwtResponse;
 import com.project.webapp.drivingschool.security.utils.JwtTokenUtil;
 import com.project.webapp.drivingschool.security.model.JwtRequest;
 import com.project.webapp.drivingschool.security.service.JwtUserDetailsService;
@@ -12,6 +13,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +46,7 @@ public class JwtAuthenticationController {
      * @return wygenerowany token lub błąd uwierzytelnienia
      */
     @PostMapping(value = "/authenticate")
-    public ResponseEntity<String> createAuthenticationToken(@RequestBody JwtRequest request) {
+    public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest request) {
         UserDetails userDetails;
         try {
             authenticate(request.getUsername(), request.getPassword());
@@ -54,7 +56,11 @@ public class JwtAuthenticationController {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
         String token = jwtTokenUtil.generateToken(userDetails);
-        return new ResponseEntity<>(token, HttpStatus.OK);
+        String login = userDetails.getUsername();
+        String userRole = userDetails.getAuthorities().stream().findFirst()
+                .map(GrantedAuthority::getAuthority).orElse(null);
+        JwtResponse response = new JwtResponse(token, login, userRole);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     /**
