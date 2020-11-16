@@ -1,41 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-
-export class User {
-  constructor(
-    public login: string,
-    public name: string,
-    public password: string,
-    public email: string,
-  ) {
-  }
-}
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.css']
+  styleUrls: ['./registration.component.css',
+    '../login/login.component.css']
 })
+/**
+ * Komponent rejestracji użytkowników
+ */
 export class RegistrationComponent implements OnInit {
 
-  login = '';
-  name = '';
-  password = '';
-  email = '';
+  fullName: string = "";
+  birthDate: string = "";
+  email: string = "";
+  password: string = "";
+  feedback: string = "";
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   register() {
-    let user: User = {
-      login: this.login,
-      name: this.name,
-      password: this.password,
-      email: this.email
-    };
-
-    this.router.navigate(['login']);
+    this.feedback = "Podane dane: " + this.fullName + " " +
+      this.birthDate + " " + this.email + " " + this.password;
+    // this.router.navigate(['login']);
 
     // (this.httpclientservice.createEmployee(user).subscribe(
     //     data => {

@@ -13,7 +13,7 @@ import {Utils} from "../../../util/utils";
  */
 export class LoginComponent implements OnInit {
 
-  login: string = "";
+  email: string = "";
   password: string = "";
 
   constructor(private router: Router) {
@@ -23,8 +23,8 @@ export class LoginComponent implements OnInit {
   }
 
   checkLogin() {
-    if (Utils.checkStringIfNotEmpty(this.login) && Utils.checkStringIfNotEmpty(this.password)) {
-      const jwtRequest = new JwtRequest(this.login, this.password);
+    if (Utils.checkStringIfNotEmpty(this.email) && Utils.checkStringIfNotEmpty(this.password)) {
+      const jwtRequest = new JwtRequest(this.email, this.password);
       this.router.navigate([jwtRequest]);
     }
   }
