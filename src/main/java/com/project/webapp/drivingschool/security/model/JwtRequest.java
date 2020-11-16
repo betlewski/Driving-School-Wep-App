@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * Klasa reprezentująca dane użytkownika przesyłane w każdym zapytaniu HTTP
+ * Klasa reprezentująca dane użytkownika do uwierzytelnienia
  */
 @Data
 @NoArgsConstructor
