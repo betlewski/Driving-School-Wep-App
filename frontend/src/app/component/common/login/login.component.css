@@ -1,21 +1,27 @@
 .background {
+  position: fixed;
+  left: 0;
+  top: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../../../../assets/images/background.jpg');
-  background-position: center;
-  background-repeat: no-repeat;
+  background: url('../../../../assets/images/background.jpg') no-repeat center;
   background-size: cover;
 }
 
 .title {
   margin-bottom: 30px;
-  font-family: Impact, Charcoal, sans-serif;
+  font-family: Impact, sans-serif;
   color: #34495e;
   font-size: 45px;
 }
 
 p {
-  font-size: 14px;
+  font-family: Roboto, sans-serif;
+  font-size: 12px;
+}
+
+a {
+  text-decoration: none;
 }
 
 strong {
@@ -26,26 +32,26 @@ strong {
   position: fixed;
   left: 37%;
   top: 23%;
-  z-index: 1;
   background: #ffffff;
   width: 300px;
   padding: 50px;
   text-align: center;
   box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 30px 30px 30px 30px;
 }
 
 .form input {
-  font-family: "Roboto", sans-serif;
+  font-family: Roboto, sans-serif;
   outline: 0;
   background: #f2f2f2;
   width: 100%;
-  border: 0;
   margin: 0 0 15px;
   padding: 15px;
   box-sizing: border-box;
-  font-size: 14px;
+  font-size: 13px;
   transition: all 1s;
   border: 2px solid #f2f2f2;
+  border-radius: 20px 20px 20px 20px;
 }
 
 .form input:focus {
@@ -54,18 +60,17 @@ strong {
 
 .form button {
   font-family: "Roboto", sans-serif;
-  text-transform: uppercase;
   outline: 0;
   background: #34495e;
-  width: 100%;
+  width: 50%;
+  margin-top: 5%;
   border: 0;
   padding: 15px;
   color: #ffffff;
   font-size: 14px;
-  -webkit-transition: all 0.3 ease;
-  transition: all 0.3 ease;
   cursor: pointer;
   transition: all 2s;
+  border-radius: 20px 20px 20px 20px;
 }
 
 .form button:hover, .form button:active, .form button:focus {

@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {JwtRequest} from "../../../model/jwt-request.model";
+import {Utils} from "../../../util/utils";
 
 @Component({
   selector: 'app-login',
@@ -7,19 +9,24 @@ import {Router} from "@angular/router";
   styleUrls: ['./login.component.css']
 })
 /**
- * Logowanie użytkowników (widok startowy)
+ * Komponent logowania użytkowników
  */
 export class LoginComponent implements OnInit {
 
-  login = '';
-  password = '';
+  login: string = "";
+  password: string = "";
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+  }
 
   checkLogin() {
-    this.router.navigate(['register']);
+    if (Utils.checkStringIfNotEmpty(this.login) && Utils.checkStringIfNotEmpty(this.password)) {
+      const jwtRequest = new JwtRequest(this.login, this.password);
+      this.router.navigate([jwtRequest]);
+    }
   }
 
 }

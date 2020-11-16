@@ -1,13 +1,16 @@
 <div class="background">
   <div class="form">
-    <div class="title">FUEL SCANNER</div>
+    <div class="title">SZKOŁA JAZDY
+      <p>Dopiero zaczynasz naukę? <strong><a routerLink="/register">Załóż konto!</a></strong></p>
+    </div>
     <form name="form">
-      <input type="text" placeholder="Login" [(ngModel)]="login" [ngModelOptions]="{standalone: true}"/>
-      <input type="password" placeholder="Password" [(ngModel)]="password" [ngModelOptions]="{standalone: true}"/>
-      <a>
-        <button (click)=checkLogin()>LOG IN</button>
-      </a>
+      <label>
+        <input type="text" placeholder="Adres email" [(ngModel)]="login" name="login"/>
+      </label>
+      <label>
+        <input type="password" placeholder="Hasło" [(ngModel)]="password" name="password"/>
+      </label>
+      <button (click)=checkLogin()>ZALOGUJ SIĘ</button>
     </form>
-    <p>If you do not have account, just <strong><a routerLink="/register">sign up!</a></strong></p>
   </div>
 </div>
