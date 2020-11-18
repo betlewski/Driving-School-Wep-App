@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './component/common/login/login.component';
 import { RegistrationComponent } from './component/common/registration/registration.component';
 import {FormsModule} from "@angular/forms";
-import {CryptoJsService} from "./service/crypto-js.service";
+import {CryptoJsService} from "./service/crypto-js/crypto-js.service";
 
 @NgModule({
   declarations: [
