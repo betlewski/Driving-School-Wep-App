@@ -4,7 +4,7 @@
 export class Utils {
 
   public static checkStringIfNotEmpty(data: string): boolean {
-    return data != null && data != "";
+    return data != null && data.trim() != "";
   }
 
 }
