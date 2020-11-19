@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {JwtRequest} from "../../../model/jwt-request.model";
-import {Utils} from "../../../util/utils";
+import {Utils} from "../../../utils/utils";
+import {AuthService} from "../../../service/auth/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -13,19 +13,25 @@ import {Utils} from "../../../util/utils";
  */
 export class LoginComponent implements OnInit {
 
-  email: string = "";
-  password: string = "";
+  private email = "";
+  private password = "";
 
-  constructor(private router: Router) {
+  constructor(private router: Router,
+              private authService: AuthService) {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(["/home"]);
+    }
   }
 
   ngOnInit() {
   }
 
-  checkLogin() {
+  public login() {
     if (Utils.checkStringIfNotEmpty(this.email) && Utils.checkStringIfNotEmpty(this.password)) {
-      const jwtRequest = new JwtRequest(this.email, this.password);
-      this.router.navigate([jwtRequest]);
+      this.authService.authenticate(this.email, this.password)
+        .subscribe(() => {
+          this.router.navigate(["/home"]);
+        });
     }
   }
 
