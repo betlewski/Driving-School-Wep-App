@@ -45,7 +45,7 @@ public class JwtAuthenticationController {
      * @param request zapytanie HTTP
      * @return wygenerowany token lub błąd uwierzytelnienia
      */
-    @PostMapping(value = "/authenticate")
+    @PostMapping(value = "/rest/authenticate")
     public ResponseEntity<JwtResponse> createAuthenticationToken(@RequestBody JwtRequest request) {
         UserDetails userDetails;
         try {
