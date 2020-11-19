@@ -31,8 +31,15 @@ export class LoginComponent implements OnInit {
       this.authService.authenticate(this.email, this.password)
         .subscribe(() => {
           this.router.navigate(["/home"]);
+        }, () => {
+          this.clearFields();
         });
     }
+  }
+
+  private clearFields() {
+    this.email = "";
+    this.password = "";
   }
 
 }
