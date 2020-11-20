@@ -9,12 +9,14 @@ import {FormsModule} from "@angular/forms";
 import {CryptoJsService} from "./service/crypto-js/crypto-js.service";
 import {AuthService} from "./service/auth/auth.service";
 import {HttpClientModule} from "@angular/common/http";
+import { HomeComponent } from './component/common/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
