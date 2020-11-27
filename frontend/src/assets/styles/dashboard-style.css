@@ -11515,7 +11515,7 @@ h1, h2, h3, h4, h5,
 #sidebar ul li a {
   padding: 15px 30px;
   display: block;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -11538,18 +11538,18 @@ h1, h2, h3, h4, h5,
 }
 
 #sidebar ul li a:hover {
-  color: black;
-  background: lightgrey;
+  cursor: default;
 }
 
 #sidebar ul li.active > a {
   background: transparent;
-  color: white;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 #sidebar ul li.active > a:hover {
   color: black;
   background: lightgrey;
+  cursor: pointer;
 }
 
 @media (max-width: 991.98px) {
