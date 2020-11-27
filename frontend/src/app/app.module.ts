@@ -9,14 +9,24 @@ import {FormsModule} from "@angular/forms";
 import {CryptoJsService} from "./service/crypto-js/crypto-js.service";
 import {AuthService} from "./service/auth/auth.service";
 import {HttpClientModule} from "@angular/common/http";
-import { HomeComponent } from './component/common/home/home.component';
+import { HomeStudentComponent } from './component/separate/student/home/home-student.component';
+import { HomeEmployeeComponent } from './component/separate/employee/home-employee/home-employee.component';
+import { HomeAdminComponent } from './component/separate/admin/home-admin/home-admin.component';
+import {StudentService} from "./service/rest/student/student.service";
+import {CourseService} from "./service/rest/course/course.service";
+import { CourseComponent } from './component/separate/student/course/course.component';
+import { CourseInitComponent } from './component/separate/student/course-init/course-init.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrationComponent,
-    HomeComponent
+    HomeStudentComponent,
+    HomeEmployeeComponent,
+    HomeAdminComponent,
+    CourseComponent,
+    CourseInitComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +36,9 @@ import { HomeComponent } from './component/common/home/home.component';
   ],
   providers: [
     AuthService,
-    CryptoJsService
+    CryptoJsService,
+    StudentService,
+    CourseService
   ],
   bootstrap: [AppComponent]
 })
