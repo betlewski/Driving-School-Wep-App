@@ -46,14 +46,14 @@ public class InternalExamService {
 
     /**
      * Pobranie egzaminów wewnętrznych o podanym typie
-     * w ramach aktywnego kursu dla kursanta o podanym ID.
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *
-     * @param id   ID kursanta
-     * @param type typ egzaminu
+     * @param email adres email kursanta
+     * @param type  typ egzaminu
      * @return lista egzaminów
      */
-    public Set<InternalExam> getAllInternalExamsByStudentIdAndExamType(Long id, ExamType type) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+    public Set<InternalExam> getAllInternalExamsByEmailAndExamType(String email, ExamType type) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(course -> course.getInternalExams().stream()
                 .filter(exam -> exam.getExamType().equals(type))
                 .collect(Collectors.toSet()))
@@ -82,7 +82,7 @@ public class InternalExamService {
         Map<Student, List<InternalExam>> resultMap = new HashMap<>();
         studentRepository.findAll().forEach(student -> {
             List<InternalExam> examsToMap = new ArrayList<>();
-            Set<InternalExam> allExams = courseService.getActiveCourseByStudentId(student.getId())
+            Set<InternalExam> allExams = courseService.getActiveCourseByEmail(student.getEmail())
                     .map(Course::getInternalExams).orElse(new HashSet<>());
             allExams.stream()
                     .filter(exam -> exam.getLessonStatus().equals(LessonStatus.ACCEPTED))
@@ -129,14 +129,14 @@ public class InternalExamService {
     }
 
     /**
-     * Dodanie egzaminu do aktywnego kursu dla kursanta o podanym ID
+     * Dodanie egzaminu do aktywnego kursu dla kursanta o podanym adresie email.
      *
-     * @param exam egzamin do dodania
-     * @param id   ID kursanta
+     * @param exam  egzamin do dodania
+     * @param email adres email kursanta
      * @return dodany egzamin
      */
-    public ResponseEntity<InternalExam> addExam(InternalExam exam, Long id) {
-        Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(id);
+    public ResponseEntity<InternalExam> addExam(InternalExam exam, String email) {
+        Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {

@@ -42,26 +42,26 @@ public class PaymentService {
     }
 
     /**
-     * Pobranie wszystkich płatności związanych z aktywnym kursem dla kursanta o podanym ID.
+     * Pobranie wszystkich płatności związanych z aktywnym kursem dla kursanta o podanym adresie email.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return zbiór płatności
      */
-    public Set<Payment> getAllPaymentsForActiveCourseByStudentId(Long id) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+    public Set<Payment> getAllPaymentsForActiveCourseByEmail(String email) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(Course::getPayments).orElse(new HashSet<>());
     }
 
     /**
      * Pobranie płatności o podanym statusie przetworzenia
-     * związanych z aktywnym kursem dla kursanta o podanym ID.
+     * związanych z aktywnym kursem dla kursanta o podanym adresie email.
      *
-     * @param id     ID kursanta
+     * @param email  adres email kursanta
      * @param status status przetworzenia płatności
      * @return zbiór płatności o podanym statusie
      */
-    public Set<Payment> getPaymentsForActiveCourseByStudentIdAndProcessingStatus(Long id, ProcessingStatus status) {
-        Set<Payment> allPayments = getAllPaymentsForActiveCourseByStudentId(id);
+    public Set<Payment> getPaymentsForActiveCourseByEmailAndProcessingStatus(String email, ProcessingStatus status) {
+        Set<Payment> allPayments = getAllPaymentsForActiveCourseByEmail(email);
         return allPayments.stream()
                 .filter(payment -> payment.getProcessingStatus().equals(status))
                 .collect(Collectors.toSet());
@@ -86,11 +86,11 @@ public class PaymentService {
      * Dodanie płatności do aktywnego kursu dla kursanta o podanym ID.
      *
      * @param payment płatność do dodania
-     * @param id      ID kursanta
+     * @param email   adres email kursanta
      * @return dodana płatność lub błąd
      */
-    public ResponseEntity<Payment> addPayment(Payment payment, Long id) {
-        Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(id);
+    public ResponseEntity<Payment> addPayment(Payment payment, String email) {
+        Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {

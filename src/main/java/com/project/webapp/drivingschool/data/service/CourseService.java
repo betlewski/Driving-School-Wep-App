@@ -41,15 +41,15 @@ public class CourseService {
     }
 
     /**
-     * Pobranie aktywnego kursu dla kursanta o podanym ID.
+     * Pobranie aktywnego kursu dla kursanta o podanym adresie email.
      * Jeśli aktywnych kursów jest wiele (sytuacja nie powinna wystąpić),
      * pobierany jest ten, który został najwcześniej rozpoczęty.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return aktywny kurs
      */
-    public Optional<Course> getActiveCourseByStudentId(Long id) {
-        Optional<Student> optionalStudent = studentRepository.findById(id);
+    public Optional<Course> getActiveCourseByEmail(String email) {
+        Optional<Student> optionalStudent = studentRepository.findByEmail(email);
         return optionalStudent.flatMap(student -> student.getCourses()
                 .stream()
                 .filter(Course::isActive)
@@ -57,48 +57,48 @@ public class CourseService {
     }
 
     /**
-     * Sprawdzenie, czy kursant o podanym ID ma przypisany aktywny kurs.
+     * Sprawdzenie, czy kursant o podanym adresie email ma przypisany aktywny kurs.
      * W takim przypadku nie jest możliwy zapis nowego kursu.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return true - jeśli aktywny kurs istnieje, false - w przeciwnym razie
      */
-    public Boolean checkExistingActiveCourseByStudentId(Long id) {
-        return getActiveCourseByStudentId(id).isPresent();
+    public Boolean checkExistingActiveCourseByEmail(String email) {
+        return getActiveCourseByEmail(email).isPresent();
     }
 
     /**
-     * Sprawdzenie, czy student o podanym ID może rozpocząć kurs
+     * Sprawdzenie, czy student o podanym adresie email może rozpocząć kurs
      * o podanej kategorii jazdy biorąc pod uwagę jego wiek.
      * Możliwe jest ropoczęcie kursu na 3 miesiące przed ukończeniem
      * wymaganego w wybranej kategorii wieku.
      *
-     * @param id       ID kursanta
+     * @param email    adres email kursanta
      * @param category kategoria kursu jazdy
      * @return true - jeśli warunek jest spełniony, false - w przeciwnym razie
      */
-    public Boolean checkRequiredAgeByStudentIdAndLicenceCategory(Long id, LicenceCategory category) {
-        Optional<Student> optionalStudent = studentRepository.findById(id);
+    public Boolean checkRequiredAgeByEmailAndLicenceCategory(String email, LicenceCategory category) {
+        Optional<Student> optionalStudent = studentRepository.findByEmail(email);
         if (optionalStudent.isPresent() && category != null) {
             int requiredAge = category.requiredAge;
             int studentAge = (int) ChronoUnit.YEARS.between(
                     optionalStudent.get().getBirthDate(), LocalDate.now().plusMonths(3));
-            return studentAge < requiredAge;
+            return studentAge > requiredAge;
         }
         return false;
     }
 
     /**
-     * Dodanie nowego kursu na podaną kategorię dla kursanta o podanym ID.
+     * Dodanie nowego kursu na podaną kategorię dla kursanta o podanym adresie email.
      *
-     * @param id       ID kursanta
+     * @param email    adres email kursanta
      * @param category kategoria kursu jazdy
      * @return dodany kurs
      */
-    public ResponseEntity<Course> addCourse(Long id, LicenceCategory category) {
-        if (!checkExistingActiveCourseByStudentId(id) &&
-                checkRequiredAgeByStudentIdAndLicenceCategory(id, category)) {
-            Optional<Student> optionalStudent = studentRepository.findById(id);
+    public ResponseEntity<Course> addCourse(String email, LicenceCategory category) {
+        if (!checkExistingActiveCourseByEmail(email) &&
+                checkRequiredAgeByEmailAndLicenceCategory(email, category)) {
+            Optional<Student> optionalStudent = studentRepository.findByEmail(email);
             if (optionalStudent.isPresent()) {
                 Student student = optionalStudent.get();
                 Course course = new Course();
@@ -205,7 +205,7 @@ public class CourseService {
         if (course != null) {
             Integer instalmentsNumber = Constants.DEFAULT_INSTALMENTS_NUMBER;
             Integer instalmentPrice = course.getLicenseCategory().price / instalmentsNumber;
-            Set<Payment> payments = new HashSet<>();
+            List<Payment> payments = new ArrayList<>();
             for (int i = 0; i < instalmentsNumber; i++) {
                 Payment payment = new Payment();
                 payment.setPaymentType(PaymentType.COURSE_FEE);
@@ -216,7 +216,7 @@ public class CourseService {
             try {
                 paymentRepository.saveAll(payments);
             } finally {
-                course.setPayments(payments);
+                course.setPayments(new HashSet<>(payments));
             }
         }
     }

@@ -48,26 +48,26 @@ public class TheoryLessonsService {
 
     /**
      * Pobranie wszystkich zajęć teoretycznych
-     * w ramach aktywnego kursu dla kursanta o podanym ID.
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return lista zajęć teoretycznych
      */
-    public Set<TheoryLessons> getAllTheoryLessonsByStudentId(Long id) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+    public Set<TheoryLessons> getAllTheoryLessonsByEmail(String email) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(Course::getTheoryLessons).orElse(new HashSet<>());
     }
 
     /**
      * Pobranie na podstawie podanego statusu przebiegu zajęć teoretycznych
-     * w ramach aktywnego kursu dla kursanta o podanym ID.
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *
-     * @param id     ID kursanta
+     * @param email  adres email kursanta
      * @param status status przebiegu
      * @return zajęcia teoretyczne
      */
-    public Set<TheoryLessons> getTheoryLessonsByStudentIdAndLessonStatus(Long id, LessonStatus status) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+    public Set<TheoryLessons> getTheoryLessonsByEmailAndLessonStatus(String email, LessonStatus status) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(course -> course.getTheoryLessons().stream()
                 .filter(lesson -> lesson.getLessonStatus().equals(status))
                 .collect(Collectors.toSet()))
@@ -76,13 +76,13 @@ public class TheoryLessonsService {
 
     /**
      * Pobranie obecnie trwających wykładów
-     * w ramach aktywnego kursu dla kursanta o podanym ID
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return lista wykładów
      */
-    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentId(Long id) {
-        Set<TheoryLessons> theoryLessonsSet = getTheoryLessonsByStudentIdAndLessonStatus(id, LessonStatus.ACCEPTED);
+    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByEmail(String email) {
+        Set<TheoryLessons> theoryLessonsSet = getTheoryLessonsByEmailAndLessonStatus(email, LessonStatus.ACCEPTED);
         if (!theoryLessonsSet.isEmpty()) {
             return theoryLessonsSet.iterator().next().getLectureSeries().getLectures();
         }
@@ -160,15 +160,15 @@ public class TheoryLessonsService {
     }
 
     /**
-     * Sprawdzenie, czy kursant o podanym ID w ramach aktywnego kursu
+     * Sprawdzenie, czy kursant o podanym adresie email w ramach aktywnego kursu
      * ma trwające zajęcia teoretyczne tzn. takie o statusie różnym od REJECTED i FAILED.
      * Jeśli tak - nie jest możliwe dodanie nowych zajęć teoretycznych.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return true - jeśli takie zajęcia istnieją, false - w przeciwnym razie
      */
-    public Boolean isTheoryLessonsActiveByStudentId(Long id) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+    public Boolean isTheoryLessonsActiveByEmail(String email) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(course -> course.getTheoryLessons().stream()
                 .anyMatch(lesson -> !lesson.getLessonStatus().equals(LessonStatus.REJECTED) &&
                         !lesson.getLessonStatus().equals(LessonStatus.FAILED)))
@@ -176,15 +176,15 @@ public class TheoryLessonsService {
     }
 
     /**
-     * Dodanie zajęć teoretycznych do aktywnego kursu dla kursanta o podanym ID
+     * Dodanie zajęć teoretycznych do aktywnego kursu dla kursanta o podanym adresie email.
      *
-     * @param studentId       ID kursanta
+     * @param email           adres email kursanta
      * @param lectureSeriesId ID cyklu wykładów
      * @return dodane zajęcia
      */
-    public ResponseEntity<TheoryLessons> addTheoryLessons(Long studentId, Long lectureSeriesId) {
-        if (!isTheoryLessonsActiveByStudentId(studentId)) {
-            Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(studentId);
+    public ResponseEntity<TheoryLessons> addTheoryLessons(String email, Long lectureSeriesId) {
+        if (!isTheoryLessonsActiveByEmail(email)) {
+            Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
             Optional<LectureSeries> seriesOptional = lectureSeriesRepository.findById(lectureSeriesId);
             if (optionalCourse.isPresent() && seriesOptional.isPresent()) {
                 Course course = optionalCourse.get();

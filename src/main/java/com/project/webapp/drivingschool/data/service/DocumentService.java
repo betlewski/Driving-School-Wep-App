@@ -44,13 +44,13 @@ public class DocumentService {
 
     /**
      * Pobranie wszystkich dokumentów związanych
-     * z aktywnym kursem dla kursanta o podanym ID.
+     * z aktywnym kursem dla kursanta o podanym adresie email.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return zbiór dokumentów
      */
-    public Set<Document> getAllDocumentsForActiveCourseByStudentId(Long id) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+    public Set<Document> getAllDocumentsForActiveCourseByEmail(String email) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(Course::getDocuments).orElse(new HashSet<>());
     }
 
@@ -58,12 +58,12 @@ public class DocumentService {
      * Pobranie dokumentów o podanym statusie przetworzenia
      * związanych z aktywnym kursem dla kursanta o podanym ID.
      *
-     * @param id     ID kursanta
+     * @param email  adres email kursanta
      * @param status status przetworzenia dokumentu
      * @return zbiór dokumentów o podanym statusie
      */
-    public Set<Document> getDocumentsForActiveCourseByStudentIdAndProcessingStatus(Long id, ProcessingStatus status) {
-        Set<Document> allDocuments = getAllDocumentsForActiveCourseByStudentId(id);
+    public Set<Document> getDocumentsForActiveCourseByEmailAndProcessingStatus(String email, ProcessingStatus status) {
+        Set<Document> allDocuments = getAllDocumentsForActiveCourseByEmail(email);
         return allDocuments.stream()
                 .filter(document -> document.getProcessingStatus().equals(status))
                 .collect(Collectors.toSet());
@@ -85,14 +85,14 @@ public class DocumentService {
     }
 
     /**
-     * Dodanie dokumentu do aktywnego kursu dla kursanta o podanym ID.
+     * Dodanie dokumentu do aktywnego kursu dla kursanta o podanym adresie email.
      *
      * @param document dokument do dodania
-     * @param id       ID kursanta
+     * @param email    adres email kursanta
      * @return dodany dokument lub błąd
      */
-    public ResponseEntity<Document> addDocument(Document document, Long id) {
-        Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(id);
+    public ResponseEntity<Document> addDocument(Document document, String email) {
+        Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {

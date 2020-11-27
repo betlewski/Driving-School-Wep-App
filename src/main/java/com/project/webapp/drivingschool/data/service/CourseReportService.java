@@ -32,13 +32,13 @@ public class CourseReportService {
 
     /**
      * Pobranie raportu dla aktywnego kursu
-     * dla kursanta o podanym ID.
+     * dla kursanta o podanym adresie email.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return raport dla aktywnego kursu
      */
-    public Optional<CourseReport> getReportByStudentId(Long id) {
-        return courseService.getActiveCourseByStudentId(id)
+    public Optional<CourseReport> getReportByEmail(String email) {
+        return courseService.getActiveCourseByEmail(email)
                 .map(this::getReportByCourse);
     }
 

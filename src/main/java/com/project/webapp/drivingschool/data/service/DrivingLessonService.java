@@ -43,13 +43,13 @@ public class DrivingLessonService {
 
     /**
      * Pobranie jazd szkoleniowych w ramach aktywnego kursu
-     * dla kursanta o podanym ID.
+     * dla kursanta o podanym adresie email.
      *
-     * @param id ID kursanta
+     * @param email adres email kursanta
      * @return lista jazd
      */
-    public Set<DrivingLesson> getAllDrivingLessonsByStudentId(Long id) {
-        Optional<Course> activeCourse = courseService.getActiveCourseByStudentId(id);
+    public Set<DrivingLesson> getAllDrivingLessonsByEmail(String email) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(Course::getDrivingLessons).orElse(new HashSet<>());
     }
 
@@ -90,7 +90,7 @@ public class DrivingLessonService {
         Map<Student, List<DrivingLesson>> resultMap = new HashMap<>();
         studentRepository.findAll().forEach(student -> {
             List<DrivingLesson> lessonsToMap = new ArrayList<>();
-            Set<DrivingLesson> allLessons = courseService.getActiveCourseByStudentId(student.getId())
+            Set<DrivingLesson> allLessons = courseService.getActiveCourseByEmail(student.getEmail())
                     .map(Course::getDrivingLessons).orElse(new HashSet<>());
             allLessons.stream()
                     .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.ACCEPTED))
@@ -138,14 +138,14 @@ public class DrivingLessonService {
     }
 
     /**
-     * Dodanie jazdy do aktywnego kursu dla kursanta o podanym ID
+     * Dodanie jazdy do aktywnego kursu dla kursanta o podanym adresie email.
      *
      * @param lesson jazda do dodania
-     * @param id     ID kursanta
+     * @param email  adres email kursanta
      * @return dodana jazda
      */
-    public ResponseEntity<DrivingLesson> addDrivingLesson(DrivingLesson lesson, Long id) {
-        Optional<Course> optionalCourse = courseService.getActiveCourseByStudentId(id);
+    public ResponseEntity<DrivingLesson> addDrivingLesson(DrivingLesson lesson, String email) {
+        Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
         if (optionalCourse.isPresent()) {
             Course course = optionalCourse.get();
             try {

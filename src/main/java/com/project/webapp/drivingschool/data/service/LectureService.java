@@ -166,7 +166,7 @@ public class LectureService {
         Map<Student, List<Lecture>> resultMap = new HashMap<>();
         studentRepository.findAll().forEach(student -> {
             List<Lecture> lecturesToMap = new ArrayList<>();
-            Set<Lecture> allLectures = theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByStudentId(student.getId());
+            Set<Lecture> allLectures = theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByEmail(student.getEmail());
             allLectures.stream()
                     .filter(lecture -> lecture.getStartTime().toLocalDate().isEqual(startDate))
                     .forEach(lecturesToMap::add);
