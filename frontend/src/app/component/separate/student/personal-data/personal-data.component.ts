@@ -5,6 +5,9 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './personal-data.component.html',
   styleUrls: ['./personal-data.component.css']
 })
+/**
+ * Panel danych osobowych kursanta
+ */
 export class PersonalDataComponent implements OnInit {
 
   constructor() { }

@@ -8,6 +8,7 @@ import {HomeAdminComponent} from "./component/separate/admin/home-admin/home-adm
 import {CourseComponent} from "./component/separate/student/course/course.component";
 import {CourseInitComponent} from "./component/separate/student/course-init/course-init.component";
 import {PersonalDataComponent} from "./component/separate/student/personal-data/personal-data.component";
+import {OfficialComponent} from "./component/separate/student/official/official.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -35,6 +36,10 @@ const routes: Routes = [
           {
             path: 'data',
             component: PersonalDataComponent
+          },
+          {
+            path: 'official',
+            component: OfficialComponent
           }
         ]
       },

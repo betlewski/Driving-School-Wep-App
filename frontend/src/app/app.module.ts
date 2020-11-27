@@ -17,6 +17,7 @@ import {CourseService} from "./service/rest/course/course.service";
 import { CourseComponent } from './component/separate/student/course/course.component';
 import { CourseInitComponent } from './component/separate/student/course-init/course-init.component';
 import { PersonalDataComponent } from './component/separate/student/personal-data/personal-data.component';
+import { OfficialComponent } from './component/separate/student/official/official.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { PersonalDataComponent } from './component/separate/student/personal-dat
     CourseComponent,
     CourseInitComponent,
     PersonalDataComponent,
+    OfficialComponent,
   ],
   imports: [
     BrowserModule,
