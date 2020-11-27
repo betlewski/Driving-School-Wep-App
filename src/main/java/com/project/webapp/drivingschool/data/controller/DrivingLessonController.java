@@ -26,10 +26,10 @@ public class DrivingLessonController {
         this.drivingLessonService = drivingLessonService;
     }
 
-    @GetMapping("/all/byStudentId")
+    @GetMapping("/all/byEmail")
     @ResponseBody
-    public Set<DrivingLesson> getAllDrivingLessonsByStudentId(@RequestParam("id") Long id) {
-        return drivingLessonService.getAllDrivingLessonsByStudentId(id);
+    public Set<DrivingLesson> getAllDrivingLessonsByStudentId(@RequestParam("email") String email) {
+        return drivingLessonService.getAllDrivingLessonsByEmail(email);
     }
 
     @GetMapping("/all/byEmployeeId")
@@ -58,8 +58,8 @@ public class DrivingLessonController {
 
     @PostMapping("/add")
     public ResponseEntity<DrivingLesson> addDrivingLesson(@RequestBody DrivingLesson lesson,
-                                                          @RequestParam("id") Long id) {
-        return drivingLessonService.addDrivingLesson(lesson, id);
+                                                          @RequestParam("email") String email) {
+        return drivingLessonService.addDrivingLesson(lesson, email);
     }
 
     @PutMapping("/edit/status")

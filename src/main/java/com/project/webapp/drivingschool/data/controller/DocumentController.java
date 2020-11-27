@@ -28,15 +28,15 @@ public class DocumentController {
 
     @GetMapping("/all/byStudentId")
     @ResponseBody
-    public Set<Document> getAllDocumentsForActiveCourseByStudentId(@RequestParam("id") Long id) {
-        return documentService.getAllDocumentsForActiveCourseByStudentId(id);
+    public Set<Document> getAllDocumentsForActiveCourseByStudentId(@RequestParam("email") String email) {
+        return documentService.getAllDocumentsForActiveCourseByEmail(email);
     }
 
-    @GetMapping("/all/byStudentId/byStatus")
+    @GetMapping("/all/byEmail/byStatus")
     @ResponseBody
-    public Set<Document> getDocumentsForActiveCourseByStudentIdAndProcessingStatus(@RequestParam("id") Long id,
+    public Set<Document> getDocumentsForActiveCourseByStudentIdAndProcessingStatus(@RequestParam("email") String email,
                                                                                    @RequestParam("status") ProcessingStatus status) {
-        return documentService.getDocumentsForActiveCourseByStudentIdAndProcessingStatus(id, status);
+        return documentService.getDocumentsForActiveCourseByEmailAndProcessingStatus(email, status);
     }
 
     @GetMapping("/course")
@@ -59,8 +59,8 @@ public class DocumentController {
 
     @PostMapping("/add")
     public ResponseEntity<Document> addDocument(@RequestBody Document document,
-                                                @RequestParam("id") Long id) {
-        return documentService.addDocument(document, id);
+                                                @RequestParam("email") String email) {
+        return documentService.addDocument(document, email);
     }
 
     @DeleteMapping("/delete")

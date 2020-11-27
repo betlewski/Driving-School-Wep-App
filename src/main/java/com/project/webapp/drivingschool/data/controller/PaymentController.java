@@ -26,17 +26,17 @@ public class PaymentController {
         this.paymentService = paymentService;
     }
 
-    @GetMapping("/all/byStudentId")
+    @GetMapping("/all/byEmail")
     @ResponseBody
-    public Set<Payment> getAllPaymentsForActiveCourseByStudentId(@RequestParam("id") Long id) {
-        return paymentService.getAllPaymentsForActiveCourseByStudentId(id);
+    public Set<Payment> getAllPaymentsForActiveCourseByStudentId(@RequestParam("email") String email) {
+        return paymentService.getAllPaymentsForActiveCourseByEmail(email);
     }
 
-    @GetMapping("/all/byStudentId/byStatus")
+    @GetMapping("/all/byEmail/byStatus")
     @ResponseBody
-    public Set<Payment> getPaymentsForActiveCourseByStudentIdAndProcessingStatus(@RequestParam("id") Long id,
+    public Set<Payment> getPaymentsForActiveCourseByStudentIdAndProcessingStatus(@RequestParam("email") String email,
                                                                                  @RequestParam("status") ProcessingStatus status) {
-        return paymentService.getPaymentsForActiveCourseByStudentIdAndProcessingStatus(id, status);
+        return paymentService.getPaymentsForActiveCourseByEmailAndProcessingStatus(email, status);
     }
 
     @GetMapping("/course")
@@ -53,8 +53,8 @@ public class PaymentController {
 
     @PostMapping("/add")
     public ResponseEntity<Payment> addPayment(@RequestBody Payment payment,
-                                              @RequestParam("id") Long id) {
-        return paymentService.addPayment(payment, id);
+                                              @RequestParam("email") String email) {
+        return paymentService.addPayment(payment, email);
     }
 
     @DeleteMapping("/delete")

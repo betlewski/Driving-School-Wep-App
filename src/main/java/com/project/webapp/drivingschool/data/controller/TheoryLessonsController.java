@@ -27,23 +27,23 @@ public class TheoryLessonsController {
         this.theoryLessonsService = theoryLessonsService;
     }
 
-    @GetMapping("/all/byStudentId")
+    @GetMapping("/all/byEmail")
     @ResponseBody
-    public Set<TheoryLessons> getAllTheoryLessonsByStudentId(@RequestParam("id") Long id) {
-        return theoryLessonsService.getAllTheoryLessonsByStudentId(id);
+    public Set<TheoryLessons> getAllTheoryLessonsByStudentId(@RequestParam("email") String email) {
+        return theoryLessonsService.getAllTheoryLessonsByEmail(email);
     }
 
-    @GetMapping("/all/byStudentId/byStatus")
+    @GetMapping("/all/byEmail/byStatus")
     @ResponseBody
-    public Set<TheoryLessons> getTheoryLessonsByStudentIdAndLessonStatus(@RequestParam("id") Long id,
+    public Set<TheoryLessons> getTheoryLessonsByStudentIdAndLessonStatus(@RequestParam("email") String email,
                                                                          @RequestParam("status") LessonStatus status) {
-        return theoryLessonsService.getTheoryLessonsByStudentIdAndLessonStatus(id, status);
+        return theoryLessonsService.getTheoryLessonsByEmailAndLessonStatus(email, status);
     }
 
-    @GetMapping("/lectures/all/byStudentId")
+    @GetMapping("/lectures/all/byEmail")
     @ResponseBody
-    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentId(@RequestParam("id") Long id) {
-        return theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByStudentId(id);
+    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentId(@RequestParam("email") String email) {
+        return theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByEmail(email);
     }
 
     @GetMapping("/hours/passed/byCourse")
@@ -70,16 +70,16 @@ public class TheoryLessonsController {
         return theoryLessonsService.isTheoryLessonsPassedByCourse(course);
     }
 
-    @GetMapping("/isActive/byStudentId")
+    @GetMapping("/isActive/byEmail")
     @ResponseBody
-    public Boolean isTheoryLessonsActiveByStudentId(@RequestParam("id") Long id) {
-        return theoryLessonsService.isTheoryLessonsActiveByStudentId(id);
+    public Boolean isTheoryLessonsActiveByStudentId(@RequestParam("email") String email) {
+        return theoryLessonsService.isTheoryLessonsActiveByEmail(email);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<TheoryLessons> addTheoryLessons(@RequestParam("id") Long studentId,
+    public ResponseEntity<TheoryLessons> addTheoryLessons(@RequestParam("email") String email,
                                                           @RequestBody Long lectureSeriesId) {
-        return theoryLessonsService.addTheoryLessons(studentId, lectureSeriesId);
+        return theoryLessonsService.addTheoryLessons(email, lectureSeriesId);
     }
 
     @PutMapping("/edit/status")

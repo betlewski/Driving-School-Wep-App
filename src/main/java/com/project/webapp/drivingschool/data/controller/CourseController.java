@@ -30,29 +30,29 @@ public class CourseController {
         this.courseReportService = courseReportService;
     }
 
-    @GetMapping("/byStudentId")
+    @GetMapping("/byEmail")
     @ResponseBody
-    public Optional<Course> getActiveCourseByStudentId(@RequestParam("id") Long id) {
-        return courseService.getActiveCourseByStudentId(id);
+    public Optional<Course> getActiveCourseByEmail(@RequestParam("email") String email) {
+        return courseService.getActiveCourseByEmail(email);
     }
 
-    @GetMapping("/exist/active/byStudentId")
+    @GetMapping("/exist/active/byEmail")
     @ResponseBody
-    public Boolean checkExistingActiveCourseByStudentId(@RequestParam("id") Long id) {
-        return courseService.checkExistingActiveCourseByStudentId(id);
+    public Boolean checkExistingActiveCourseByEmail(@RequestParam("email") String email) {
+        return courseService.checkExistingActiveCourseByEmail(email);
     }
 
-    @GetMapping("/isAgeEnough/byStudentId/byCategory")
+    @GetMapping("/isAgeEnough/byEmail/byCategory")
     @ResponseBody
-    public Boolean checkRequiredAgeByStudentIdAndLicenceCategory(@RequestParam("id") Long id,
-                                                                 @RequestParam("category") LicenceCategory category) {
-        return courseService.checkRequiredAgeByStudentIdAndLicenceCategory(id, category);
+    public Boolean checkRequiredAgeByEmailAndLicenceCategory(@RequestParam("email") String email,
+                                                             @RequestParam("category") LicenceCategory category) {
+        return courseService.checkRequiredAgeByEmailAndLicenceCategory(email, category);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<Course> addCourse(@RequestParam("id") Long id,
+    public ResponseEntity<Course> addCourse(@RequestParam("email") String email,
                                             @RequestBody LicenceCategory category) {
-        return courseService.addCourse(id, category);
+        return courseService.addCourse(email, category);
     }
 
     @PutMapping("/finish")
@@ -66,10 +66,10 @@ public class CourseController {
         return courseService.changeStatusByCourseId(id, status);
     }
 
-    @GetMapping("/report/byStudentId")
+    @GetMapping("/report/byEmail")
     @ResponseBody
-    public Optional<CourseReport> getReportByStudentId(@RequestParam("id") Long id) {
-        return courseReportService.getReportByStudentId(id);
+    public Optional<CourseReport> getReportByEmail(@RequestParam("email") String email) {
+        return courseReportService.getReportByEmail(email);
     }
 
     @GetMapping("/report/byCourse")

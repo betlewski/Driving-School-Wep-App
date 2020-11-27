@@ -27,11 +27,11 @@ public class InternalExamController {
         this.internalExamService = internalExamService;
     }
 
-    @GetMapping("/all/byStudentId/byType")
+    @GetMapping("/all/byEmail/byType")
     @ResponseBody
-    public Set<InternalExam> getAllInternalExamsByStudentIdAndExamType(@RequestParam("id") Long id,
+    public Set<InternalExam> getAllInternalExamsByStudentIdAndExamType(@RequestParam("email") String email,
                                                                        @RequestParam("type") ExamType type) {
-        return internalExamService.getAllInternalExamsByStudentIdAndExamType(id, type);
+        return internalExamService.getAllInternalExamsByEmailAndExamType(email, type);
     }
 
     @GetMapping("/all/byEmployeeId")
@@ -55,8 +55,8 @@ public class InternalExamController {
 
     @PostMapping("/add")
     public ResponseEntity<InternalExam> addExam(@RequestBody InternalExam exam,
-                                                @RequestParam("id") Long id) {
-        return internalExamService.addExam(exam, id);
+                                                @RequestParam("email") String email) {
+        return internalExamService.addExam(exam, email);
     }
 
     @PutMapping("/edit")
