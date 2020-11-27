@@ -1,0 +1,38 @@
+<h2 class="mb-4"> Rozpocznij kurs </h2>
+<p> Nie masz przypisanego żadnego kursu. Wybierz jeden z listy, aby rozpocząć...
+</p>
+<br>
+<table class="table table-hover table-bordered">
+  <thead class="thead-light text-truncate">
+  <tr>
+    <th scope="col"> Kategoria jazdy </th>
+    <th scope="col"> Wymagany wiek </th>
+    <th scope="col"> Cena kursu </th>
+    <th scope="col"> Część teoretyczna </th>
+    <th scope="col"> Część praktyczna </th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let licenseCategory of licenseCategories">
+    <td><b>{{licenseCategory.name}}</b></td>
+    <td>{{licenseCategory.requiredAge}} lat</td>
+    <td>{{licenseCategory.price}} zł</td>
+    <td>{{licenseCategory.practiceHours}} godzin</td>
+    <td> 30 godzin</td>
+    <td><button type="button" class="btn btn-outline-dark init-button"
+              (click)="initCourse(licenseCategory)">Start</button></td>
+  </tr>
+  </tbody>
+</table>
+<br>
+<div class="text-center">{{feedback}}</div>
+
+<!--<div class="form-group select-center">-->
+<!--  <label>-->
+<!--    <select name="categoryToInit" [(ngModel)]="categoryToInit" class="custom-select" style="width: 120%">-->
+<!--      <option value=null disabled selected [defaultSelected]="categoryToInit"> Wybierz kategorię </option>-->
+<!--      <option *ngFor="let licenseCategory of licenseCategories">{{licenseCategory.name}}</option>-->
+<!--    </select>-->
+<!--  </label>-->
+<!--  <button type="button" class="btn btn-dark init-button" (click)="initCourse()"> Zaczynamy </button>-->
+<!--</div>-->
