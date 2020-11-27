@@ -1,0 +1,62 @@
+<body>
+<div class="wrapper d-flex align-items-stretch">
+  <nav id="sidebar">
+    <div class="img bg-wrap text-center py-4 background-image">
+      <div class="user-logo">
+        <div class="img student-icon"></div>
+        <h3 class="email-text">{{email}}</h3>
+      </div>
+    </div>
+    <ul class="list-unstyled components mb-5">
+      <li class="active">
+        <a routerLink="data">
+          <span class="fa fa-id-card mr-3"></span> Dane osobowe
+        </a>
+      </li>
+      <li class="active" *ngIf="!isActiveCourse">
+        <a routerLink="course/init">
+          <span class="fa fa-paper-plane mr-3"></span> Rozpocznij kurs
+        </a>
+      </li>
+      <li class="active" *ngIf="isActiveCourse">
+        <a routerLink="course">
+          <span class="fa fa-paper-plane mr-3"></span> Kurs nauki
+        </a>
+      </li>
+      <li [class]="isActiveCourse ? 'active' : null">
+        <a [routerLink]="isActiveCourse ? 'calendar' : null">
+          <span class="fa fa-calendar mr-3"></span> Kalendarz
+        </a>
+      </li>
+      <li [class]="isActiveCourse ? 'active' : null">
+        <a [routerLink]="isActiveCourse ? 'documents' : null">
+          <span class="fa fa-file-text mr-3"></span> Dokumenty i płatności
+        </a>
+      </li>
+      <li [class]="theoryEnable ? 'active' : null">
+        <a [routerLink]="theoryEnable ? 'theory' : null">
+          <span class="fa fa-book mr-3"></span> Wykłady
+        </a>
+      </li>
+      <li [class]="drivingEnable ? 'active' : null">
+        <a [routerLink]="drivingEnable ? 'driving' : null">
+          <span class="fa fa-car mr-3"></span> Jazdy szkoleniowe
+        </a>
+      </li>
+      <li [class]="examEnable ? 'active' : null">
+        <a [routerLink]="examEnable ? 'exam' : null">
+          <span class="fa fa-flag mr-3"></span> Egzaminy wewnętrzne
+        </a>
+      </li>
+      <li class="active">
+        <a (click)="logout()">
+          <span class="fa fa-sign-out mr-3"></span> Wyloguj się
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div id="content" class="p-4 p-md-5 pt-5">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+</body>
