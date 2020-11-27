@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
 import {Student} from "../../../model/student.model";
 import {Utils} from "../../../utils/utils";
-import {StudentService} from "../../../service/student/student.service";
+import {StudentService} from "../../../service/rest/student/student.service";
 import {AuthService} from "../../../service/auth/auth.service";
 
 @Component({
