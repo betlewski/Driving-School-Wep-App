@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {JwtRequest} from "../../model/jwt-request.model";
 import {JwtResponse} from "../../model/jwt-response.model";
 import {CryptoJsService} from "../crypto-js/crypto-js.service";
 import {map} from "rxjs/operators";
+import {UserRole} from "../../utils/user-role";
 
 @Injectable({
   providedIn: 'root'
@@ -49,19 +50,14 @@ export class AuthService {
     sessionStorage.clear();
   }
 
-  public getAuthToken(): string {
-    const jwtToken = sessionStorage.getItem(this.JWT_TOKEN);
-    return "Bearer " + jwtToken;
-  }
-
   public getUserEmail(): string {
     const userEmail = sessionStorage.getItem(this.USER_EMAIL);
     return userEmail != null ? this.cryptoJsService.decrypt(userEmail) : "";
   }
 
-  public getUserRole(): string {
+  public getUserRole(): UserRole {
     const userRole = sessionStorage.getItem(this.USER_ROLE);
-    return userRole != null ? this.cryptoJsService.decrypt(userRole) : "";
+    return userRole != null ? UserRole.parse(this.cryptoJsService.decrypt(userRole)) : UserRole.NONE;
   }
 
   public isAuthenticated(): boolean {
@@ -69,6 +65,18 @@ export class AuthService {
     const userEmail = sessionStorage.getItem(this.USER_EMAIL);
     const userRole = sessionStorage.getItem(this.USER_ROLE);
     return jwtToken != null && userEmail != null && userRole != null;
+  }
+
+  public getAuthHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': this.getAuthToken(),
+    });
+  }
+
+  private getAuthToken(): string {
+    const jwtToken = sessionStorage.getItem(this.JWT_TOKEN);
+    return "Bearer " + jwtToken;
   }
 
 }
