@@ -1,0 +1,19 @@
+<h2 class="mb-4"> Kurs nauki </h2>
+<p> Najważniejsze informacje o Twoim kursie - stopień ukończenia, statystyki, podsumowania... </p>
+<br>
+<div *ngIf="courseReport != null">
+  <p> Kategoria jazdy: <b>{{courseReport.category}} </b></p>
+  <p> Wymagany wiek: <b>{{courseReport.requiredAge}} lat </b></p>
+  <p> Cena kursu: <b>{{courseReport.price}} zł </b></p>
+  <p> Zajęcia teoretyczne: <b>{{courseReport.theoryHours}} godzin </b></p>
+  <p> Zajęcia praktyczne: <b>{{courseReport.practiceHours}} godzin </b></p>
+  <p> Status kursu: <b>{{courseStatus}} </b></p>
+  <p> Stopień ukończenia kursu: <b>{{courseReport.passedCoursePercent}}% </b></p>
+  <p> Stopień ukończenia części teoretycznej: <b>{{courseReport.passedTheoryPercent}}% </b></p>
+  <p> Stopień ukończenia części praktycznej: <b>{{courseReport.passedPracticePercent}}% </b></p>
+  <p> Status płatności:<b> {{paymentStatus}} </b></p>
+  <p> Dodatkowe jazdy szkoleniowe: <b>{{courseReport.extraDrivingLessonsHours}} godzin </b></p>
+  <p> Data rozpoczęcia kursu: <b>{{courseReport.startDate}} </b></p>
+  <p> Data zakończenia kursu: <b>{{courseReport.endTime}} </b></p>
+  <p> Komentarz: <b>{{courseReport.comment}} </b></p>
+</div>
