@@ -3,7 +3,7 @@
  */
 export class Utils {
 
-  public static checkStringIfNotEmpty(data: string): boolean {
+  public static checkStringIfNotEmpty(data: string | null): boolean {
     return data != null && data.trim() != "";
   }
 
