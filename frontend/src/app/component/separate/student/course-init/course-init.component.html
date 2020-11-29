@@ -1,14 +1,14 @@
 <h2 class="mb-4"> Rozpocznij kurs </h2>
 <p> Nie masz przypisanego żadnego kursu. Wybierz jeden z listy, aby rozpocząć...</p>
 <br>
-<table class="table table-hover table-bordered">
-  <thead class="thead-light text-truncate">
+<table class="table table-striped table-bordered">
+  <thead class="thead-dark text-truncate">
   <tr>
-    <th scope="col"> Kategoria jazdy </th>
-    <th scope="col"> Wymagany wiek </th>
-    <th scope="col"> Cena kursu </th>
-    <th scope="col"> Część teoretyczna </th>
-    <th scope="col"> Część praktyczna </th>
+    <th scope="col"> Kategoria</th>
+    <th scope="col"> Wymagany wiek</th>
+    <th scope="col"> Cena kursu</th>
+    <th scope="col"> Część teoretyczna</th>
+    <th scope="col"> Część praktyczna</th>
   </tr>
   </thead>
   <tbody>
@@ -18,8 +18,11 @@
     <td>{{licenseCategory.price}} zł</td>
     <td>{{licenseCategory.practiceHours}} godzin</td>
     <td> 30 godzin</td>
-    <td><button type="button" class="btn btn-outline-dark init-button"
-              (click)="initCourse(licenseCategory)">Start</button></td>
+    <td>
+      <button type="button" class="btn btn-outline-dark init-button"
+              (click)="initCourse(licenseCategory)">Start
+      </button>
+    </td>
   </tr>
   </tbody>
 </table>
