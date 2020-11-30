@@ -18,6 +18,8 @@ import { CourseComponent } from './component/separate/student/course/course.comp
 import { CourseInitComponent } from './component/separate/student/course-init/course-init.component';
 import { PersonalDataComponent } from './component/separate/student/personal-data/personal-data.component';
 import { OfficialComponent } from './component/separate/student/official/official.component';
+import {DocumentService} from "./service/rest/document/document.service";
+import {PaymentService} from "./service/rest/payment/payment.service";
 
 @NgModule({
   declarations: [
@@ -42,7 +44,9 @@ import { OfficialComponent } from './component/separate/student/official/officia
     AuthService,
     CryptoJsService,
     StudentService,
-    CourseService
+    CourseService,
+    DocumentService,
+    PaymentService
   ],
   bootstrap: [AppComponent]
 })
