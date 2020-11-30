@@ -80,13 +80,17 @@ public class StudentService {
         if (emailExisting(student.getEmail())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         } else if (DataUtils.isPasswordCorrect(student.getPassword())) {
+            Student newStudent = new Student();
             try {
-                student.setPassword(passwordEncoder.encode(student.getPassword()));
-                student = studentRepository.save(student);
+                newStudent.setFullName(student.getFullName());
+                newStudent.setBirthDate(student.getBirthDate());
+                newStudent.setEmail(student.getEmail());
+                newStudent.setPassword(passwordEncoder.encode(student.getPassword()));
+                newStudent = studentRepository.save(newStudent);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(student, HttpStatus.OK);
+            return new ResponseEntity<>(newStudent, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
