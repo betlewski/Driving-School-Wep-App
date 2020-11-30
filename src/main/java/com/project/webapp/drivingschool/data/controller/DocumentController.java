@@ -26,7 +26,7 @@ public class DocumentController {
         this.documentService = documentService;
     }
 
-    @GetMapping("/all/byStudentId")
+    @GetMapping("/all/byEmail")
     @ResponseBody
     public Set<Document> getAllDocumentsForActiveCourseByStudentId(@RequestParam("email") String email) {
         return documentService.getAllDocumentsForActiveCourseByEmail(email);

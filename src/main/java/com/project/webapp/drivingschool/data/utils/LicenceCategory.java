@@ -9,31 +9,31 @@ public enum LicenceCategory {
      * Kat. AM:
      * motorower, czterokołowiec lekki (wymagane 14 lat, pisemna zgoda rodziców)
      */
-    AM (14, 1000, 10),
+    AM (14, 900, 10),
 
     /**
      * Kat. A1:
      * motocykl o mocy poniżej pierwszego progu (wymagane 16 lat, pisemna zgoda rodziców)
      */
-    A1 (16, 1300, 30),
+    A1 (16, 1200, 30),
 
     /**
      * Kat. A2:
      * motocykl o mocy poniżej drugiego progu (wymagane 18 lat)
      */
-    A2 (18, 1400, 30),
+    A2 (18, 1500, 30),
 
     /**
      * Kat. A:
      * motocykl bez ograniczeń (wymagane 24 lata)
      */
-    A (24, 1500, 30),
+    A (24, 1800, 30),
 
     /**
      * Kat. B:
      * pojazd samochodowy z przyczepą lekką (wymagane 18 lat)
      */
-    B (18, 1800, 30);
+    B (18, 2100, 30);
 
     /**
      * Minimalny wiek wymagany do uzyskania kategorii

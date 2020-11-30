@@ -15,7 +15,7 @@ public final class Constants {
      * Domyślna liczba rat,
      * na jakie podzielona zostaje opłata za kurs.
      */
-    public static final Integer DEFAULT_INSTALMENTS_NUMBER = 5;
+    public static final Integer DEFAULT_INSTALMENTS_NUMBER = 3;
 
     /**
      * Opłata za godzinę dodatkowej
