@@ -21,7 +21,7 @@ export namespace DocumentType {
         translator = "Profil Kandydata na Kierowcę";
         break;
       case DocumentType.PARENT_PERMISSION:
-        translator = "Zgoda rodziców na udział w kursie";
+        translator = "Oświadczenie rodzica (opiekuna)";
         break;
       default:
         translator = "";
