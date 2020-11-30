@@ -70,7 +70,7 @@ public class CourseService {
     /**
      * Sprawdzenie, czy student o podanym adresie email może rozpocząć kurs
      * o podanej kategorii jazdy biorąc pod uwagę jego wiek.
-     * Możliwe jest ropoczęcie kursu na 3 miesiące przed ukończeniem
+     * Możliwe jest rozpoczęcie kursu na 3 miesiące przed ukończeniem
      * wymaganego w wybranej kategorii wieku.
      *
      * @param email    adres email kursanta
@@ -83,7 +83,7 @@ public class CourseService {
             int requiredAge = category.requiredAge;
             int studentAge = (int) ChronoUnit.YEARS.between(
                     optionalStudent.get().getBirthDate(), LocalDate.now().plusMonths(3));
-            return studentAge > requiredAge;
+            return studentAge >= requiredAge;
         }
         return false;
     }
