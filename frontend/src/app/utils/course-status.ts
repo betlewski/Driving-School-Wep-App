@@ -16,32 +16,41 @@ export enum CourseStatus {
 
 export namespace CourseStatus {
 
+  const MEDICAL_EXAMS_TRANSLATION = "Badania lekarskie";
+  const DOCUMENTS_SUBMISSION_TRANSLATION = "Złożenie dokumentów";
+  const LECTURES_TRANSLATION = "Zajęcia teoretyczne (wykłady)";
+  const THEORY_INTERNAL_EXAM_TRANSLATION = "Teoretyczny egzamin wewnętrzny";
+  const DRIVING_LESSONS_TRANSLATION = "Zajęcia praktyczne (jazdy szkoleniowe)";
+  const PRACTICAL_INTERNAL_EXAM_TRANSLATION = "Praktyczny egzamin wewnętrzny";
+  const STATE_EXAMS_TRANSLATION = "Egzaminy państwowe";
+  const FINISHED_TRANSLATION = "Odebranie prawa jazdy i zakończenie kursu";
+
   export function translate(status: CourseStatus): string {
     let translator: string;
     switch (CourseStatus[status] as unknown) {
       case CourseStatus.MEDICAL_EXAMS:
-        translator = "Badania lekarskie";
+        translator = MEDICAL_EXAMS_TRANSLATION;
         break;
       case CourseStatus.DOCUMENTS_SUBMISSION:
-        translator = "Złożenie dokumentów";
+        translator = DOCUMENTS_SUBMISSION_TRANSLATION;
         break;
       case CourseStatus.LECTURES:
-        translator = "Zajęcia teoretyczne (wykłady)";
+        translator = LECTURES_TRANSLATION;
         break;
       case CourseStatus.THEORY_INTERNAL_EXAM:
-        translator = "Teoretyczny egzamin wewnętrzny";
+        translator = THEORY_INTERNAL_EXAM_TRANSLATION;
         break;
       case CourseStatus.DRIVING_LESSONS:
-        translator = "Zajęcia praktyczne (jazdy szkoleniowe)";
+        translator = DRIVING_LESSONS_TRANSLATION;
         break;
       case CourseStatus.PRACTICAL_INTERNAL_EXAM:
-        translator = "Praktyczny egzamin wewnętrzny";
+        translator = PRACTICAL_INTERNAL_EXAM_TRANSLATION;
         break;
       case CourseStatus.STATE_EXAMS:
-        translator = "Egzaminy państwowe";
+        translator = STATE_EXAMS_TRANSLATION;
         break;
       case CourseStatus.FINISHED:
-        translator = "Odebranie prawa jazdy i zakończenie kursu";
+        translator = FINISHED_TRANSLATION;
         break;
       default:
         translator = "";

@@ -11,17 +11,21 @@ export enum DocumentType {
 
 export namespace DocumentType {
 
+  const MEDICAL_EXAMS_TRANSLATION = "Badania lekarskie";
+  const DOCUMENT_PKK_TRANSLATION = "Profil Kandydata na Kierowcę";
+  const PARENT_PERMISSION_TRANSLATION = "Oświadczenie rodzica (opiekuna)";
+
   export function translate(type: DocumentType): string {
     let translator: string;
     switch (DocumentType[type] as unknown) {
       case DocumentType.MEDICAL_EXAMS:
-        translator = "Badania lekarskie";
+        translator = MEDICAL_EXAMS_TRANSLATION;
         break;
       case DocumentType.DOCUMENT_PKK:
-        translator = "Profil Kandydata na Kierowcę";
+        translator = DOCUMENT_PKK_TRANSLATION;
         break;
       case DocumentType.PARENT_PERMISSION:
-        translator = "Oświadczenie rodzica (opiekuna)";
+        translator = PARENT_PERMISSION_TRANSLATION;
         break;
       default:
         translator = "";
