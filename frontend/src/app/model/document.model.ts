@@ -7,14 +7,14 @@ import {DocumentType} from "../utils/document-type";
 export class Document {
 
   id: number;
-  type: DocumentType;
-  status: ProcessingStatus;
+  documentType: DocumentType;
+  processingStatus: ProcessingStatus;
   submissionTime: string;
 
-  constructor(id: number, type: DocumentType, status: ProcessingStatus, submissionTime: string) {
+  constructor(id: number, documentType: DocumentType, processingStatus: ProcessingStatus, submissionTime: string) {
     this.id = id;
-    this.type = type;
-    this.status = status;
+    this.documentType = documentType;
+    this.processingStatus = processingStatus;
     this.submissionTime = submissionTime;
   }
 

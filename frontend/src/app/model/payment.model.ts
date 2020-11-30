@@ -7,16 +7,16 @@ import {PaymentType} from "../utils/payment-type";
 export class Payment {
 
   id: number;
-  type: PaymentType;
+  paymentType: PaymentType;
   price: number;
-  status: ProcessingStatus;
+  processingStatus: ProcessingStatus;
   paymentTime: string;
 
-  constructor(id: number, type: PaymentType, price: number, status: ProcessingStatus, paymentTime: string) {
+  constructor(id: number, paymentType: PaymentType, price: number, processingStatus: ProcessingStatus, paymentTime: string) {
     this.id = id;
-    this.type = type;
+    this.paymentType = paymentType;
     this.price = price;
-    this.status = status;
+    this.processingStatus = processingStatus;
     this.paymentTime = paymentTime;
   }
 

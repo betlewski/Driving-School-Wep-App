@@ -1,5 +1,5 @@
 <h2 class="mb-4"> Kurs nauki </h2>
-<p> Najważniejsze informacje o Twoim kursie - stopień ukończenia, statystyki, podsumowania... </p>
+<p> {{courseReport.comment}} </p>
 <br>
 <div *ngIf="courseReport != null">
   <p> Kategoria jazdy: <b>{{courseReport.category}} </b></p>
@@ -15,5 +15,4 @@
   <p> Dodatkowe jazdy szkoleniowe: <b>{{courseReport.extraDrivingLessonsHours}} godzin </b></p>
   <p> Data rozpoczęcia kursu: <b>{{courseReport.startDate}} </b></p>
   <p> Data zakończenia kursu: <b>{{courseReport.endTime}} </b></p>
-  <p> Komentarz: <b>{{courseReport.comment}} </b></p>
 </div>

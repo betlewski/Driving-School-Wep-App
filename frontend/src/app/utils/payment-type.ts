@@ -14,7 +14,7 @@ export namespace PaymentType {
     let translator: string;
     switch (PaymentType[type] as unknown) {
       case PaymentType.COURSE_FEE:
-        translator = "Opłata za kurs (rata)";
+        translator = "Opłata za kurs";
         break;
       case PaymentType.EXTRA_DRIVING_LESSON:
         translator = "Dodatkowe godziny jazd szkoleniowych";
