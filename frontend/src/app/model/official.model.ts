@@ -24,8 +24,8 @@ export class Official {
     this.submissionTime = submissionTime;
   }
 
-  private static PAYMENT_TYPE = "PŁATNOŚĆ";
-  private static DOCUMENT_TYPE = "DOKUMENT";
+  public static PAYMENT_TYPE = "PŁATNOŚĆ";
+  public static DOCUMENT_TYPE = "DOKUMENT";
 
   public static mapFromPayment(payment: Payment): Official {
     const description = PaymentType.translate(payment.paymentType)

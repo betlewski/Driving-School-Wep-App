@@ -1,2 +1,54 @@
 <h2 class="mb-4"> Dokumenty i płatności </h2>
-<p> Panel zarządzania wszystkimi dokumentami i płatnościami </p>
+<p>
+  Aby rozpocząć cykl wykładów, musisz dostarczyć wszystkie wymagane dokumenty. <br>
+  Płatności możesz dokonać na dowolnym etapie kursu.
+</p>
+<br>
+<!--Do realizacji-->
+<table class="table table-bordered">
+  <thead class="thead-dark text-truncate">
+  <tr>
+    <th scope="col" style="width: 300px"> Opis</th>
+    <th scope="col" style="width: 250px"> Status</th>
+    <th scope="col" style="width: 200px"> Typ</th>
+    <th scope="col" style="width: 150px"> Czas zgłoszenia</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let official of officialsToComplete" style="background-color: #ffeaea">
+    <td>{{official.description}}</td>
+    <td>{{official.status}}</td>
+    <td>{{official.type}}</td>
+    <td>{{official.submissionTime}}</td>
+    <td>
+      <button type="button" class="btn btn-outline-dark request-button"
+              (click)="request(official)">Zgłoś
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<!--W trakcie realizacji-->
+<table class="table table-bordered">
+  <tbody>
+  <tr *ngFor="let official of officialsRequested" style="background-color: lightyellow">
+    <td style="width: 300px">{{official.description}}</td>
+    <td style="width: 250px">{{official.status}}</td>
+    <td style="width: 200px">{{official.type}}</td>
+    <td style="width: 150px">{{official.submissionTime}}</td>
+  </tr>
+  </tbody>
+</table>
+
+<!--Zrealizowane-->
+<table class="table table-bordered">
+  <tbody>
+  <tr *ngFor="let official of officialsCompleted" style="background-color: #d8ffd6">
+    <td style="width: 300px">{{official.description}}</td>
+    <td style="width: 250px">{{official.status}}</td>
+    <td style="width: 200px">{{official.type}}</td>
+    <td style="width: 150px">{{official.submissionTime}}</td>
+  </tr>
+  </tbody>
+</table>

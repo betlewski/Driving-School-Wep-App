@@ -37,7 +37,7 @@ export class RegistrationComponent implements OnInit {
         () => {
           this.authService.authenticate(this.email, this.password)
             .subscribe(() => {
-              this.router.navigate(["/home"]);
+              this.router.navigate(["/home/student"]);
             }, () => {
               this.router.navigate(["/login"]);
             });

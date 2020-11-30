@@ -28,7 +28,7 @@ export class Student {
 
   public static register(fullName: string, birthDate: string, email: string, password: string) {
     return new Student(null, fullName, null, birthDate, null,
-      null, email, password, new Date().toDateString());
+      null, email, password, null);
   }
 
   public static edit(fullName: string, address: string | null, phoneNumber: string | null) {
