@@ -10,8 +10,8 @@
   <tr>
     <th scope="col" style="width: 300px"> Opis</th>
     <th scope="col" style="width: 250px"> Status</th>
-    <th scope="col" style="width: 200px"> Typ</th>
-    <th scope="col" style="width: 150px"> Czas zgłoszenia</th>
+    <th scope="col" style="width: 150px"> Typ</th>
+    <th scope="col" style="width: 200px"> Data zgłoszenia</th>
   </tr>
   </thead>
   <tbody>
@@ -35,8 +35,8 @@
   <tr *ngFor="let official of officialsRequested" style="background-color: lightyellow">
     <td style="width: 300px">{{official.description}}</td>
     <td style="width: 250px">{{official.status}}</td>
-    <td style="width: 200px">{{official.type}}</td>
-    <td style="width: 150px">{{official.submissionTime}}</td>
+    <td style="width: 150px">{{official.type}}</td>
+    <td style="width: 200px">{{official.submissionTime}}</td>
   </tr>
   </tbody>
 </table>
@@ -47,8 +47,8 @@
   <tr *ngFor="let official of officialsCompleted" style="background-color: #d8ffd6">
     <td style="width: 300px">{{official.description}}</td>
     <td style="width: 250px">{{official.status}}</td>
-    <td style="width: 200px">{{official.type}}</td>
-    <td style="width: 150px">{{official.submissionTime}}</td>
+    <td style="width: 150px">{{official.type}}</td>
+    <td style="width: 200px">{{official.submissionTime}}</td>
   </tr>
   </tbody>
 </table>

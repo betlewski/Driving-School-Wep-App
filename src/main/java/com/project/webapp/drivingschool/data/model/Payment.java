@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 /**
  * Klasa reprezentująca płatności w ramach kursu nauki jazdy
@@ -49,8 +49,8 @@ public class Payment {
     private ProcessingStatus processingStatus;
 
     /**
-     * Czas zgłoszenia zapłaty
+     * Data zgłoszenia zapłaty
      */
-    private LocalDateTime paymentTime;
+    private LocalDate paymentTime;
 
 }

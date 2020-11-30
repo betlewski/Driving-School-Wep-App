@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -147,8 +148,8 @@ public class PaymentService {
             Payment payment = paymentOptional.get();
             try {
                 payment.setProcessingStatus(status);
-                checkStatusAfterPaymentChangedByPaymentId(id);
                 payment = paymentRepository.save(payment);
+                checkStatusAfterPaymentChangedByPaymentId(id);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -165,7 +166,21 @@ public class PaymentService {
      * @return zgłoszona płatność lub błąd
      */
     public ResponseEntity<Payment> requestPaymentByPaymentId(Long id) {
-        return changeProcessingStatusByPaymentId(id, ProcessingStatus.REQUESTED);
+        Optional<Payment> paymentOptional = paymentRepository.findById(id);
+        if (paymentOptional.isPresent()) {
+            Payment payment = paymentOptional.get();
+            try {
+                payment.setProcessingStatus(ProcessingStatus.REQUESTED);
+                payment.setPaymentTime(LocalDate.now());
+                payment = paymentRepository.save(payment);
+                checkStatusAfterPaymentChangedByPaymentId(id);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(payment, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**

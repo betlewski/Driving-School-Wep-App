@@ -220,8 +220,8 @@ public class TheoryLessonsService {
             TheoryLessons lesson = optionalLesson.get();
             try {
                 lesson.setLessonStatus(status);
-                checkStatusAfterTheoryLessonsChangedByTheoryLessonId(id);
                 lesson = theoryLessonsRepository.save(lesson);
+                checkStatusAfterTheoryLessonsChangedByTheoryLessonId(id);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

@@ -191,8 +191,8 @@ public class InternalExamService {
             InternalExam exam = optionalExam.get();
             try {
                 exam.setLessonStatus(status);
-                checkStatusAfterInternalExamChangedByInternalExamId(id);
                 exam = internalExamRepository.save(exam);
+                checkStatusAfterInternalExamChangedByInternalExamId(id);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }

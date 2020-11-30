@@ -175,8 +175,8 @@ public class DrivingLessonService {
             DrivingLesson lesson = optionalLesson.get();
             try {
                 lesson.setLessonStatus(status);
-                checkStatusAfterDrivingLessonChangedByDrivingLessonId(id);
                 lesson = drivingLessonRepository.save(lesson);
+                checkStatusAfterDrivingLessonChangedByDrivingLessonId(id);
                 checkExtraDrivingLessonPayments(lesson);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

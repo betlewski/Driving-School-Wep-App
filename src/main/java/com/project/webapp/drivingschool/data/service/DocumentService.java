@@ -149,8 +149,8 @@ public class DocumentService {
             Document document = documentOptional.get();
             try {
                 document.setProcessingStatus(status);
-                checkStatusAfterDocumentChangedByDocumentId(id);
                 document = documentRepository.save(document);
+                checkStatusAfterDocumentChangedByDocumentId(id);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -167,7 +167,21 @@ public class DocumentService {
      * @return zgłoszony dokument lub błąd
      */
     public ResponseEntity<Document> requestDocumentByDocumentId(Long id) {
-        return changeProcessingStatusByDocumentId(id, ProcessingStatus.REQUESTED);
+        Optional<Document> documentOptional = documentRepository.findById(id);
+        if (documentOptional.isPresent()) {
+            Document document = documentOptional.get();
+            try {
+                document.setProcessingStatus(ProcessingStatus.REQUESTED);
+                document.setSubmissionTime(LocalDate.now());
+                document = documentRepository.save(document);
+                checkStatusAfterDocumentChangedByDocumentId(id);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(document, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
