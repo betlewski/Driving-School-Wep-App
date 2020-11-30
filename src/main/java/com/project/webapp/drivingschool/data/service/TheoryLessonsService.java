@@ -255,6 +255,7 @@ public class TheoryLessonsService {
             CourseStatus status = course.getCourseStatus();
             if (status.equals(CourseStatus.LECTURES) && isTheoryLessonsPassedByCourse(course)) {
                 course.setCourseStatus(CourseStatus.THEORY_INTERNAL_EXAM);
+                courseRepository.save(course);
             }
         }
     }

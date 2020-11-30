@@ -174,7 +174,6 @@ public class DocumentService {
                 document.setProcessingStatus(ProcessingStatus.REQUESTED);
                 document.setSubmissionTime(LocalDate.now());
                 document = documentRepository.save(document);
-                checkStatusAfterDocumentChangedByDocumentId(id);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -210,11 +209,16 @@ public class DocumentService {
                 case MEDICAL_EXAMS:
                     if (checkIfMedicalExamsCompleted(course)) {
                         course.setCourseStatus(CourseStatus.DOCUMENTS_SUBMISSION);
+                        if (checkIfAllDocumentsCompleted(course)) {
+                            course.setCourseStatus(CourseStatus.LECTURES);
+                        }
+                        courseRepository.save(course);
                     }
                     break;
                 case DOCUMENTS_SUBMISSION:
                     if (checkIfAllDocumentsCompleted(course)) {
                         course.setCourseStatus(CourseStatus.LECTURES);
+                        courseRepository.save(course);
                     }
                     break;
                 default:

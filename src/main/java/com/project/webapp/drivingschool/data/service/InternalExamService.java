@@ -228,12 +228,14 @@ public class InternalExamService {
                 case THEORY_INTERNAL_EXAM:
                     if (isInternalExamPassedByCourseAndExamType(course, ExamType.THEORETICAL)) {
                         course.setCourseStatus(CourseStatus.DRIVING_LESSONS);
+                        courseRepository.save(course);
                     }
                     break;
                 case PRACTICAL_INTERNAL_EXAM:
                     if (isInternalExamPassedByCourseAndExamType(course, ExamType.PRACTICAL) &&
                             paymentService.checkIfAllPaymentsCompleted(course)) {
                         course.setCourseStatus(CourseStatus.STATE_EXAMS);
+                        courseRepository.save(course);
                     }
                     break;
                 default:

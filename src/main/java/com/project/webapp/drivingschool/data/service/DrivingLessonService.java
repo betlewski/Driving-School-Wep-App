@@ -211,6 +211,7 @@ public class DrivingLessonService {
             CourseStatus status = course.getCourseStatus();
             if (status.equals(CourseStatus.DRIVING_LESSONS) && isDrivingLessonsPassedByCourse(course)) {
                 course.setCourseStatus(CourseStatus.PRACTICAL_INTERNAL_EXAM);
+                courseRepository.save(course);
             }
         }
     }

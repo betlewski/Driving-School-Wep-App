@@ -173,7 +173,6 @@ public class PaymentService {
                 payment.setProcessingStatus(ProcessingStatus.REQUESTED);
                 payment.setPaymentTime(LocalDate.now());
                 payment = paymentRepository.save(payment);
-                checkStatusAfterPaymentChangedByPaymentId(id);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
@@ -209,6 +208,7 @@ public class PaymentService {
                     && checkIfAllPaymentsCompleted(course)
                     && internalExamService.isInternalExamPassedByCourseAndExamType(course, ExamType.PRACTICAL)) {
                 course.setCourseStatus(CourseStatus.STATE_EXAMS);
+                courseRepository.save(course);
             }
         }
     }
