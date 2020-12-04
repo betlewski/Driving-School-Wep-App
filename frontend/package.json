@@ -20,7 +20,9 @@
     "@angular/platform-browser-dynamic": "~11.0.0",
     "@angular/router": "~11.0.0",
     "@types/crypto-js": "^4.0.1",
+    "angular-calendar": "^0.28.22",
     "crypto-js": "^4.0.0",
+    "date-fns": "^2.16.1",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.2"

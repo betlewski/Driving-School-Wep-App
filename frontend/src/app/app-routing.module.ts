@@ -9,6 +9,7 @@ import {CourseComponent} from "./component/separate/student/course/course.compon
 import {CourseInitComponent} from "./component/separate/student/course-init/course-init.component";
 import {PersonalDataComponent} from "./component/separate/student/personal-data/personal-data.component";
 import {OfficialComponent} from "./component/separate/student/official/official.component";
+import {CalendarComponent} from "./component/separate/student/calendar/calendar.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -40,6 +41,10 @@ const routes: Routes = [
           {
             path: 'official',
             component: OfficialComponent
+          },
+          {
+            path: 'calendar',
+            component: CalendarComponent
           }
         ]
       },
