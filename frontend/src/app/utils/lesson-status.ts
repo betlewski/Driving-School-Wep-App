@@ -13,11 +13,11 @@ export enum LessonStatus {
 
 export namespace LessonStatus {
 
-  const REQUESTED_TRANSLATION = "Zgłoszenie prośby o akceptację";
-  const ACCEPTED_TRANSLATION = "Zgłoszenie przyjęte";
-  const REJECTED_TRANSLATION = "Zgłoszenie odrzucone";
-  const PASSED_TRANSLATION = "Zajęcia zrealizowane";
-  const FAILED_TRANSLATION = "Zajęcia niezrealizowane";
+  const REQUESTED_TRANSLATION = "W trakcie zgłoszenia";
+  const ACCEPTED_TRANSLATION = "Przyjęto zgłoszenie";
+  const REJECTED_TRANSLATION = "Odrzucono zgłoszenie";
+  const PASSED_TRANSLATION = "Zrealizowano";
+  const FAILED_TRANSLATION = "Niezrealizowano";
 
   export function translate(status: LessonStatus): string {
     let translator: string;

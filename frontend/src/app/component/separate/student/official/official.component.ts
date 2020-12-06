@@ -49,6 +49,10 @@ export class OfficialComponent implements OnInit {
   }
 
   private getOfficials(email: string) {
+    this.getOfficialsFromDocuments(email);
+  }
+
+  private getOfficialsFromDocuments(email: string) {
     this.documentService.findAllByEmail(email)
       .subscribe(documents => {
         const officialsFromMap = Official.mapFromDocuments(documents);

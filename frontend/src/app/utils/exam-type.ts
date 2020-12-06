@@ -10,8 +10,8 @@ export enum ExamType {
 
 export namespace ExamType {
 
-  const THEORETICAL_TRANSLATION = "Wewnętrzny egzamin teoretyczny";
-  const PRACTICAL_TRANSLATION = "Wewnętrzny egzamin praktyczny";
+  const THEORETICAL_TRANSLATION = "WEWNĘTRZNY EGZAMIN TEORETYCZNY";
+  const PRACTICAL_TRANSLATION = "WEWNĘTRZNY EGZAMIN PRAKTYCZNY";
 
   export function translate(type: ExamType): string {
     let translator: string;

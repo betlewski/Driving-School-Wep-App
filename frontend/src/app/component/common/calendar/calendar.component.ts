@@ -2,12 +2,16 @@ import {Component, ChangeDetectionStrategy, ViewChild, TemplateRef} from '@angul
 import {CalendarEvent, CalendarView,} from 'angular-calendar';
 import {isSameDay, isSameMonth} from 'date-fns';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AuthService} from "../../../service/auth/auth.service";
+import {TheoryLessonsService} from "../../../service/rest/theory-lessons/theory-lessons.service";
+import {DrivingLessonService} from "../../../service/rest/driving-lesson/driving-lesson.service";
+import {InternalExamService} from "../../../service/rest/internal-exam/internal-exam.service";
 
 /**
- * Kolory wykorzystywane do oznaczania statusu wydarzeń:
- * -> żółty (wydarzenie planowane lub zatwierdzone)
- * -> zielony (wydarzenie odbyte, zakończone pomyślnie)
- * -> czerwone (wydarzenie nieodbyte lub zakończone niepomyślnie)
+ * Kolory wykorzystywane do oznaczania typu wydarzeń:
+ * -> żółty (zajęcia teoretyczne - wykłady)
+ * -> zielony (zajęcia praktyczne - jazdy szkoleniowe)
+ * -> czerwone (egzaminy wewnętrzne)
  */
 export const colors: any = {
   yellow: {
@@ -35,7 +39,11 @@ export const colors: any = {
  */
 export class CalendarComponent {
 
-  public constructor(private modal: NgbModal) {
+  public constructor(private modal: NgbModal,
+                     protected authService: AuthService,
+                     protected theoryLessonsService: TheoryLessonsService,
+                     protected drivingLessonService: DrivingLessonService,
+                     protected internalExamService: InternalExamService) {
   }
 
   @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any> | undefined;
