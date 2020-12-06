@@ -1,5 +1,6 @@
 <h2 class="mb-4"> Kurs nauki </h2>
-<p> {{courseReport.comment}} </p>
+<p> {{courseReport !== null ? courseReport.comment :
+  "Nie znaleziono aktywnego kursu. Rozpocznij nowy..."}} </p>
 <br>
 <div *ngIf="courseReport != null">
   <p> Kategoria jazdy: <b>{{courseReport.category}} </b></p>

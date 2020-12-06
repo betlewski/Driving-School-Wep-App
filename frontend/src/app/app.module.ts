@@ -25,6 +25,9 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {StudentCalendarComponent} from './component/separate/student/calendar/student-calendar.component';
 import {CalendarComponent} from "./component/common/calendar/calendar.component";
+import {DrivingLessonService} from "./service/rest/driving-lesson/driving-lesson.service";
+import {InternalExamService} from "./service/rest/internal-exam/internal-exam.service";
+import {TheoryLessonsService} from "./service/rest/theory-lessons/theory-lessons.service";
 
 @NgModule({
   declarations: [
@@ -55,7 +58,10 @@ import {CalendarComponent} from "./component/common/calendar/calendar.component"
     StudentService,
     CourseService,
     DocumentService,
-    PaymentService
+    PaymentService,
+    DrivingLessonService,
+    InternalExamService,
+    TheoryLessonsService
   ],
   bootstrap: [AppComponent]
 })
