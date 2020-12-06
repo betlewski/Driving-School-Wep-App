@@ -20,9 +20,11 @@ import {PersonalDataComponent} from './component/separate/student/personal-data/
 import {OfficialComponent} from './component/separate/student/official/official.component';
 import {DocumentService} from "./service/rest/document/document.service";
 import {PaymentService} from "./service/rest/payment/payment.service";
-import {CalendarComponent} from './component/separate/student/calendar/calendar.component';
 import {CalendarModule, DateAdapter} from 'angular-calendar';
 import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {StudentCalendarComponent} from './component/separate/student/calendar/student-calendar.component';
+import {CalendarComponent} from "./component/common/calendar/calendar.component";
 
 @NgModule({
   declarations: [
@@ -37,13 +39,15 @@ import {adapterFactory} from 'angular-calendar/date-adapters/date-fns';
     PersonalDataComponent,
     OfficialComponent,
     CalendarComponent,
+    StudentCalendarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory})
+    CalendarModule.forRoot({provide: DateAdapter, useFactory: adapterFactory}),
+    NgbModule
   ],
   providers: [
     AuthService,

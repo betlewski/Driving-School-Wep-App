@@ -9,7 +9,7 @@ import {CourseComponent} from "./component/separate/student/course/course.compon
 import {CourseInitComponent} from "./component/separate/student/course-init/course-init.component";
 import {PersonalDataComponent} from "./component/separate/student/personal-data/personal-data.component";
 import {OfficialComponent} from "./component/separate/student/official/official.component";
-import {CalendarComponent} from "./component/separate/student/calendar/calendar.component";
+import {StudentCalendarComponent} from "./component/separate/student/calendar/student-calendar.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -44,7 +44,7 @@ const routes: Routes = [
           },
           {
             path: 'calendar',
-            component: CalendarComponent
+            component: StudentCalendarComponent
           }
         ]
       },
