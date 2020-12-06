@@ -45,6 +45,19 @@ public class InternalExamService {
     }
 
     /**
+     * Pobranie wszystkich egzaminów wewnętrznych
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
+     *
+     * @param email adres email kursanta
+     * @return lista egzaminów
+     */
+    public Set<InternalExam> getAllInternalExamsByEmail(String email) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
+        return activeCourse.map(course -> new HashSet<>(course.getInternalExams()))
+                .orElse(new HashSet<>());
+    }
+
+    /**
      * Pobranie egzaminów wewnętrznych o podanym typie
      * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *
