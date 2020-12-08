@@ -28,6 +28,7 @@ import {CalendarComponent} from "./component/common/calendar/calendar.component"
 import {DrivingLessonService} from "./service/rest/driving-lesson/driving-lesson.service";
 import {InternalExamService} from "./service/rest/internal-exam/internal-exam.service";
 import {TheoryLessonsService} from "./service/rest/theory-lessons/theory-lessons.service";
+import { DrivingLessonsComponent } from './component/separate/student/driving-lessons/driving-lessons.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import {TheoryLessonsService} from "./service/rest/theory-lessons/theory-lessons
     OfficialComponent,
     CalendarComponent,
     StudentCalendarComponent,
+    DrivingLessonsComponent,
   ],
   imports: [
     BrowserModule,
