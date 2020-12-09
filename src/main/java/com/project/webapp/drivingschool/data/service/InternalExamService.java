@@ -7,6 +7,7 @@ import com.project.webapp.drivingschool.data.repository.CourseRepository;
 import com.project.webapp.drivingschool.data.repository.InternalExamRepository;
 import com.project.webapp.drivingschool.data.repository.StudentRepository;
 import com.project.webapp.drivingschool.data.utils.CourseStatus;
+import com.project.webapp.drivingschool.data.utils.DataUtils;
 import com.project.webapp.drivingschool.data.utils.ExamType;
 import com.project.webapp.drivingschool.data.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -149,20 +150,24 @@ public class InternalExamService {
      * @return dodany egzamin
      */
     public ResponseEntity<InternalExam> addExam(InternalExam exam, String email) {
-        Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
-        if (optionalCourse.isPresent()) {
-            Course course = optionalCourse.get();
-            try {
-                exam.setLessonStatus(LessonStatus.REQUESTED);
-                exam = internalExamRepository.save(exam);
-                course.getInternalExams().add(exam);
-                courseRepository.save(course);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (DataUtils.isStartAndEndTimeCorrect(exam.getStartTime(), exam.getEndTime())) {
+            Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
+            if (optionalCourse.isPresent()) {
+                Course course = optionalCourse.get();
+                try {
+                    exam.setLessonStatus(LessonStatus.REQUESTED);
+                    exam = internalExamRepository.save(exam);
+                    course.getInternalExams().add(exam);
+                    courseRepository.save(course);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+                return new ResponseEntity<>(exam, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(exam, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 

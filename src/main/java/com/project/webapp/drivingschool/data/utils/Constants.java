@@ -1,5 +1,7 @@
 package com.project.webapp.drivingschool.data.utils;
 
+import java.sql.Time;
+
 /**
  * Klasa przechowująca stałe wartości.
  */
@@ -22,5 +24,17 @@ public final class Constants {
      * jazdy szkoleniowej.
      */
     public static final Integer EXTRA_DRIVING_LESSON_FEE = 50;
+
+    /**
+     * Godzina rozpoczęcia dnia pracy.
+     * (minimalna godzina początku dowolnych zajęć)
+     */
+    public static final Integer START_WORK_HOUR = 6;
+
+    /**
+     * Godzina zakończenia dnia pracy.
+     * (maksymalna godzina końca dowolnych zajęć)
+     */
+    public static final Integer END_WORK_HOUR = 20;
 
 }

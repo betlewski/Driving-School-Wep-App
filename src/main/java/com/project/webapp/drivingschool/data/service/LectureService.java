@@ -5,6 +5,7 @@ import com.project.webapp.drivingschool.data.repository.LectureRepository;
 import com.project.webapp.drivingschool.data.repository.LectureSeriesRepository;
 import com.project.webapp.drivingschool.data.repository.StudentRepository;
 import com.project.webapp.drivingschool.data.utils.Constants;
+import com.project.webapp.drivingschool.data.utils.DataUtils;
 import com.project.webapp.drivingschool.data.utils.LectureSeriesStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -184,7 +185,7 @@ public class LectureService {
      * @return dodany wykład
      */
     public ResponseEntity<Lecture> addLecture(Lecture lecture) {
-        if (checkIfStartTimeIsBeforeEndTime(lecture.getStartTime(), lecture.getEndTime())) {
+        if (DataUtils.isStartAndEndTimeCorrect(lecture.getStartTime(), lecture.getEndTime())) {
             try {
                 lecture = lectureRepository.save(lecture);
             } catch (Exception e) {
@@ -207,7 +208,7 @@ public class LectureService {
         if (optionalLecture.isPresent()) {
             Lecture lecture = optionalLecture.get();
             try {
-                if (checkIfStartTimeIsBeforeEndTime(newLecture.getStartTime(), newLecture.getEndTime())) {
+                if (DataUtils.isStartAndEndTimeCorrect(newLecture.getStartTime(), newLecture.getEndTime())) {
                     lecture.setStartTime(newLecture.getStartTime());
                     lecture.setEndTime(newLecture.getEndTime());
                 }
@@ -219,22 +220,6 @@ public class LectureService {
             return new ResponseEntity<>(lecture, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-    }
-
-    /**
-     * Sprawdzenie, czy podane godziny wykładu są prawidłowe
-     * tzn. czy godzina rozpoczęcia jest przed godziną zakończenia.
-     *
-     * @param startTime godzina rozpoczęcia
-     * @param endTime   godzina zakończenia
-     * @return true - jeśli godziny są prawidłowe, false - w przeciwnym razie
-     */
-    public Boolean checkIfStartTimeIsBeforeEndTime(LocalDateTime startTime, LocalDateTime endTime) {
-        if (startTime != null && endTime != null) {
-            return startTime.isBefore(endTime);
-        } else {
-            return Boolean.FALSE;
-        }
     }
 
 }

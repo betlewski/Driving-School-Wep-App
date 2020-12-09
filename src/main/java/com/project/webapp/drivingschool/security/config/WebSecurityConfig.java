@@ -55,50 +55,51 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().and()
                 .csrf().disable()
                 .sessionManagement()
-                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                    .and()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .exceptionHandling()
-                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                    .and()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and()
                 .formLogin()
-                    .permitAll()
-                    .and()
+                .permitAll()
+                .and()
                 .authorizeRequests()
-                    .antMatchers("/rest/authenticate").permitAll()
-                    .antMatchers("/rest/employee/byEmail",
-                                "/rest/employee/edit",
-                                "/rest/employee/edit/password").hasAnyRole(ADMIN, EMPLOYEE)
-                    .antMatchers("/rest/employee/**").hasRole(ADMIN)
-                    .antMatchers("/rest/student/all",
-                                "/rest/student/edit/pkk",
-                                "/rest/student/email/exist").hasRole(ADMIN)
-                    .antMatchers("/rest/student/add").permitAll()
-                    .antMatchers("/rest/student/**").hasAnyRole(ADMIN, STUDENT)
-                    .antMatchers("/rest/course/edit/status").hasRole(ADMIN)
-                    .antMatchers("/rest/course/**").hasAnyRole(ADMIN, STUDENT)
-                    .antMatchers("/rest/document/add",
-                                "/rest/document/delete",
-                                 "/rest/document/edit/status").hasRole(ADMIN)
-                    .antMatchers("/rest/document/**").hasAnyRole(ADMIN, STUDENT)
-                    .antMatchers("/rest/payment/add",
-                                "/rest/payment/delete",
-                                "/rest/payment/edit/status").hasRole(ADMIN)
-                    .antMatchers("/rest/payment/**").hasAnyRole(ADMIN, STUDENT)
-                    .antMatchers("/rest/theory/all/byEmployeeId",
-                                "/rest/theory/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
-                    .antMatchers("/rest/theory/**").hasAnyRole(ADMIN, STUDENT)
-                    .antMatchers("/rest/series/all/free").authenticated()
-                    .antMatchers("/rest/series/**").hasAnyRole(ADMIN, EMPLOYEE)
-                    .antMatchers("/rest/lecture/all/bySeriesId",
-                                "/rest/lecture/hours/passed/bySeriesId").hasAnyRole(ADMIN, STUDENT)
-                    .antMatchers("/rest/lecture/**").hasAnyRole(ADMIN, EMPLOYEE)
-                    .antMatchers("/rest/driving/all/byEmployeeId",
-                                "/rest/driving/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
-                    .antMatchers("/rest/driving/**").hasAnyRole(ADMIN, STUDENT)
-                    .antMatchers("/rest/exam/all/byEmployeeId",
-                                "/rest/exam/edit/**").hasAnyRole(ADMIN, EMPLOYEE)
-                    .antMatchers("/rest/exam/**").hasAnyRole(ADMIN, STUDENT)
-                    .anyRequest().authenticated();
+                .antMatchers("/rest/authenticate").permitAll()
+                .antMatchers("/rest/employee/byEmail",
+                        "/rest/employee/edit",
+                        "/rest/employee/edit/password").hasAnyRole(ADMIN, EMPLOYEE)
+                .antMatchers("/rest/employee/all/byRole").hasAnyRole(ADMIN, STUDENT)
+                .antMatchers("/rest/employee/**").hasRole(ADMIN)
+                .antMatchers("/rest/student/all",
+                        "/rest/student/edit/pkk",
+                        "/rest/student/email/exist").hasRole(ADMIN)
+                .antMatchers("/rest/student/add").permitAll()
+                .antMatchers("/rest/student/**").hasAnyRole(ADMIN, STUDENT)
+                .antMatchers("/rest/course/edit/status").hasRole(ADMIN)
+                .antMatchers("/rest/course/**").hasAnyRole(ADMIN, STUDENT)
+                .antMatchers("/rest/document/add",
+                        "/rest/document/delete",
+                        "/rest/document/edit/status").hasRole(ADMIN)
+                .antMatchers("/rest/document/**").hasAnyRole(ADMIN, STUDENT)
+                .antMatchers("/rest/payment/add",
+                        "/rest/payment/delete",
+                        "/rest/payment/edit/status").hasRole(ADMIN)
+                .antMatchers("/rest/payment/**").hasAnyRole(ADMIN, STUDENT)
+                .antMatchers("/rest/theory/all/byEmployeeId",
+                        "/rest/theory/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
+                .antMatchers("/rest/theory/**").hasAnyRole(ADMIN, STUDENT)
+                .antMatchers("/rest/series/all/free").authenticated()
+                .antMatchers("/rest/series/**").hasAnyRole(ADMIN, EMPLOYEE)
+                .antMatchers("/rest/lecture/all/bySeriesId",
+                        "/rest/lecture/hours/passed/bySeriesId").hasAnyRole(ADMIN, STUDENT)
+                .antMatchers("/rest/lecture/**").hasAnyRole(ADMIN, EMPLOYEE)
+                .antMatchers("/rest/driving/all/byEmployeeId",
+                        "/rest/driving/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
+                .antMatchers("/rest/driving/**").hasAnyRole(ADMIN, STUDENT)
+                .antMatchers("/rest/exam/all/byEmployeeId",
+                        "/rest/exam/edit/**").hasAnyRole(ADMIN, EMPLOYEE)
+                .antMatchers("/rest/exam/**").hasAnyRole(ADMIN, STUDENT)
+                .anyRequest().authenticated();
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }

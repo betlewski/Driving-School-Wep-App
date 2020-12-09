@@ -145,20 +145,24 @@ public class DrivingLessonService {
      * @return dodana jazda
      */
     public ResponseEntity<DrivingLesson> addDrivingLesson(DrivingLesson lesson, String email) {
-        Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
-        if (optionalCourse.isPresent()) {
-            Course course = optionalCourse.get();
-            try {
-                lesson.setLessonStatus(LessonStatus.REQUESTED);
-                lesson = drivingLessonRepository.save(lesson);
-                course.getDrivingLessons().add(lesson);
-                courseRepository.save(course);
-            } catch (Exception e) {
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if (DataUtils.isStartAndEndTimeCorrect(lesson.getStartTime(), lesson.getEndTime())) {
+            Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
+            if (optionalCourse.isPresent()) {
+                Course course = optionalCourse.get();
+                try {
+                    lesson.setLessonStatus(LessonStatus.REQUESTED);
+                    lesson = drivingLessonRepository.save(lesson);
+                    course.getDrivingLessons().add(lesson);
+                    courseRepository.save(course);
+                } catch (Exception e) {
+                    return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+                }
+                return new ResponseEntity<>(lesson, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
-            return new ResponseEntity<>(lesson, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
