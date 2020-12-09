@@ -1,8 +1,35 @@
 <h2 class="mb-4"> Jazdy szkoleniowe </h2>
-<p> Sprawdź, jakie jazdy masz już za sobą i umów się z ulubionym instruktorem na kolejną.</p>
-<br>
+<p> Sprawdź, jakie jazdy masz już za sobą i umów się z wybranym instruktorem na kolejne.</p>
+<form class="form-margin">
+  <div class="form-group">
+    <label> Instruktor
+      <select class="browser-default custom-select" name="employee" [(ngModel)]="instructor"
+              style="font-size: 15px">
+        <option value=""></option>
+        <option *ngFor="let instructor of instructors" [ngValue]="instructor">
+          {{ instructor.fullName + " (" + instructor.email + ")" }}
+        </option>
+      </select>
+    </label>
+    <label style="margin-left: 50px"> Rozpoczęcie
+      <input type="datetime-local" class="form-control border bg-light"
+             style="width: 200px" name="startTime" [(ngModel)]="startTime">
+    </label>
+    <label style="margin-left: 50px"> Zakończenie
+      <input type="datetime-local" class="form-control border bg-light"
+             style="width: 200px" name="endTime`" [(ngModel)]="endTime">
+    </label>
+  </div>
+  <div class="form-group" style="margin-top: 20px">
+    <button type="button" class="btn btn-outline-dark" style="width: 10%"
+            (click)="request()">Umów się
+    </button>
+    <a style="margin-left: 30px">{{feedback}}</a>
+  </div>
+</form>
+
 <!--Zajęcia oczekujące (zgłoszone lub zaakceptowane)-->
-<table class="table table-bordered">
+<table class="table table-bordered" style="margin-top: 7%">
   <thead class="thead-dark text-truncate">
   <tr>
     <th scope="col" style="width: 300px"> Instruktor</th>
@@ -21,10 +48,10 @@
   </tbody>
 </table>
 
-<!--Zajęcia zrealizowane-->
+<!--Zajęcia niezrealizowane lub odrzucone-->
 <table class="table table-bordered">
   <tbody>
-  <tr *ngFor="let lesson of passedLessons" style="background-color: #d8ffd6">
+  <tr *ngFor="let lesson of failedLessons" style="background-color: #ffeaea">
     <td style="width: 300px">{{convertEmployee(lesson.employee)}}</td>
     <td style="width: 250px">{{translateStatus(lesson.lessonStatus)}}</td>
     <td style="width: 200px">{{convertDate(lesson.startTime)}}</td>
@@ -33,10 +60,10 @@
   </tbody>
 </table>
 
-<!--Zajęcia niezrealizowane lub odrzucone-->
+<!--Zajęcia zrealizowane-->
 <table class="table table-bordered">
   <tbody>
-  <tr *ngFor="let lesson of failedLessons" style="background-color: #ffeaea">
+  <tr *ngFor="let lesson of passedLessons" style="background-color: #d8ffd6">
     <td style="width: 300px">{{convertEmployee(lesson.employee)}}</td>
     <td style="width: 250px">{{translateStatus(lesson.lessonStatus)}}</td>
     <td style="width: 200px">{{convertDate(lesson.startTime)}}</td>
