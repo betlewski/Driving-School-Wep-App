@@ -58,8 +58,9 @@ public class DrivingLessonController {
 
     @PostMapping("/add")
     public ResponseEntity<DrivingLesson> addDrivingLesson(@RequestBody DrivingLesson lesson,
-                                                          @RequestParam("email") String email) {
-        return drivingLessonService.addDrivingLesson(lesson, email);
+                                                          @RequestParam("student") String studentEmail,
+                                                          @RequestParam("employee") String employeeEmail) {
+        return drivingLessonService.addDrivingLesson(lesson, studentEmail, employeeEmail);
     }
 
     @PutMapping("/edit/status")

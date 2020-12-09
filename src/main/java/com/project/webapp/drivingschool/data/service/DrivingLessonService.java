@@ -1,10 +1,7 @@
 package com.project.webapp.drivingschool.data.service;
 
 import com.project.webapp.drivingschool.data.model.*;
-import com.project.webapp.drivingschool.data.repository.CourseRepository;
-import com.project.webapp.drivingschool.data.repository.DrivingLessonRepository;
-import com.project.webapp.drivingschool.data.repository.PaymentRepository;
-import com.project.webapp.drivingschool.data.repository.StudentRepository;
+import com.project.webapp.drivingschool.data.repository.*;
 import com.project.webapp.drivingschool.data.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,18 +24,21 @@ public class DrivingLessonService {
     private CourseRepository courseRepository;
     private PaymentRepository paymentRepository;
     private CourseService courseService;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     public DrivingLessonService(DrivingLessonRepository drivingLessonRepository,
                                 StudentRepository studentRepository,
                                 CourseRepository courseRepository,
                                 PaymentRepository paymentRepository,
-                                CourseService courseService) {
+                                CourseService courseService,
+                                EmployeeRepository employeeRepository) {
         this.drivingLessonRepository = drivingLessonRepository;
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.paymentRepository = paymentRepository;
         this.courseService = courseService;
+        this.employeeRepository = employeeRepository;
     }
 
     /**
@@ -138,19 +138,24 @@ public class DrivingLessonService {
     }
 
     /**
-     * Dodanie jazdy do aktywnego kursu dla kursanta o podanym adresie email.
+     * Dodanie jazdy prowadzonej przez instruktora o podanym adresie email
+     * do aktywnego kursu dla kursanta o podanym adresie email.
      *
-     * @param lesson jazda do dodania
-     * @param email  adres email kursanta
+     * @param lesson        jazda do dodania
+     * @param studentEmail  adres email kursanta
+     * @param employeeEmail adres email instruktora
      * @return dodana jazda
      */
-    public ResponseEntity<DrivingLesson> addDrivingLesson(DrivingLesson lesson, String email) {
+    public ResponseEntity<DrivingLesson> addDrivingLesson(DrivingLesson lesson, String studentEmail, String employeeEmail) {
         if (DataUtils.isStartAndEndTimeCorrect(lesson.getStartTime(), lesson.getEndTime())) {
-            Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
-            if (optionalCourse.isPresent()) {
+            Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(studentEmail);
+            Optional<Employee> optionalEmployee = employeeRepository.findByEmail(employeeEmail);
+            if (optionalCourse.isPresent() && optionalEmployee.isPresent()) {
                 Course course = optionalCourse.get();
+                Employee employee = optionalEmployee.get();
                 try {
                     lesson.setLessonStatus(LessonStatus.REQUESTED);
+                    lesson.setEmployee(employee);
                     lesson = drivingLessonRepository.save(lesson);
                     course.getDrivingLessons().add(lesson);
                     courseRepository.save(course);

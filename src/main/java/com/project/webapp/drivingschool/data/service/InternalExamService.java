@@ -1,9 +1,11 @@
 package com.project.webapp.drivingschool.data.service;
 
 import com.project.webapp.drivingschool.data.model.Course;
+import com.project.webapp.drivingschool.data.model.Employee;
 import com.project.webapp.drivingschool.data.model.InternalExam;
 import com.project.webapp.drivingschool.data.model.Student;
 import com.project.webapp.drivingschool.data.repository.CourseRepository;
+import com.project.webapp.drivingschool.data.repository.EmployeeRepository;
 import com.project.webapp.drivingschool.data.repository.InternalExamRepository;
 import com.project.webapp.drivingschool.data.repository.StudentRepository;
 import com.project.webapp.drivingschool.data.utils.CourseStatus;
@@ -31,18 +33,21 @@ public class InternalExamService {
     private CourseRepository courseRepository;
     private CourseService courseService;
     private PaymentService paymentService;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     public InternalExamService(InternalExamRepository internalExamRepository,
                                StudentRepository studentRepository,
                                CourseRepository courseRepository,
                                CourseService courseService,
-                               @Lazy PaymentService paymentService) {
+                               @Lazy PaymentService paymentService,
+                               EmployeeRepository employeeRepository) {
         this.internalExamRepository = internalExamRepository;
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.courseService = courseService;
         this.paymentService = paymentService;
+        this.employeeRepository = employeeRepository;
     }
 
     /**
@@ -143,19 +148,24 @@ public class InternalExamService {
     }
 
     /**
-     * Dodanie egzaminu do aktywnego kursu dla kursanta o podanym adresie email.
+     * Dodanie egzaminu prowadzonego przez egzaminatora o podanym adresie email
+     * do aktywnego kursu dla kursanta o podanym adresie email.
      *
-     * @param exam  egzamin do dodania
-     * @param email adres email kursanta
+     * @param exam          egzamin do dodania
+     * @param studentEmail  adres email kursanta
+     * @param employeeEmail adres email egzaminatora
      * @return dodany egzamin
      */
-    public ResponseEntity<InternalExam> addExam(InternalExam exam, String email) {
+    public ResponseEntity<InternalExam> addExam(InternalExam exam, String studentEmail, String employeeEmail) {
         if (DataUtils.isStartAndEndTimeCorrect(exam.getStartTime(), exam.getEndTime())) {
-            Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
-            if (optionalCourse.isPresent()) {
+            Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(studentEmail);
+            Optional<Employee> optionalEmployee = employeeRepository.findByEmail(employeeEmail);
+            if (optionalCourse.isPresent() && optionalEmployee.isPresent()) {
                 Course course = optionalCourse.get();
+                Employee employee = optionalEmployee.get();
                 try {
                     exam.setLessonStatus(LessonStatus.REQUESTED);
+                    exam.setEmployee(employee);
                     exam = internalExamRepository.save(exam);
                     course.getInternalExams().add(exam);
                     courseRepository.save(course);

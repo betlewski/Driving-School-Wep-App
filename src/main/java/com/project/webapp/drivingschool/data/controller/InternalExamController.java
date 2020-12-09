@@ -61,8 +61,9 @@ public class InternalExamController {
 
     @PostMapping("/add")
     public ResponseEntity<InternalExam> addExam(@RequestBody InternalExam exam,
-                                                @RequestParam("email") String email) {
-        return internalExamService.addExam(exam, email);
+                                                @RequestParam("student") String studentEmail,
+                                                @RequestParam("employee") String employeeEmail) {
+        return internalExamService.addExam(exam, studentEmail, employeeEmail);
     }
 
     @PutMapping("/edit")

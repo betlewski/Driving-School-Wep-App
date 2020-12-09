@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.Set;
 
 /**
@@ -70,13 +69,6 @@ public class LectureController {
     @ResponseBody
     public Boolean checkIfSumEqualsRequiredTheoryHoursForLecturesSet(@RequestBody Set<Lecture> lectures) {
         return lectureService.checkIfSumEqualsRequiredTheoryHoursForLecturesSet(lectures);
-    }
-
-    @GetMapping("/isTimeCorrect")
-    @ResponseBody
-    public Boolean checkIfStartTimeIsBeforeEndTime(@RequestParam("start") LocalDateTime startTime,
-                                                   @RequestParam("end") LocalDateTime endTime) {
-        return lectureService.checkIfStartTimeIsBeforeEndTime(startTime, endTime);
     }
 
     @PostMapping("/add")
