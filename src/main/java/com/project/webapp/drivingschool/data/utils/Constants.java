@@ -35,6 +35,6 @@ public final class Constants {
      * Godzina zakończenia dnia pracy.
      * (maksymalna godzina końca dowolnych zajęć)
      */
-    public static final Integer END_WORK_HOUR = 20;
+    public static final Integer END_WORK_HOUR = 19;
 
 }

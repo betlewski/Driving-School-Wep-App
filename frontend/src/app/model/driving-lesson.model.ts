@@ -7,13 +7,13 @@ import {LessonStatus} from "../utils/lesson-status";
  */
 export class DrivingLesson {
 
-  id: number;
-  employee: Employee;
-  lessonStatus: LessonStatus;
+  id: number | null;
+  employee: Employee | null;
+  lessonStatus: LessonStatus | null;
   startTime: Date;
   endTime: Date;
 
-  constructor(id: number, employee: Employee, lessonStatus: LessonStatus,
+  constructor(id: number | null, employee: Employee | null, lessonStatus: LessonStatus | null,
               startTime: Date, endTime: Date) {
     this.id = id;
     this.employee = employee;
