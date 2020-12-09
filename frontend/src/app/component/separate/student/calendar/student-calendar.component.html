@@ -97,12 +97,12 @@
       <pre class="font-italic">{{ event === undefined ? "" : event.title }}</pre>
     </div>
     <div> Rozpoczęcie:
-      <pre><strong>{{ event === undefined ? "" :
+      <pre><strong>{{ event.start == undefined ? "" :
         event.start.toLocaleDateString().concat("  ")
           .concat(event.start.toLocaleTimeString()) }}</strong></pre>
     </div>
     <div> Zakończenie:
-      <pre><strong>{{ event === undefined ? "" :
+      <pre><strong>{{ event.end == undefined ? "" :
         event.end.toLocaleDateString().concat("  ")
           .concat(event.end.toLocaleTimeString()) }}</strong></pre>
     </div>
