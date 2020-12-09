@@ -91,16 +91,19 @@ export class StudentCalendarComponent extends CalendarComponent implements OnIni
   }
 
   private getEventTitleFromDrivingLesson(lesson: DrivingLesson): string {
-    return "JAZDA SZKOLENIOWA"
-      .concat("\n- Instruktor: ").concat(lesson.employee.fullName)
-      .concat(" (").concat(lesson.employee.phoneNumber).concat(")")
-      .concat("\n- Status: ").concat(LessonStatus.translate(lesson.lessonStatus));
+    if (lesson.employee != null && lesson.lessonStatus != null) {
+      return "JAZDA SZKOLENIOWA"
+        .concat("\n- Instruktor: ").concat(lesson.employee.fullName)
+        .concat(" (").concat(lesson.employee.email).concat(")")
+        .concat("\n- Status: ").concat(LessonStatus.translate(lesson.lessonStatus));
+    }
+    return "";
   }
 
   private getEventTitleFromInternalExam(exam: InternalExam): string {
     return ExamType.translate(exam.examType)
       .concat("\n- Prowadzący: ").concat(exam.employee.fullName)
-      .concat(" (").concat(exam.employee.phoneNumber).concat(")")
+      .concat(" (").concat(exam.employee.email).concat(")")
       .concat("\n- Status: ").concat(LessonStatus.translate(exam.lessonStatus));
   }
 

@@ -87,13 +87,19 @@ export class DrivingLessonsComponent implements OnInit {
       new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
   }
 
-  public convertEmployee(employee: Employee): string {
-    return employee.fullName.concat(" (")
-      .concat(employee.email).concat(")");
+  public convertEmployee(employee: Employee | null): string {
+    if (employee != null) {
+      return employee.fullName.concat(" (")
+        .concat(employee.email).concat(")");
+    }
+    return "";
   }
 
-  public translateStatus(status: LessonStatus): string {
-    return LessonStatus.translate(status);
+  public translateStatus(status: LessonStatus | null): string {
+    if (status != null) {
+      return LessonStatus.translate(status);
+    }
+    return "";
   }
 
   public convertDate(date: Date): string {
