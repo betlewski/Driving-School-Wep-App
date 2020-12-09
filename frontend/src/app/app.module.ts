@@ -29,6 +29,7 @@ import {DrivingLessonService} from "./service/rest/driving-lesson/driving-lesson
 import {InternalExamService} from "./service/rest/internal-exam/internal-exam.service";
 import {TheoryLessonsService} from "./service/rest/theory-lessons/theory-lessons.service";
 import { DrivingLessonsComponent } from './component/separate/student/driving-lessons/driving-lessons.component';
+import {EmployeeService} from "./service/rest/employee/employee.service";
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { DrivingLessonsComponent } from './component/separate/student/driving-le
     PaymentService,
     DrivingLessonService,
     InternalExamService,
-    TheoryLessonsService
+    TheoryLessonsService,
+    EmployeeService
   ],
   bootstrap: [AppComponent]
 })
