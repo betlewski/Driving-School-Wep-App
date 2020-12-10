@@ -1,30 +1,33 @@
 import {Component, OnInit} from '@angular/core';
+import {DrivingLesson} from "../../../../model/driving-lesson.model";
+import {Employee} from "../../../../model/employee.model";
 import {AuthService} from "../../../../service/auth/auth.service";
 import {DrivingLessonService} from "../../../../service/rest/driving-lesson/driving-lesson.service";
-import {DrivingLesson} from "../../../../model/driving-lesson.model";
-import {LessonStatus} from "../../../../utils/lesson-status";
-import {Employee} from "../../../../model/employee.model";
 import {EmployeeService} from "../../../../service/rest/employee/employee.service";
 import {CourseService} from "../../../../service/rest/course/course.service";
 import {EmployeeRole} from "../../../../utils/employee-role";
+import {LessonStatus} from "../../../../utils/lesson-status";
+import {ExamType} from "../../../../utils/exam-type";
 import {Utils} from "../../../../utils/utils";
 
 @Component({
-  selector: 'app-driving-lessons',
-  templateUrl: './driving-lessons.component.html',
-  styleUrls: ['./driving-lessons.component.css']
+  selector: 'app-exam',
+  templateUrl: './exam.component.html',
+  styleUrls: ['./exam.component.css']
 })
 /**
- * Panel zarządzania jazdami szkoleniowymi.
+ * Panel zarządzania egzaminami wewnętrznymi.
  */
-export class DrivingLessonsComponent implements OnInit {
+export class ExamComponent implements OnInit {
 
   waitingLessons: DrivingLesson[] = [];
   passedLessons: DrivingLesson[] = [];
   failedLessons: DrivingLesson[] = [];
 
-  instructors: Employee[] = [];
-  instructor: Employee | null = null;
+  teachers: Employee[] = [];
+  chosenTeacher: Employee | null = null;
+  examTypes = ExamType.values();
+  chosenExamType: ExamType | null = null;
   startTime: Date | null = null;
   endTime: Date | null = null;
 
@@ -47,7 +50,7 @@ export class DrivingLessonsComponent implements OnInit {
       if (course != null && course.licenseCategory != null) {
         const role = EmployeeRole.getInstructorRoleByCourseCategory(course.licenseCategory);
         this.employeeService.findAllByRole(role).subscribe(
-          employees => this.instructors = employees)
+          employees => this.teachers = employees)
       }
     });
   }
@@ -88,6 +91,10 @@ export class DrivingLessonsComponent implements OnInit {
       new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
   }
 
+  public translateExamType(examType: ExamType): string {
+    return ExamType.shortTranslate(examType);
+  }
+
   public convertEmployee(employee: Employee | null): string {
     if (employee != null) {
       return employee.fullName.concat(" (")
@@ -111,12 +118,13 @@ export class DrivingLessonsComponent implements OnInit {
 
   public request(): void {
     // @ts-ignore
-    if (Utils.checkStringIfNotEmpty(this.instructor) && this.startTime != null && this.endTime != null) {
+    if (Utils.checkStringIfNotEmpty(this.chosenExamType) && Utils.checkStringIfNotEmpty(this.chosenTeacher)
+      && this.startTime != null && this.endTime != null) {
       const studentEmail = this.authService.getUserEmail();
       // @ts-ignore
-      const employeeEmail = this.instructor.email;
+      const employeeEmail = this.chosenTeacher.email;
       const lesson = new DrivingLesson(null, null, null, this.startTime, this.endTime);
-      this.drivingLessonService.addLesson(studentEmail, employeeEmail, lesson).subscribe(
+      this.addLesson(studentEmail, employeeEmail, lesson).subscribe(
         () => {
           this.refreshData();
           this.feedback = "Nowe zgłoszenie znajdziesz w tabeli poniżej - zaczekaj, aż instruktor je zaakceptuje.";
@@ -140,8 +148,8 @@ export class DrivingLessonsComponent implements OnInit {
     this.waitingLessons = [];
     this.passedLessons = [];
     this.failedLessons = [];
-    this.instructors = [];
-    this.instructor = null;
+    this.chosenTeacher = null;
+    this.chosenExamType = null;
     this.startTime = null;
     this.endTime = null;
     this.feedback = "";
