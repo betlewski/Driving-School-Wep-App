@@ -101,7 +101,7 @@ export class StudentCalendarComponent extends CalendarComponent implements OnIni
   }
 
   private getEventTitleFromInternalExam(exam: InternalExam): string {
-    return ExamType.translate(exam.examType)
+    return ExamType.fullTranslate(exam.examType)
       .concat("\n- Prowadzący: ").concat(exam.employee.fullName)
       .concat(" (").concat(exam.employee.email).concat(")")
       .concat("\n- Status: ").concat(LessonStatus.translate(exam.lessonStatus));
