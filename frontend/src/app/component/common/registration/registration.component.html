@@ -1,25 +1,35 @@
-<div class="background">
-  <div class="form">
-    <div class="title">REJESTRACJA
-      <p>Masz już swoje konto? <a routerLink="/login"><strong>Zaloguj się!</strong></a></p>
+<div class="container">
+  <div class="background">
+    <div class="form">
+      <div class="title">REJESTRACJA
+        <p>Masz już swoje konto? <a routerLink="/login"><strong>Zaloguj się!</strong></a></p>
+      </div>
+      <form name="form">
+        <div class="row justify-content-center">
+          <label>
+            <input type="text" placeholder="Imię i nazwisko" [(ngModel)]="fullName" name="fullName"/>
+          </label>
+        </div>
+        <div class="row justify-content-center">
+          <label>
+            <input type="text" onfocus="(this.type='date')" placeholder="Data urodzenia"
+                   [ngModel]="birthDate | date:'yyyy-MM-dd'"
+                   (ngModelChange)="birthDate = $event" name="birthDate"/>
+          </label>
+        </div>
+        <div class="row justify-content-center">
+          <label>
+            <input type="text" placeholder="Adres email" [(ngModel)]="email" name="email"/>
+          </label>
+        </div>
+        <div class="row justify-content-center">
+          <label>
+            <input type="password" placeholder="Hasło" [(ngModel)]="password" name="password"/>
+          </label>
+        </div>
+        <button (click)=register()>DOŁĄCZ</button>
+      </form>
+      <div class="message">{{feedback}}</div>
     </div>
-    <form name="form">
-      <label>
-        <input type="text" placeholder="Imię i nazwisko" [(ngModel)]="fullName" name="fullName"/>
-      </label>
-      <label>
-        <input type="text" onfocus="(this.type='date')" placeholder="Data urodzenia"
-               [ngModel]="birthDate | date:'yyyy-MM-dd'"
-               (ngModelChange)="birthDate = $event" name="birthDate"/>
-      </label>
-      <label>
-        <input type="text" placeholder="Adres email" [(ngModel)]="email" name="email"/>
-      </label>
-      <label>
-        <input type="password" placeholder="Hasło" [(ngModel)]="password" name="password"/>
-      </label>
-      <button (click)=register()>DOŁĄCZ</button>
-    </form>
-    <div class="message">{{feedback}}</div>
   </div>
 </div>
