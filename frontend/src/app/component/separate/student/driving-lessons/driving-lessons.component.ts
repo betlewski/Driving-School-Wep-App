@@ -8,6 +8,7 @@ import {EmployeeService} from "../../../../service/rest/employee/employee.servic
 import {CourseService} from "../../../../service/rest/course/course.service";
 import {EmployeeRole} from "../../../../utils/employee-role";
 import {TextConstants} from "../../../../utils/text-constants";
+import {Utils} from "../../../../utils/utils";
 
 @Component({
   selector: 'app-driving-lessons',
@@ -29,6 +30,7 @@ export class DrivingLessonsComponent implements OnInit {
   endTime: Date | null = null;
 
   feedback: string = "";
+  utils = new Utils();
 
   constructor(private authService: AuthService,
               private drivingLessonService: DrivingLessonService,
@@ -86,27 +88,6 @@ export class DrivingLessonsComponent implements OnInit {
   private sortLessonsByStartTime(lessons: DrivingLesson[]): void {
     lessons.sort((a, b) =>
       new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
-  }
-
-  public convertEmployee(employee: Employee | null): string {
-    if (employee != null) {
-      return employee.fullName.concat(" (")
-        .concat(employee.email).concat(")");
-    }
-    return "";
-  }
-
-  public translateStatus(status: LessonStatus | null): string {
-    if (status != null) {
-      return LessonStatus.translate(status);
-    }
-    return "";
-  }
-
-  public convertDate(date: Date): string {
-    const dateToParse = new Date(date);
-    return dateToParse.toLocaleDateString().concat("  ")
-      .concat(dateToParse.toLocaleTimeString());
   }
 
   public request(): void {

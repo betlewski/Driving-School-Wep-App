@@ -40,10 +40,10 @@
   </thead>
   <tbody>
   <tr *ngFor="let lesson of waitingLessons" style="background-color: lightyellow">
-    <td style="width: 300px">{{convertEmployee(lesson.employee)}}</td>
-    <td style="width: 250px">{{translateStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.startTime)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.endTime)}}</td>
+    <td style="width: 300px">{{utils.convertEmployeeToText(lesson.employee)}}</td>
+    <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
+    <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
+    <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
   </tr>
   </tbody>
 </table>
@@ -52,10 +52,10 @@
 <table class="table table-bordered">
   <tbody>
   <tr *ngFor="let lesson of failedLessons" style="background-color: #ffeaea">
-    <td style="width: 300px">{{convertEmployee(lesson.employee)}}</td>
-    <td style="width: 250px">{{translateStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.startTime)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.endTime)}}</td>
+    <td style="width: 300px">{{utils.convertEmployeeToText(lesson.employee)}}</td>
+    <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
+    <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
+    <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
   </tr>
   </tbody>
 </table>
@@ -64,10 +64,10 @@
 <table class="table table-bordered">
   <tbody>
   <tr *ngFor="let lesson of passedLessons" style="background-color: #d8ffd6">
-    <td style="width: 300px">{{convertEmployee(lesson.employee)}}</td>
-    <td style="width: 250px">{{translateStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.startTime)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.endTime)}}</td>
+    <td style="width: 300px">{{utils.convertEmployeeToText(lesson.employee)}}</td>
+    <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
+    <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
+    <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
   </tr>
   </tbody>
 </table>

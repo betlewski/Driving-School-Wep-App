@@ -1,5 +1,9 @@
+import {ExamType} from "./exam-type";
+import {LessonStatus} from "./lesson-status";
+import {Employee} from "../model/employee.model";
+
 /**
- * Narzędzia do przetwarzania danych
+ * Narzędzia do przetwarzania / tłumaczenia danych
  */
 export class Utils {
 
@@ -15,6 +19,41 @@ export class Utils {
   public static checkIfPasswordCorrect(password: string): boolean {
     return password == null ? false :
       password.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$") != null;
+  }
+
+  public translateExamType(examType: ExamType): string {
+    return ExamType.shortTranslate(examType);
+  }
+
+  public translateLessonStatus(status: LessonStatus): string {
+    return LessonStatus.translate(status);
+  }
+
+  public convertExamIsPassedToText(isPassed: boolean): string {
+    if (isPassed != null) {
+      return isPassed ? "TAK" : "NIE";
+    } else {
+      return "-";
+    }
+  }
+
+  public convertExamResultToText(result: number): string {
+    if (result != null) {
+      return result.toString().concat("%");
+    } else {
+      return "-";
+    }
+  }
+
+  public convertEmployeeToText(employee: Employee): string {
+    return employee.fullName.concat(" (")
+      .concat(employee.email).concat(")");
+  }
+
+  public convertEventDateToText(date: Date): string {
+    const dateToParse = new Date(date);
+    return dateToParse.toLocaleDateString().concat("  ")
+      .concat(dateToParse.toLocaleTimeString());
   }
 
 }

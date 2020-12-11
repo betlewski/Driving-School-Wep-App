@@ -1,3 +1,5 @@
+import {CourseStatus} from "./course-status";
+
 /**
  * Typ egzaminu wewnętrznego.
  */
@@ -50,6 +52,17 @@ export namespace ExamType {
 
   export function values(): ExamType[] {
     return [ExamType.THEORETICAL, ExamType.PRACTICAL];
+  }
+
+  export function getExamTypeByCourseStatus(status: CourseStatus): ExamType | null {
+    switch (CourseStatus[status] as unknown) {
+      case CourseStatus.THEORY_INTERNAL_EXAM:
+        return ExamType.THEORETICAL;
+      case CourseStatus.PRACTICAL_INTERNAL_EXAM:
+        return ExamType.PRACTICAL;
+      default:
+        return null;
+    }
   }
 
 }
