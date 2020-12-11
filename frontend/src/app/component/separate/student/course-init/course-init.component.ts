@@ -3,6 +3,7 @@ import {LicenseCategory} from "../../../../utils/license-category";
 import {CourseService} from "../../../../service/rest/course/course.service";
 import {AuthService} from "../../../../service/auth/auth.service";
 import {Router} from "@angular/router";
+import {TextConstants} from "../../../../utils/text-constants";
 
 @Component({
   selector: 'app-course-init',
@@ -31,7 +32,7 @@ export class CourseInitComponent implements OnInit {
       const email = this.authService.getUserEmail();
       this.courseService.addCourse(email, categoryToInit)
         .subscribe(() => window.location.replace("home/student/course"),
-          () => this.feedback = "Jesteś zbyt młody, aby rozpocząć wybrany kurs!");
+          () => this.feedback = TextConstants.COURSE_INIT_TOO_YOUNG);
     }
   }
 

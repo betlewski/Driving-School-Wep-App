@@ -4,6 +4,7 @@ import {Student} from "../../../model/student.model";
 import {Utils} from "../../../utils/utils";
 import {StudentService} from "../../../service/rest/student/student.service";
 import {AuthService} from "../../../service/auth/auth.service";
+import {TextConstants} from "../../../utils/text-constants";
 
 @Component({
   selector: 'app-registration',
@@ -44,9 +45,9 @@ export class RegistrationComponent implements OnInit {
         },
         error => {
           if (error.status == 409) {
-            this.feedback = "Podany adres email już istnieje.";
+            this.feedback = TextConstants.REGISTRATION_DUPLICATED_EMAIL;
           } else {
-            this.feedback = "Podano niewłaściwe dane.";
+            this.feedback = TextConstants.REGISTRATION_INVALID_DATA;
           }
         });
     }
@@ -54,13 +55,13 @@ export class RegistrationComponent implements OnInit {
 
   private checkIfDataCorrect(): boolean {
     if (!Utils.checkStringIfNotEmpty(this.fullName) || !Utils.checkStringIfNotEmpty(this.birthDate)) {
-      this.feedback = "Należy uzupełnić wszystkie dane.";
+      this.feedback = TextConstants.REGISTRATION_INCOMPLETE_DATA;
       return false;
     } else if (!Utils.checkIfEmailCorrect(this.email)) {
-      this.feedback = "Podany adres email jest niewłaściwy.";
+      this.feedback = TextConstants.REGISTRATION_INVALID_EMAIL;
       return false;
     } else if (!Utils.checkIfPasswordCorrect(this.password)) {
-      this.feedback = "Podane hasło jest za słabe.";
+      this.feedback = TextConstants.REGISTRATION_WEAK_PASSWORD;
       return false;
     }
     return true;

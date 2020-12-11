@@ -11,6 +11,7 @@ import {PersonalDataComponent} from "./component/separate/student/personal-data/
 import {OfficialComponent} from "./component/separate/student/official/official.component";
 import {StudentCalendarComponent} from "./component/separate/student/calendar/student-calendar.component";
 import {DrivingLessonsComponent} from "./component/separate/student/driving-lessons/driving-lessons.component";
+import {ExamComponent} from "./component/separate/student/exam/exam.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -50,6 +51,10 @@ const routes: Routes = [
           {
             path: 'driving',
             component: DrivingLessonsComponent
+          },
+          {
+            path: 'exam',
+            component: ExamComponent
           }
         ]
       },

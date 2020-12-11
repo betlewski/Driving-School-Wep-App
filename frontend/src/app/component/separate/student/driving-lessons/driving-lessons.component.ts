@@ -7,7 +7,7 @@ import {Employee} from "../../../../model/employee.model";
 import {EmployeeService} from "../../../../service/rest/employee/employee.service";
 import {CourseService} from "../../../../service/rest/course/course.service";
 import {EmployeeRole} from "../../../../utils/employee-role";
-import {Utils} from "../../../../utils/utils";
+import {TextConstants} from "../../../../utils/text-constants";
 
 @Component({
   selector: 'app-driving-lessons',
@@ -111,7 +111,7 @@ export class DrivingLessonsComponent implements OnInit {
 
   public request(): void {
     // @ts-ignore
-    if (Utils.checkStringIfNotEmpty(this.instructor) && this.startTime != null && this.endTime != null) {
+    if (this.instructor != null && this.instructor != "" && this.startTime != null && this.endTime != null) {
       const studentEmail = this.authService.getUserEmail();
       // @ts-ignore
       const employeeEmail = this.instructor.email;
@@ -119,15 +119,15 @@ export class DrivingLessonsComponent implements OnInit {
       this.drivingLessonService.addLesson(studentEmail, employeeEmail, lesson).subscribe(
         () => {
           this.refreshData();
-          this.feedback = "Nowe zgłoszenie znajdziesz w tabeli poniżej - zaczekaj, aż instruktor je zaakceptuje.";
+          this.feedback = TextConstants.LESSON_NEW_SUCCESSFUL;
         },
         error => {
           if (error.status == 400) {
-            this.feedback = "Czas rozpoczęcia (najwcześniej 6:00) musi następować po czasie zakończenia (najpóźniej 20:00)";
+            this.feedback = TextConstants.LESSON_NEW_INVALID_TIME;
           }
         });
     } else {
-      this.feedback = "Nie wybrano wszystkich danych.";
+      this.feedback = TextConstants.LESSON_NEW_INCOMPLETE_DATA;
     }
   }
 

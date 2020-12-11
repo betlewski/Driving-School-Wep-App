@@ -30,6 +30,7 @@ import {InternalExamService} from "./service/rest/internal-exam/internal-exam.se
 import {TheoryLessonsService} from "./service/rest/theory-lessons/theory-lessons.service";
 import { DrivingLessonsComponent } from './component/separate/student/driving-lessons/driving-lessons.component';
 import {EmployeeService} from "./service/rest/employee/employee.service";
+import { ExamComponent } from './component/separate/student/exam/exam.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {EmployeeService} from "./service/rest/employee/employee.service";
     CalendarComponent,
     StudentCalendarComponent,
     DrivingLessonsComponent,
+    ExamComponent,
   ],
   imports: [
     BrowserModule,

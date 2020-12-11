@@ -7,18 +7,18 @@ import {LessonStatus} from "../utils/lesson-status";
  */
 export class InternalExam {
 
-  id: number;
-  examType: ExamType;
-  employee: Employee;
+  id: number | null;
+  examType: ExamType | null;
+  employee: Employee | null;
   startTime: Date;
   endTime: Date;
-  lessonStatus: LessonStatus;
-  result: number;
-  isPassed: boolean;
+  lessonStatus: LessonStatus | null;
+  result: number | null;
+  isPassed: boolean | null;
 
-  constructor(id: number, examType: ExamType, employee: Employee,
-              startTime: Date, endTime: Date, lessonStatus: LessonStatus,
-              result: number, isPassed: boolean) {
+  constructor(id: number | null, examType: ExamType | null, employee: Employee | null,
+              startTime: Date, endTime: Date, lessonStatus: LessonStatus | null,
+              result: number | null, isPassed: boolean | null) {
     this.id = id;
     this.examType = examType;
     this.employee = employee;

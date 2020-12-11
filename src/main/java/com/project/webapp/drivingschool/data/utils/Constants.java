@@ -1,7 +1,5 @@
 package com.project.webapp.drivingschool.data.utils;
 
-import java.sql.Time;
-
 /**
  * Klasa przechowująca stałe wartości.
  */
