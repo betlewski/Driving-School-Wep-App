@@ -39,24 +39,24 @@
 <table class="table table-bordered" style="margin-top: 5%">
   <thead class="thead-dark text-truncate">
   <tr>
-    <th scope="col" style="width: 50px"> Prowadzący</th>
-    <th scope="col" style="width: 50px"> Typ egzaminu</th>
-    <th scope="col" style="width: 50px"> Status</th>
-    <th scope="col" style="width: 50px"> Zaliczony</th>
-    <th scope="col" style="width: 50px"> Wynik</th>
-    <th scope="col" style="width: 50px"> Rozpoczęcie</th>
-    <th scope="col" style="width: 50px"> Zakończenie</th>
+    <th scope="col" style="width: 200px"> Prowadzący</th>
+    <th scope="col" style="width: 150px"> Typ egzaminu</th>
+    <th scope="col" style="width: 190px"> Status</th>
+    <th scope="col" style="width: 100px"> Zaliczony</th>
+    <th scope="col" style="width: 100px"> Wynik</th>
+    <th scope="col" style="width: 130px"> Rozpoczęcie</th>
+    <th scope="col" style="width: 130px"> Zakończenie</th>
   </tr>
   </thead>
   <tbody>
   <tr *ngFor="let exam of waitingExams" style="background-color: lightyellow">
-    <td style="width: 50px">{{utils.convertEmployeeToText(exam.employee)}}</td>
-    <td style="width: 50px">{{utils.translateExamTypeByText(exam.examType)}}</td>
-    <td style="width: 50px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
-    <td style="width: 50px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
-    <td style="width: 50px">{{utils.convertExamResultToText(exam.result)}}</td>
-    <td style="width: 50px">{{utils.convertEventDateToText(exam.startTime)}}</td>
-    <td style="width: 50px">{{utils.convertEventDateToText(exam.endTime)}}</td>
+    <td style="width: 200px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 150px">{{utils.translateExamTypeByText(exam.examType)}}</td>
+    <td style="width: 190px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
+    <td style="width: 100px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
+    <td style="width: 100px">{{utils.convertExamResultToText(exam.result)}}</td>
+    <td style="width: 130px">{{utils.convertEventDateToText(exam.startTime)}}</td>
+    <td style="width: 130px">{{utils.convertEventDateToText(exam.endTime)}}</td>
   </tr>
   </tbody>
 </table>
@@ -65,13 +65,13 @@
 <table class="table table-bordered">
   <tbody>
   <tr *ngFor="let exam of failedExams" style="background-color: #ffeaea">
-    <td style="width: 50px">{{utils.convertEmployeeToText(exam.employee)}}</td>
-    <td style="width: 50px">{{utils.translateExamTypeByText(exam.examType)}}</td>
-    <td style="width: 50px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
-    <td style="width: 50px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
-    <td style="width: 50px">{{utils.convertExamResultToText(exam.result)}}</td>
-    <td style="width: 50px">{{utils.convertEventDateToText(exam.startTime)}}</td>
-    <td style="width: 50px">{{utils.convertEventDateToText(exam.endTime)}}</td>
+    <td style="width: 200px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 150px">{{utils.translateExamTypeByText(exam.examType)}}</td>
+    <td style="width: 190px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
+    <td style="width: 100px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
+    <td style="width: 100px">{{utils.convertExamResultToText(exam.result)}}</td>
+    <td style="width: 130px">{{utils.convertEventDateToText(exam.startTime)}}</td>
+    <td style="width: 130px">{{utils.convertEventDateToText(exam.endTime)}}</td>
   </tr>
   </tbody>
 </table>
@@ -80,13 +80,13 @@
 <table class="table table-bordered">
   <tbody>
   <tr *ngFor="let exam of passedExams" style="background-color: #d8ffd6">
-    <td style="width: 50px">{{utils.convertEmployeeToText(exam.employee)}}</td>
-    <td style="width: 50px">{{utils.translateExamTypeByText(exam.examType)}}</td>
-    <td style="width: 50px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
-    <td style="width: 50px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
-    <td style="width: 50px">{{utils.convertExamResultToText(exam.result)}}</td>
-    <td style="width: 50px">{{utils.convertEventDateToText(exam.startTime)}}</td>
-    <td style="width: 50px">{{utils.convertEventDateToText(exam.endTime)}}</td>
+    <td style="width: 200px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 150px">{{utils.translateExamTypeByText(exam.examType)}}</td>
+    <td style="width: 190px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
+    <td style="width: 100px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
+    <td style="width: 100px">{{utils.convertExamResultToText(exam.result)}}</td>
+    <td style="width: 130px">{{utils.convertEventDateToText(exam.startTime)}}</td>
+    <td style="width: 130px">{{utils.convertEventDateToText(exam.endTime)}}</td>
   </tr>
   </tbody>
 </table>
