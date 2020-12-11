@@ -3,11 +3,9 @@
 <form class="form-margin">
   <div class="form-group">
     <label style="width: 200px"> Typ egzaminu
-      <select class="browser-default custom-select" name="examType" [(ngModel)]="chosenExamType"
+      <select class="browser-default custom-select" name="examType" [(ngModel)]="possibleExamType"
               style="font-size: 15px">
-        <option value=""></option>
-        <option *ngFor="let examType of examTypes" [ngValue]="examType">
-          {{ translateExamType(examType) }}
+        <option [ngValue]="possibleExamType"> {{utils.translateExamTypeByNumber(possibleExamType)}}
         </option>
       </select>
     </label>
@@ -22,11 +20,11 @@
     </label>
     <label style="margin-left: 30px"> Rozpoczęcie
       <input type="datetime-local" class="form-control border bg-light"
-             style="width: 180px" name="startTime" [(ngModel)]="startTime">
+             style="width: 190px" name="startTime" (ngModelChange)="setEndTime($event)" [(ngModel)]="startTime">
     </label>
     <label style="margin-left: 30px"> Zakończenie
       <input type="datetime-local" class="form-control border bg-light"
-             style="width: 180px" name="endTime`" [(ngModel)]="endTime">
+             style="width: 190px" name="endTime" disabled [(ngModel)]="endTime">
     </label>
   </div>
   <div class="form-group" style="margin-top: 20px">
@@ -41,18 +39,24 @@
 <table class="table table-bordered" style="margin-top: 5%">
   <thead class="thead-dark text-truncate">
   <tr>
-    <th scope="col" style="width: 300px"> Instruktor</th>
-    <th scope="col" style="width: 250px"> Status</th>
-    <th scope="col" style="width: 200px"> Rozpoczęcie</th>
-    <th scope="col" style="width: 200px"> Zakończenie</th>
+    <th scope="col" style="width: 50px"> Prowadzący</th>
+    <th scope="col" style="width: 50px"> Typ egzaminu</th>
+    <th scope="col" style="width: 50px"> Status</th>
+    <th scope="col" style="width: 50px"> Zaliczony</th>
+    <th scope="col" style="width: 50px"> Wynik</th>
+    <th scope="col" style="width: 50px"> Rozpoczęcie</th>
+    <th scope="col" style="width: 50px"> Zakończenie</th>
   </tr>
   </thead>
   <tbody>
-  <tr *ngFor="let lesson of waitingLessons" style="background-color: lightyellow">
-    <td style="width: 300px">{{convertEmployee(lesson.employee)}}</td>
-    <td style="width: 250px">{{translateStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.startTime)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.endTime)}}</td>
+  <tr *ngFor="let exam of waitingExams" style="background-color: lightyellow">
+    <td style="width: 50px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 50px">{{utils.translateExamTypeByText(exam.examType)}}</td>
+    <td style="width: 50px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
+    <td style="width: 50px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
+    <td style="width: 50px">{{utils.convertExamResultToText(exam.result)}}</td>
+    <td style="width: 50px">{{utils.convertEventDateToText(exam.startTime)}}</td>
+    <td style="width: 50px">{{utils.convertEventDateToText(exam.endTime)}}</td>
   </tr>
   </tbody>
 </table>
@@ -60,11 +64,14 @@
 <!--Egzaminy niezrealizowane, odrzucone lub niezaliczone-->
 <table class="table table-bordered">
   <tbody>
-  <tr *ngFor="let lesson of failedLessons" style="background-color: #ffeaea">
-    <td style="width: 300px">{{convertEmployee(lesson.employee)}}</td>
-    <td style="width: 250px">{{translateStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.startTime)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.endTime)}}</td>
+  <tr *ngFor="let exam of failedExams" style="background-color: #ffeaea">
+    <td style="width: 50px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 50px">{{utils.translateExamTypeByText(exam.examType)}}</td>
+    <td style="width: 50px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
+    <td style="width: 50px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
+    <td style="width: 50px">{{utils.convertExamResultToText(exam.result)}}</td>
+    <td style="width: 50px">{{utils.convertEventDateToText(exam.startTime)}}</td>
+    <td style="width: 50px">{{utils.convertEventDateToText(exam.endTime)}}</td>
   </tr>
   </tbody>
 </table>
@@ -72,11 +79,14 @@
 <!--Egzaminy zaliczone-->
 <table class="table table-bordered">
   <tbody>
-  <tr *ngFor="let lesson of passedLessons" style="background-color: #d8ffd6">
-    <td style="width: 300px">{{convertEmployee(lesson.employee)}}</td>
-    <td style="width: 250px">{{translateStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.startTime)}}</td>
-    <td style="width: 200px">{{convertDate(lesson.endTime)}}</td>
+  <tr *ngFor="let exam of passedExams" style="background-color: #d8ffd6">
+    <td style="width: 50px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 50px">{{utils.translateExamTypeByText(exam.examType)}}</td>
+    <td style="width: 50px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
+    <td style="width: 50px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
+    <td style="width: 50px">{{utils.convertExamResultToText(exam.result)}}</td>
+    <td style="width: 50px">{{utils.convertEventDateToText(exam.startTime)}}</td>
+    <td style="width: 50px">{{utils.convertEventDateToText(exam.endTime)}}</td>
   </tr>
   </tbody>
 </table>

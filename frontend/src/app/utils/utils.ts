@@ -21,8 +21,12 @@ export class Utils {
       password.match("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$") != null;
   }
 
-  public translateExamType(examType: ExamType): string {
-    return ExamType.shortTranslate(examType);
+  public translateExamTypeByNumber(examType: ExamType): string {
+    return ExamType.shortTranslateByNumber(examType);
+  }
+
+  public translateExamTypeByText(examType: ExamType): string {
+    return ExamType.shortTranslateByText(examType);
   }
 
   public translateLessonStatus(status: LessonStatus): string {

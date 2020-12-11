@@ -34,9 +34,25 @@ export namespace ExamType {
   const SHORT_THEORETICAL_TRANSLATION = "TEORETYCZNY";
   const SHORT_PRACTICAL_TRANSLATION = "PRAKTYCZNY";
 
-  export function shortTranslate(type: ExamType): string {
+  export function shortTranslateByNumber(type: ExamType): string {
     let translator: string;
     switch (type) {
+      case ExamType.THEORETICAL:
+        translator = SHORT_THEORETICAL_TRANSLATION;
+        break;
+      case ExamType.PRACTICAL:
+        translator = SHORT_PRACTICAL_TRANSLATION;
+        break;
+      default:
+        translator = "";
+        break;
+    }
+    return translator;
+  }
+
+  export function shortTranslateByText(type: ExamType): string {
+    let translator: string;
+    switch (ExamType[type] as unknown) {
       case ExamType.THEORETICAL:
         translator = SHORT_THEORETICAL_TRANSLATION;
         break;
