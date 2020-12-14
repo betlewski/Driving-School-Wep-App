@@ -28,9 +28,12 @@ import {CalendarComponent} from "./component/common/calendar/calendar.component"
 import {DrivingLessonService} from "./service/rest/driving-lesson/driving-lesson.service";
 import {InternalExamService} from "./service/rest/internal-exam/internal-exam.service";
 import {TheoryLessonsService} from "./service/rest/theory-lessons/theory-lessons.service";
-import { DrivingLessonsComponent } from './component/separate/student/driving-lessons/driving-lessons.component';
+import {DrivingLessonsComponent} from './component/separate/student/driving-lessons/driving-lessons.component';
 import {EmployeeService} from "./service/rest/employee/employee.service";
-import { ExamComponent } from './component/separate/student/exam/exam.component';
+import {ExamComponent} from './component/separate/student/exam/exam.component';
+import {TheoryManagerComponent} from './component/separate/student/theory/theory-manager/theory-manager.component';
+import {TheoryInitComponent} from './component/separate/student/theory/theory-init/theory-init.component';
+import {TheoryLessonsComponent} from './component/separate/student/theory/theory-lessons/theory-lessons.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +51,9 @@ import { ExamComponent } from './component/separate/student/exam/exam.component'
     StudentCalendarComponent,
     DrivingLessonsComponent,
     ExamComponent,
+    TheoryManagerComponent,
+    TheoryInitComponent,
+    TheoryLessonsComponent,
   ],
   imports: [
     BrowserModule,
