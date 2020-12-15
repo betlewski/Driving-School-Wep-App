@@ -12,7 +12,6 @@ import {OfficialComponent} from "./component/separate/student/official/official.
 import {StudentCalendarComponent} from "./component/separate/student/calendar/student-calendar.component";
 import {DrivingLessonsComponent} from "./component/separate/student/driving-lessons/driving-lessons.component";
 import {ExamComponent} from "./component/separate/student/exam/exam.component";
-import {TheoryManagerComponent} from "./component/separate/student/theory/theory-manager/theory-manager.component";
 import {TheoryInitComponent} from "./component/separate/student/theory/theory-init/theory-init.component";
 import {TheoryLessonsComponent} from "./component/separate/student/theory/theory-lessons/theory-lessons.component";
 
@@ -57,16 +56,12 @@ const routes: Routes = [
           },
           {
             path: 'theory',
-            component: TheoryManagerComponent,
+            component: TheoryLessonsComponent,
             children: [
               {
                 path: 'init',
                 component: TheoryInitComponent
               },
-              {
-                path: 'lessons',
-                component: TheoryLessonsComponent
-              }
             ]
           },
           {

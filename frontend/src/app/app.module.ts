@@ -31,7 +31,6 @@ import {TheoryLessonsService} from "./service/rest/theory-lessons/theory-lessons
 import {DrivingLessonsComponent} from './component/separate/student/driving-lessons/driving-lessons.component';
 import {EmployeeService} from "./service/rest/employee/employee.service";
 import {ExamComponent} from './component/separate/student/exam/exam.component';
-import {TheoryManagerComponent} from './component/separate/student/theory/theory-manager/theory-manager.component';
 import {TheoryInitComponent} from './component/separate/student/theory/theory-init/theory-init.component';
 import {TheoryLessonsComponent} from './component/separate/student/theory/theory-lessons/theory-lessons.component';
 import {LectureSeriesService} from "./service/rest/lecture-series/lecture-series.service";
@@ -52,7 +51,6 @@ import {LectureSeriesService} from "./service/rest/lecture-series/lecture-series
     StudentCalendarComponent,
     DrivingLessonsComponent,
     ExamComponent,
-    TheoryManagerComponent,
     TheoryInitComponent,
     TheoryLessonsComponent,
   ],
