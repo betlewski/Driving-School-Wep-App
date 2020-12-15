@@ -20,6 +20,7 @@
 <table class="table table-bordered table-striped" style="margin-top: 7%" [hidden]="isLecturesForChosenEmpty()">
   <thead class="thead-dark text-truncate">
   <tr>
+    <th scope="col" style="width: 50px"> Nr</th>
     <th scope="col" style="width: 300px"> Temat</th>
     <th scope="col" style="width: 250px"> Dodatkowe informacje</th>
     <th scope="col" style="width: 200px"> Rozpoczęcie</th>
@@ -28,6 +29,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let lecture of lecturesForChosen">
+    <td style="width: 50px">{{lecturesForChosen.indexOf(lecture) + 1}}</td>
     <td style="width: 300px">{{lecture.subject}}</td>
     <td style="width: 250px">{{utils.convertTextIfEmpty(lecture.additionalInfo)}}</td>
     <td style="width: 200px">{{utils.convertEventDateToText(lecture.startTime)}}</td>
