@@ -1,6 +1,7 @@
 import {ExamType} from "./exam-type";
 import {LessonStatus} from "./lesson-status";
 import {Employee} from "../model/employee.model";
+import {LectureSeries} from "../model/lecture-series.model";
 
 /**
  * Narzędzia do przetwarzania / tłumaczenia danych
@@ -62,6 +63,11 @@ export class Utils {
 
   public convertTextIfEmpty(text: string): string {
     return (text != null && text.trim() != "") ? text : "-";
+  }
+
+  public convertLectureSeriesToText(series: LectureSeries): string {
+    return "Seria nr ".concat(series.id.toString())
+      .concat(" - prowadzący: ").concat(series.employee.fullName);
   }
 
 }

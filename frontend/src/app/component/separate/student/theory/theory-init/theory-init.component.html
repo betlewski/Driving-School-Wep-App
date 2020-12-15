@@ -7,7 +7,7 @@
               [(ngModel)]="chosenSeries" (ngModelChange)="showLecturesForChosen()">
         <option value=""></option>
         <option *ngFor="let series of seriesToInit" [ngValue]="series">
-          {{ "Seria nr " + series.id + " - prowadzący: " + series.employee.fullName}}
+          {{ utils.convertLectureSeriesToText(series) }}
         </option>
       </select>
     </label>
