@@ -56,13 +56,11 @@ const routes: Routes = [
           },
           {
             path: 'theory',
-            component: TheoryLessonsComponent,
-            children: [
-              {
-                path: 'init',
-                component: TheoryInitComponent
-              },
-            ]
+            component: TheoryLessonsComponent
+          },
+          {
+            path: 'theory/init',
+            component: TheoryInitComponent
           },
           {
             path: 'exam',

@@ -60,4 +60,8 @@ export class Utils {
       .concat(dateToParse.toLocaleTimeString());
   }
 
+  public convertTextIfEmpty(text: string): string {
+    return (text != null && text.trim() != "") ? text : "-";
+  }
+
 }
