@@ -34,6 +34,7 @@ import {ExamComponent} from './component/separate/student/exam/exam.component';
 import {TheoryManagerComponent} from './component/separate/student/theory/theory-manager/theory-manager.component';
 import {TheoryInitComponent} from './component/separate/student/theory/theory-init/theory-init.component';
 import {TheoryLessonsComponent} from './component/separate/student/theory/theory-lessons/theory-lessons.component';
+import {LectureSeriesService} from "./service/rest/lecture-series/lecture-series.service";
 
 @NgModule({
   declarations: [
@@ -73,7 +74,8 @@ import {TheoryLessonsComponent} from './component/separate/student/theory/theory
     DrivingLessonService,
     InternalExamService,
     TheoryLessonsService,
-    EmployeeService
+    EmployeeService,
+    LectureSeriesService
   ],
   bootstrap: [AppComponent]
 })
