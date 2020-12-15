@@ -1,1 +1,37 @@
-<p>theory-init works!</p>
+<h2 class="mb-4"> Wykłady </h2>
+<p> Przed Tobą część teoretyczna kursu. Wybierz jeden z dostępnych cyklów wykładów, aby go rozpocząć.</p>
+<form class="form-margin">
+  <div class="form-group">
+    <label> Dostępne cykle
+      <select class="browser-default custom-select" name="chosenSeries" style="font-size: 15px"
+              [(ngModel)]="chosenSeries" (ngModelChange)="showLecturesForChosen()">
+        <option value=""></option>
+        <option *ngFor="let series of seriesToInit" [ngValue]="series">
+          {{ "Seria nr " + series.id + " - prowadzący: " + series.employee.fullName}}
+        </option>
+      </select>
+    </label>
+    <button type="button" class="btn btn-outline-dark" style="width: 15%; margin-left: 40px"
+            (click)="init()">Rozpocznij
+    </button>
+  </div>
+</form>
+
+<table class="table table-bordered table-striped" style="margin-top: 7%" [hidden]="isLecturesForChosenEmpty()">
+  <thead class="thead-dark text-truncate">
+  <tr>
+    <th scope="col" style="width: 300px"> Temat</th>
+    <th scope="col" style="width: 250px"> Dodatkowe informacje</th>
+    <th scope="col" style="width: 200px"> Rozpoczęcie</th>
+    <th scope="col" style="width: 200px"> Zakończenie</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let lecture of lecturesForChosen">
+    <td style="width: 300px">{{lecture.subject}}</td>
+    <td style="width: 250px">{{utils.convertTextIfEmpty(lecture.additionalInfo)}}</td>
+    <td style="width: 200px">{{utils.convertEventDateToText(lecture.startTime)}}</td>
+    <td style="width: 200px">{{utils.convertEventDateToText(lecture.endTime)}}</td>
+  </tr>
+  </tbody>
+</table>
