@@ -29,20 +29,26 @@ public class TheoryLessonsController {
 
     @GetMapping("/all/byEmail")
     @ResponseBody
-    public Set<TheoryLessons> getAllTheoryLessonsByStudentId(@RequestParam("email") String email) {
+    public Set<TheoryLessons> getAllTheoryLessonsByStudentEmail(@RequestParam("email") String email) {
         return theoryLessonsService.getAllTheoryLessonsByEmail(email);
     }
 
     @GetMapping("/all/byEmail/byStatus")
     @ResponseBody
-    public Set<TheoryLessons> getTheoryLessonsByStudentIdAndLessonStatus(@RequestParam("email") String email,
-                                                                         @RequestParam("status") LessonStatus status) {
+    public Set<TheoryLessons> getTheoryLessonsByStudentEmailAndLessonStatus(@RequestParam("email") String email,
+                                                                            @RequestParam("status") LessonStatus status) {
         return theoryLessonsService.getTheoryLessonsByEmailAndLessonStatus(email, status);
+    }
+
+    @GetMapping("/active/byEmail")
+    @ResponseBody
+    public Optional<TheoryLessons> getActiveTheoryLessonsByStudentEmail(@RequestParam("email") String email) {
+        return theoryLessonsService.getActiveTheoryLessonsByEmail(email);
     }
 
     @GetMapping("/lectures/all/byEmail")
     @ResponseBody
-    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentId(@RequestParam("email") String email) {
+    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentEmail(@RequestParam("email") String email) {
         return theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByEmail(email);
     }
 
@@ -72,7 +78,7 @@ public class TheoryLessonsController {
 
     @GetMapping("/isActive/byEmail")
     @ResponseBody
-    public Boolean isTheoryLessonsActiveByStudentId(@RequestParam("email") String email) {
+    public Boolean isTheoryLessonsActiveByStudentEmail(@RequestParam("email") String email) {
         return theoryLessonsService.isTheoryLessonsActiveByEmail(email);
     }
 

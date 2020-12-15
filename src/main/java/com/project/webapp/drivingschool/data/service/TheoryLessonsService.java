@@ -75,6 +75,21 @@ public class TheoryLessonsService {
     }
 
     /**
+     * Pobranie aktywnych zajęć teoretycznych w ramach aktywnego kursu
+     * dla kursanta o podanym adresie email.
+     *
+     * @param email adres email kursanta
+     * @return aktywne zajęcia teoretyczne
+     */
+    public Optional<TheoryLessons> getActiveTheoryLessonsByEmail(String email) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
+        return activeCourse.flatMap(course -> course.getTheoryLessons().stream()
+                .filter(lesson -> !lesson.getLessonStatus().equals(LessonStatus.REJECTED) &&
+                        !lesson.getLessonStatus().equals(LessonStatus.FAILED))
+                .findFirst());
+    }
+
+    /**
      * Pobranie obecnie trwających wykładów
      * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *
