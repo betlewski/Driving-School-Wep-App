@@ -3,7 +3,21 @@
   "Nie znaleziono aktywnego kursu. Rozpocznij nowy..."}} </p>
 <br>
 <div *ngIf="courseReport != null">
-  <img style="zoom: 0.38" [src]="imageSrc" alt="course-status"/>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+        <!--Graf ze statusem kursu-->
+        <img style="zoom: 0.38" [src]="imageSrc" alt="course-status"/>
+      </div>
+      <div class="col-sm" style="margin-left: -30%">
+        <!--Belka z procentem ukończenia kursu-->
+        Stopień ukończenia: {{passedCoursePercent}}%
+        <div class="full-rectangle" style="width: 600px;">
+          <div class="part-rectangle" [style.width.px]="passedCoursePercent * 6"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 <!--<div *ngIf="courseReport != null">
   <p> Kategoria jazdy: <b>{{courseReport.category}} </b></p>

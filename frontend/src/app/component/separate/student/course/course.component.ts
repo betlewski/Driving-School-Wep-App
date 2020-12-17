@@ -15,6 +15,7 @@ import {CourseStatus} from "../../../../utils/course-status";
 export class CourseComponent implements OnInit {
 
   courseReport: CourseReport | null = null;
+  passedCoursePercent: number = 0;
 
   imagePath = "../../../../../assets/course-status/";
   imageSrc: string = "";
@@ -29,6 +30,7 @@ export class CourseComponent implements OnInit {
       .subscribe(course => {
         if (course != null) {
           this.courseReport = course;
+          this.passedCoursePercent = course.passedCoursePercent;
           this.showStatusImage(course.courseStatus);
         }
       });
