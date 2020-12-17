@@ -97,14 +97,17 @@ export class StudentCalendarComponent extends CalendarComponent implements OnIni
         .concat(" (").concat(lesson.employee.email).concat(")")
         .concat("\n- Status: ").concat(LessonStatus.translate(lesson.lessonStatus));
     }
-    return "";
+    return "ERROR";
   }
 
   private getEventTitleFromInternalExam(exam: InternalExam): string {
-    return ExamType.fullTranslate(exam.examType)
-      .concat("\n- Prowadzący: ").concat(exam.employee.fullName)
-      .concat(" (").concat(exam.employee.email).concat(")")
-      .concat("\n- Status: ").concat(LessonStatus.translate(exam.lessonStatus));
+    if (exam.examType != null && exam.employee != null && exam.lessonStatus != null) {
+      return ExamType.fullTranslate(exam.examType)
+        .concat("\n- Prowadzący: ").concat(exam.employee.fullName)
+        .concat(" (").concat(exam.employee.email).concat(")")
+        .concat("\n- Status: ").concat(LessonStatus.translate(exam.lessonStatus));
+    }
+    return "ERROR";
   }
 
 }
