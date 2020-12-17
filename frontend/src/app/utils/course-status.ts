@@ -59,4 +59,35 @@ export namespace CourseStatus {
     return translator;
   }
 
+  export function getImageNumber(status: CourseStatus): string {
+    let imageNumber: string;
+    switch (CourseStatus[status] as unknown) {
+      case CourseStatus.MEDICAL_EXAMS:
+        imageNumber = "1";
+        break;
+      case CourseStatus.DOCUMENTS_SUBMISSION:
+        imageNumber = "2";
+        break;
+      case CourseStatus.LECTURES:
+        imageNumber = "3";
+        break;
+      case CourseStatus.THEORY_INTERNAL_EXAM:
+        imageNumber = "4";
+        break;
+      case CourseStatus.DRIVING_LESSONS:
+        imageNumber = "5";
+        break;
+      case CourseStatus.PRACTICAL_INTERNAL_EXAM:
+        imageNumber = "6";
+        break;
+      case CourseStatus.STATE_EXAMS:
+        imageNumber = "7";
+        break;
+      default:
+        imageNumber = "";
+        break;
+    }
+    return imageNumber;
+  }
+
 }
