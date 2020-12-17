@@ -3,6 +3,9 @@
   "Nie znaleziono aktywnego kursu. Rozpocznij nowy..."}} </p>
 <br>
 <div *ngIf="courseReport != null">
+  <img style="zoom: 0.38" [src]="imageSrc" alt="course-status"/>
+</div>
+<!--<div *ngIf="courseReport != null">
   <p> Kategoria jazdy: <b>{{courseReport.category}} </b></p>
   <p> Wymagany wiek: <b>{{courseReport.requiredAge}} lat </b></p>
   <p> Cena kursu: <b>{{courseReport.price}} zł </b></p>
@@ -16,4 +19,4 @@
   <p> Dodatkowe jazdy szkoleniowe: <b>{{courseReport.extraDrivingLessonsHours}} godzin </b></p>
   <p> Data rozpoczęcia kursu: <b>{{courseReport.startDate}} </b></p>
   <p> Data zakończenia kursu: <b>{{courseReport.endTime}} </b></p>
-</div>
+</div>-->

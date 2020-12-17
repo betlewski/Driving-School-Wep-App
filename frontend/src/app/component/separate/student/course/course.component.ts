@@ -3,7 +3,6 @@ import {CourseService} from "../../../../service/rest/course/course.service";
 import {AuthService} from "../../../../service/auth/auth.service";
 import {CourseReport} from "../../../../model/course-report.model";
 import {CourseStatus} from "../../../../utils/course-status";
-import {ProcessingStatus} from "../../../../utils/processing-status";
 
 @Component({
   selector: 'app-course',
@@ -16,8 +15,9 @@ import {ProcessingStatus} from "../../../../utils/processing-status";
 export class CourseComponent implements OnInit {
 
   courseReport: CourseReport | null = null;
-  courseStatus: string = "";
-  paymentStatus: string = "";
+
+  imagePath = "../../../../../assets/course-status/";
+  imageSrc: string = "";
 
   constructor(private authService: AuthService,
               private courseService: CourseService) {
@@ -26,11 +26,17 @@ export class CourseComponent implements OnInit {
   ngOnInit(): void {
     const email = this.authService.getUserEmail();
     this.courseService.getReportByEmail(email)
-      .subscribe(data => {
-        this.courseReport = data;
-        this.courseStatus = CourseStatus.translate(data.courseStatus);
-        this.paymentStatus = ProcessingStatus.translate(data.paymentStatus);
+      .subscribe(course => {
+        if (course != null) {
+          this.courseReport = course;
+          this.showStatusImage(course.courseStatus);
+        }
       });
+  }
+
+  private showStatusImage(status: CourseStatus): void {
+    const imageNumber = CourseStatus.getImageNumber(status);
+    this.imageSrc = this.imagePath + imageNumber + ".jpg";
   }
 
 }
