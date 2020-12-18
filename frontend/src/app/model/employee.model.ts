@@ -3,16 +3,17 @@
  */
 export class Employee {
 
-  id: number;
-  employeeRole: string;
-  fullName: string;
-  phoneNumber: string;
-  email: string;
-  password: string;
-  registrationDate: string;
+  id: number | null;
+  employeeRole: string | null;
+  fullName: string | null;
+  phoneNumber: string | null;
+  email: string | null;
+  password: string | null;
+  registrationDate: string | null;
 
-  constructor(id: number, employeeRole: string, fullName: string, phoneNumber: string,
-              email: string, password: string, registrationDate: string) {
+  constructor(id: number | null, employeeRole: string | null, fullName: string | null,
+              phoneNumber: string | null, email: string | null, password: string | null,
+              registrationDate: string | null) {
     this.id = id;
     this.employeeRole = employeeRole;
     this.fullName = fullName;
@@ -20,6 +21,11 @@ export class Employee {
     this.email = email;
     this.password = password;
     this.registrationDate = registrationDate;
+  }
+
+  public static edit(fullName: string | null, phoneNumber: string | null) {
+    return new Employee(null, null, fullName, phoneNumber,
+      null, null, null);
   }
 
 }

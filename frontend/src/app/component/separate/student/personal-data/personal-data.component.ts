@@ -14,7 +14,7 @@ import {Utils} from "../../../../utils/utils";
  */
 export class PersonalDataComponent implements OnInit {
 
-  name = "";
+  name: string | null = "";
   birthDate: string | null = "";
   address: string | null = "";
   phoneNumber: string | null = "";

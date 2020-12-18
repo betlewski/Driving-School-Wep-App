@@ -4,7 +4,7 @@
 export class Student {
 
   id: number | null;
-  fullName: string;
+  fullName: string | null;
   pkk: string | null;
   birthDate: string | null;
   address: string | null;
@@ -13,7 +13,7 @@ export class Student {
   password: string | null;
   registrationDate: string | null;
 
-  constructor(id: number | null, fullName: string, pkk: string | null, birthDate: string | null, address: string | null,
+  constructor(id: number | null, fullName: string | null, pkk: string | null, birthDate: string | null, address: string | null,
               phoneNumber: string | null, email: string | null, password: string | null, registrationDate: string | null) {
     this.id = id;
     this.fullName = fullName;
@@ -31,7 +31,7 @@ export class Student {
       null, email, password, null);
   }
 
-  public static edit(fullName: string, address: string | null, phoneNumber: string | null) {
+  public static edit(fullName: string | null, address: string | null, phoneNumber: string | null) {
     return new Student(null, fullName, null, null, address,
       phoneNumber, null, null, null);
   }
