@@ -126,13 +126,18 @@ public class EmployeeService {
         if (emailExisting(employee.getEmail())) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         } else if (DataUtils.isPasswordCorrect(employee.getPassword())) {
+            Employee newEmployee = new Employee();
             try {
-                employee.setPassword(passwordEncoder.encode(employee.getPassword()));
-                employee = employeeRepository.save(employee);
+                newEmployee.setEmployeeRole(employee.getEmployeeRole());
+                newEmployee.setFullName(employee.getFullName());
+                newEmployee.setPhoneNumber(employee.getPhoneNumber());
+                newEmployee.setEmail(employee.getEmail());
+                newEmployee.setPassword(passwordEncoder.encode(employee.getPassword()));
+                newEmployee = employeeRepository.save(newEmployee);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(employee, HttpStatus.OK);
+            return new ResponseEntity<>(newEmployee, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
@@ -152,11 +157,11 @@ public class EmployeeService {
             try {
                 employee.setFullName(newEmployee.getFullName());
                 employee.setPhoneNumber(newEmployee.getPhoneNumber());
-                employeeRepository.save(newEmployee);
+                employee = employeeRepository.save(employee);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
-            return new ResponseEntity<>(newEmployee, HttpStatus.OK);
+            return new ResponseEntity<>(employee, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
