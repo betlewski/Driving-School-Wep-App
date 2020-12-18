@@ -1,36 +1,51 @@
 <h2 class="mb-4"> Kurs nauki </h2>
-<p> {{courseReport !== null ? courseReport.comment :
-  "Nie znaleziono aktywnego kursu. Rozpocznij nowy..."}} </p>
+<p> {{comment}} </p>
 <br>
-<div *ngIf="courseReport != null">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm">
-        <!--Graf ze statusem kursu-->
-        <img style="zoom: 0.38" [src]="imageSrc" alt="course-status"/>
-      </div>
-      <div class="col-sm" style="margin-left: -30%">
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <!--Graf ze statusem kursu-->
+      <img style="margin-left: 2%; zoom: 0.38" [src]="imageSrc" alt="course-status"/>
+    </div>
+    <div class="col-sm" style="margin-left: -30%; margin-top: 1%">
+      <div class="row">
         <!--Belka z procentem ukończenia kursu-->
-        Stopień ukończenia: {{passedCoursePercent}}%
+        Stopień ukończenia kursu: {{passedCoursePercent}}%
         <div class="full-rectangle" style="width: 600px;">
           <div class="part-rectangle" [style.width.px]="passedCoursePercent * 6"></div>
         </div>
       </div>
+      <div class="row" style="margin-top: 9%">
+        <div class="col-sm" style="margin-left: 5%">
+          <!--Wykres kołowy dla stopnia ukończenia części teoretycznej-->
+          <div> Stopień ukończenia teorii</div>
+          <div id="theoryChart"></div>
+        </div>
+        <div class="col-sm" style="margin-left: -15%">
+          <!--Wykres kołowy dla stopnia ukończenia części praktycznej-->
+          <div> Stopień ukończenia praktyki</div>
+          <div id="practiceChart"></div>
+        </div>
+      </div>
+      <div class="row">
+        <!--Tabela z podsumowaniem pozostałych danych-->
+        <table class="table table-bordered table-hover">
+          <tbody>
+          <tr>
+            <td style="width: 300px">Dodatkowe jazdy szkoleniowe</td>
+            <td style="width: 200px">{{extraDrivingLessonsHours}} godzin</td>
+          </tr>
+          <tr>
+            <td style="width: 300px">Rozpoczęcie kursu</td>
+            <td style="width: 200px">{{startTime}}</td>
+          </tr>
+          <tr>
+            <td style="width: 300px">Zakończenie kursu</td>
+            <td style="width: 200px">{{endTime == null ? "-" : endTime}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
-<!--<div *ngIf="courseReport != null">
-  <p> Kategoria jazdy: <b>{{courseReport.category}} </b></p>
-  <p> Wymagany wiek: <b>{{courseReport.requiredAge}} lat </b></p>
-  <p> Cena kursu: <b>{{courseReport.price}} zł </b></p>
-  <p> Zajęcia teoretyczne: <b>{{courseReport.theoryHours}} godzin </b></p>
-  <p> Zajęcia praktyczne: <b>{{courseReport.practiceHours}} godzin </b></p>
-  <p> Status kursu: <b>{{courseStatus}} </b></p>
-  <p> Stopień ukończenia kursu: <b>{{courseReport.passedCoursePercent}}% </b></p>
-  <p> Stopień ukończenia części teoretycznej: <b>{{courseReport.passedTheoryPercent}}% </b></p>
-  <p> Stopień ukończenia części praktycznej: <b>{{courseReport.passedPracticePercent}}% </b></p>
-  <p> Status płatności:<b> {{paymentStatus}} </b></p>
-  <p> Dodatkowe jazdy szkoleniowe: <b>{{courseReport.extraDrivingLessonsHours}} godzin </b></p>
-  <p> Data rozpoczęcia kursu: <b>{{courseReport.startDate}} </b></p>
-  <p> Data zakończenia kursu: <b>{{courseReport.endTime}} </b></p>
-</div>-->

@@ -4,14 +4,38 @@
 
 .full-rectangle {
   height: 30px;
-  background-color: lightyellow;
-  border: 1px darkslateblue solid;
+  background-color: #f1f2f3;
 }
 
 .part-rectangle {
   height: 30px;
   margin-top: -1px;
   margin-left: -1px;
-  background: darkgray;
-  border: 1px darkslateblue solid;
+  background: #5b616f;
+}
+
+#theoryChart {
+  width: 200px;
+  height: 150px;
+}
+
+#practiceChart {
+  width: 200px;
+  height: 150px;
+}
+
+.chart-title {
+  margin-top: -2%;
+  margin-left: 10%;
+}
+
+.table th, td {
+  text-align: center;
+  vertical-align: middle !important;
+  line-height: 15px;
+}
+
+.table {
+  margin: 9% 8%;
+  width: 500px;
 }
