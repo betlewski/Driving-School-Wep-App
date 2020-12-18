@@ -77,9 +77,6 @@ export class StudentsComponent implements OnInit {
     return Utils.checkStringIfNotEmpty(this.name) &&
       Utils.checkStringIfNotEmpty(this.email) &&
       Utils.checkStringIfNotEmpty(this.birthDate) &&
-      Utils.checkStringIfNotEmpty(this.address) &&
-      Utils.checkStringIfNotEmpty(this.phoneNumber) &&
-      Utils.checkStringIfNotEmpty(this.pkk) &&
       Utils.checkStringIfNotEmpty(this.registrationDate);
   }
 
