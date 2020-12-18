@@ -1,0 +1,12 @@
+@import url('../../../../../assets/styles/dashboard-style.css');
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.form-margin {
+  margin-left: 5%;
+  margin-top: 5%;
+}
+
+input:enabled {
+  background: lightyellow !important;
+}

@@ -1,0 +1,59 @@
+<h2 class="mb-4"> Kursanci </h2>
+<p> Tu możesz przeglądać oraz edytować dane personalne wszystkich kursantów. </p>
+<form class="form-margin">
+  <div class="form-group">
+    <label style="width: 400px"> Kursant
+      <select class="browser-default custom-select" name="chosenStudent" style="font-size: 15px"
+              [(ngModel)]="chosenStudent" (ngModelChange)="changeStudent()" [disabled]="!viewMode">
+        <option value=""></option>
+        <option *ngFor="let student of students" [ngValue]="student">
+          {{ student.fullName + " (" + student.email + ")" }}
+        </option>
+      </select>
+    </label>
+  </div>
+  <div [hidden]="chosenStudent == null">
+    <div class="form-group" style="margin-top: 40px">
+      <label> Imię i nazwisko
+        <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 300px; font-size: 14px" name="fullName" [(ngModel)]="name">
+      </label>
+      <label style="margin-left: 50px"> Adres email
+        <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 300px; font-size: 14px" name="email" [(ngModel)]="email">
+      </label>
+    </div>
+    <div class="form-group" style="margin-top: 20px">
+      <label> Profil Kandydata na Kierowcę
+        <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 300px; font-size: 14px" name="pkk" [(ngModel)]="pkk">
+      </label>
+      <label style="margin-left: 50px"> Adres zamieszkania
+        <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 300px; font-size: 14px" name="address" [(ngModel)]="address">
+      </label>
+    </div>
+    <div class="form-group" style="margin-top: 20px">
+      <label> Numer telefonu
+        <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 190px; font-size: 14px" name="phoneNumber" [(ngModel)]="phoneNumber">
+      </label>
+      <label style="margin-left: 40px"> Data urodzenia
+        <input type="date" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 190px; font-size: 14px" name="birthDate" [(ngModel)]="birthDate">
+      </label>
+      <label style="margin-left: 40px"> Data rejestracji
+        <input type="date" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 190px; font-size: 14px" name="registrationDate" [(ngModel)]="registrationDate">
+      </label>
+    </div>
+    <div class="form-group" style="margin-top: 50px">
+      <button *ngIf="viewMode" type="button" class="btn btn-outline-dark" style="width: 10%"
+              (click)="editData()">Edytuj
+      </button>
+      <button *ngIf="!viewMode" type="button" class="btn btn-outline-dark" style="width: 10%; margin-left: 540px"
+              (click)="saveData()">Zapisz
+      </button>
+    </div>
+  </div>
+</form>

@@ -35,6 +35,7 @@ import {TheoryInitComponent} from './component/separate/student/theory/theory-in
 import {TheoryLessonsComponent} from './component/separate/student/theory/theory-lessons/theory-lessons.component';
 import {LectureSeriesService} from "./service/rest/lecture-series/lecture-series.service";
 import { PersonalDataAdminComponent } from './component/separate/admin/personal-data-admin/personal-data-admin.component';
+import { StudentsComponent } from './component/separate/admin/students/students.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PersonalDataAdminComponent } from './component/separate/admin/personal-
     TheoryInitComponent,
     TheoryLessonsComponent,
     PersonalDataAdminComponent,
+    StudentsComponent,
   ],
   imports: [
     BrowserModule,

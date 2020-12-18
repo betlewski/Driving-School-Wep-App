@@ -15,6 +15,7 @@ import {ExamComponent} from "./component/separate/student/exam/exam.component";
 import {TheoryInitComponent} from "./component/separate/student/theory/theory-init/theory-init.component";
 import {TheoryLessonsComponent} from "./component/separate/student/theory/theory-lessons/theory-lessons.component";
 import {PersonalDataAdminComponent} from './component/separate/admin/personal-data-admin/personal-data-admin.component';
+import {StudentsComponent} from "./component/separate/admin/students/students.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -81,6 +82,10 @@ const routes: Routes = [
           {
             path: 'data',
             component: PersonalDataAdminComponent
+          },
+          {
+            path: 'student',
+            component: StudentsComponent
           }
         ]
       },
