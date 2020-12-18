@@ -122,18 +122,24 @@ public class StudentService {
     }
 
     /**
-     * Dodanie numeru PKK kursanta na podstawie podanego adresu email
+     * Edycja wszystkich danych kursanta na podstawie podanego adresu email.
      *
-     * @param email adres email
-     * @param pkk   numer PKK
+     * @param email      adres email
+     * @param newStudent kursant ze zmienionymi danymi
      * @return edytowany kursant
      */
-    public ResponseEntity<Student> setStudentPkk(String email, String pkk) {
-        Optional<Student> optionalStudent = studentRepository.findByEmail(email);
-        if (optionalStudent.isPresent()) {
-            Student student = optionalStudent.get();
+    public ResponseEntity<Student> editStudentFull(String email, Student newStudent) {
+        Optional<Student> oldStudent = studentRepository.findByEmail(email);
+        if (oldStudent.isPresent()) {
+            Student student = oldStudent.get();
             try {
-                student.setPkk(pkk);
+                student.setFullName(newStudent.getFullName());
+                student.setPkk(newStudent.getPkk());
+                student.setBirthDate(newStudent.getBirthDate());
+                student.setAddress(newStudent.getAddress());
+                student.setPhoneNumber(newStudent.getPhoneNumber());
+                student.setEmail(newStudent.getEmail());
+                student.setRegistrationDate(newStudent.getRegistrationDate());
                 studentRepository.save(student);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

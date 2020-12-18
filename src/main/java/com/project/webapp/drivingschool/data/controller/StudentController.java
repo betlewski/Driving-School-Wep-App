@@ -60,10 +60,10 @@ public class StudentController {
         return studentService.editStudent(email, newStudent);
     }
 
-    @PutMapping("/edit/pkk")
-    public ResponseEntity<Student> setStudentPkk(@RequestParam("email") String email,
-                                                 @RequestBody String pkk) {
-        return studentService.setStudentPkk(email, pkk);
+    @PutMapping("/edit/full")
+    public ResponseEntity<Student> editStudentFull(@RequestParam("email") String email,
+                                                   @RequestBody Student newStudent) {
+        return studentService.editStudentFull(email, newStudent);
     }
 
 }

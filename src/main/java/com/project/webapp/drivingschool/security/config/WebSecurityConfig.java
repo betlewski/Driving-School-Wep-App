@@ -71,7 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rest/employee/all/byRole").hasAnyRole(ADMIN, STUDENT)
                 .antMatchers("/rest/employee/**").hasRole(ADMIN)
                 .antMatchers("/rest/student/all",
-                        "/rest/student/edit/pkk",
+                        "/rest/student/edit/full",
                         "/rest/student/email/exist").hasRole(ADMIN)
                 .antMatchers("/rest/student/add").permitAll()
                 .antMatchers("/rest/student/**").hasAnyRole(ADMIN, STUDENT)
