@@ -1,0 +1,28 @@
+<h2 class="mb-4"> Dane osobowe </h2>
+<p> Tu możesz przeglądać oraz edytować swoje dane personalne. </p>
+<form class="form-margin">
+  <div class="form-group">
+    <label> Imię i nazwisko
+      <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+             style="width: 370px; font-size: 14px" name="fullName" [(ngModel)]="name">
+    </label>
+  </div>
+  <div class="form-group" style="margin-top: 30px">
+    <label> Numer telefonu
+      <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+             style="width: 170px; font-size: 14px" name="phoneNumber" [(ngModel)]="phoneNumber">
+    </label>
+    <label style="margin-left: 30px"> Data rejestracji
+      <input type="date" class="form-control border bg-light" disabled
+             style="width: 170px; font-size: 14px" name="registrationDate" [(ngModel)]="registrationDate">
+    </label>
+  </div>
+  <div class="form-group" style="margin-top: 60px">
+    <button *ngIf="viewMode" type="button" class="btn btn-outline-dark" style="width: 10%"
+            (click)="editData()">Edytuj
+    </button>
+    <button *ngIf="!viewMode" type="button" class="btn btn-outline-dark" style="width: 10%; margin-left: 260px"
+            (click)="saveData()">Zapisz
+    </button>
+  </div>
+</form>
