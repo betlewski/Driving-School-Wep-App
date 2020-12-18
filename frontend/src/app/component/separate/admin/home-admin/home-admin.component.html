@@ -9,19 +9,44 @@
     </div>
     <ul class="list-unstyled components mb-5">
       <li class="active">
-        <a href="#"><span class="fa fa-id-card mr-3"></span>Dane osobowe</a>
+        <a routerLink="data">
+          <span class="fa fa-id-card mr-3"></span> Dane osobowe
+        </a>
       </li>
-      <li>
-        <a href="#"><span class="fa fa-calendar mr-3"></span>Kalendarz</a>
+      <li class="active">
+        <a routerLink="course">
+          <span class="fa fa-paper-plane mr-3"></span> Kursy nauki
+        </a>
       </li>
-      <li>
-        <a href="#"><span class="fa fa-sign-out mr-3"></span>Wyloguj się</a>
+      <li class="active">
+        <a routerLink="official">
+          <span class="fa fa-file-text mr-3"></span> Dokumenty i płatności
+        </a>
+      </li>
+      <li class="active">
+        <a routerLink="calendar">
+          <span class="fa fa-calendar mr-3"></span> Kalendarz
+        </a>
+      </li>
+      <li class="active">
+        <a routerLink="theory">
+          <span class="fa fa-graduation-cap mr-3"></span> Kursanci
+        </a>
+      </li>
+      <li class="active">
+        <a routerLink="driving">
+          <span class="fa fa-briefcase mr-3"></span> Pracownicy
+        </a>
+      </li>
+      <li class="active">
+        <a (click)="logout()">
+          <span class="fa fa-sign-out mr-3"></span> Wyloguj się
+        </a>
       </li>
     </ul>
   </nav>
   <div id="content" class="p-4 p-md-5 pt-5">
-    <h2 class="mb-4">Sidebar #09</h2>
-    <p> Panel administratora szkoły jazdy</p>
+    <router-outlet></router-outlet>
   </div>
 </div>
 </body>

@@ -34,7 +34,7 @@
         </a>
       </li>
       <li [class]="theoryEnable ? 'active' : null">
-        <a [routerLink]="theoryEnable ? 'theory' : null">
+        <a [routerLink]="theoryEnable ? (theoryActive ? 'theory' : 'theory/init') : null">
           <span class="fa fa-book mr-3"></span> Wykłady
         </a>
       </li>

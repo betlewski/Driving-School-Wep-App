@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AuthService} from "../../../../service/auth/auth.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-home-admin',
@@ -7,17 +8,23 @@ import {AuthService} from "../../../../service/auth/auth.service";
   styleUrls: ['./home-admin.component.css']
 })
 /**
- * Panel główny administratora
+ * Panel główny administratora.
  */
 export class HomeAdminComponent implements OnInit {
 
   email = "";
 
-  constructor(private authService: AuthService) {
+  constructor(private router: Router,
+              private authService: AuthService) {
   }
 
   ngOnInit(): void {
     this.email = this.authService.getUserEmail();
+  }
+
+  public logout() {
+    this.authService.clearItems();
+    this.router.navigate(["/login"]);
   }
 
 }
