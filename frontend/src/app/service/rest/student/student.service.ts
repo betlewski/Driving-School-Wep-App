@@ -14,12 +14,20 @@ import {AuthService} from "../../auth/auth.service";
 export class StudentService {
 
   private STUDENT_URL = environment.restUrl + '/student';
+  private FIND_ALL_URL = this.STUDENT_URL + '/all';
   private REGISTER_URL = this.STUDENT_URL + '/add';
   private FIND_BY_EMAIL_URL = this.STUDENT_URL + '/byEmail';
   private EDIT_URL = this.STUDENT_URL + '/edit';
+  private EDIT_FULL_URL = this.STUDENT_URL + '/edit/full';
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
+  }
+
+  public findAll(): Observable<Student[]> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http.get<Student[]>(this.FIND_ALL_URL,
+      {headers: headers});
   }
 
   public register(student: Student) {
@@ -37,6 +45,13 @@ export class StudentService {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
     return this.http.put<Student>(this.EDIT_URL, newStudent,
+      {headers: headers, params: params});
+  }
+
+  public editFull(email: string, newStudent: Student): Observable<Student> {
+    const headers = this.authService.getAuthHeaders();
+    const params = new HttpParams().set("email", email);
+    return this.http.put<Student>(this.EDIT_FULL_URL, newStudent,
       {headers: headers, params: params});
   }
 
