@@ -84,8 +84,8 @@ public class CourseReportService {
         if (course != null) {
             report.setCourseStatus(course.getCourseStatus());
             report.setPassedCoursePercent(calculatePassedCoursePercent(course));
-            report.setPassedTheoryPercent(calculatePassedTheoryPercent(course));
-            report.setPassedPracticePercent(calculatePassedPracticePercent(course));
+            report.setPassedTheoryHours(getPassedTheoryHours(course));
+            report.setPassedPracticeHours(getPassedPracticeHours(course));
             report.setPaymentStatus(getReportedPaymentStatus(course));
             report.setExtraDrivingLessonsHours(calculateExtraDrivingLessonsHours(course));
             report.setStartDate(course.getStartDate());
@@ -108,8 +108,9 @@ public class CourseReportService {
                 percent = 5;
                 break;
             case LECTURES:
-                float calculatedTheory = Float.valueOf(
-                        calculatePassedTheoryPercent(course)) / 100;
+                Float theoryPassed = Float.valueOf(getPassedTheoryHours(course));
+                Float theoryRequired = Float.valueOf(Constants.REQUIRED_THEORY_HOURS);
+                float calculatedTheory = Math.min(theoryPassed / theoryRequired, 100);
                 int theoryPercent = Math.round(10 + 30 * calculatedTheory);
                 percent = Math.min(theoryPercent, 40);
                 break;
@@ -117,8 +118,9 @@ public class CourseReportService {
                 percent = 40;
                 break;
             case DRIVING_LESSONS:
-                float calculatedPractice = Float.valueOf(
-                        calculatePassedPracticePercent(course)) / 100;
+                Float practicePassed = Float.valueOf(getPassedPracticeHours(course));
+                Float practiceRequired = Float.valueOf(course.getLicenseCategory().practiceHours);
+                float calculatedPractice = Math.min(practicePassed / practiceRequired, 100);
                 int practicePercent = Math.round(50 + 30 * calculatedPractice);
                 percent = Math.min(practicePercent, 80);
                 break;
@@ -136,33 +138,23 @@ public class CourseReportService {
     }
 
     /**
-     * Obliczenie stopnia ukończenia zajęć teoretycznych
-     * dla podanego kursu (w procentach)
+     * Obliczenie liczby ukończonych godzin w części teoretycznej.
      *
      * @param course kurs
-     * @return obliczona wartość z zakresu: [0, 100]
+     * @return liczba zaliczonych wykładów
      */
-    private Integer calculatePassedTheoryPercent(Course course) {
-        Float theoryPassed = Float.valueOf(theoryLessonsService
-                .getCurrentlyPassedHoursOfTheoryLessonsByCourse(course));
-        Float theoryRequired = Float.valueOf(Constants.REQUIRED_THEORY_HOURS);
-        int percent = Math.round((theoryPassed / theoryRequired) * 100);
-        return Math.min(percent, 100);
+    private Integer getPassedTheoryHours(Course course) {
+        return theoryLessonsService.getCurrentlyPassedHoursOfTheoryLessonsByCourse(course);
     }
 
     /**
-     * Obliczenie stopnia ukończenia zajęć praktycznych
-     * dla podanego kursu (w procentach)
+     * Obliczenie liczby ukończonych godzin w części praktycznej.
      *
      * @param course kurs
-     * @return obliczona wartość z zakresu: [0, 100]
+     * @return liczba zaliczonych jazd szkoleniowych
      */
-    private Integer calculatePassedPracticePercent(Course course) {
-        Float practicePassed = Float.valueOf(drivingLessonService
-                .getAllPassedHoursOfDrivingLessonsByCourse(course));
-        Float practiceRequired = Float.valueOf(course.getLicenseCategory().practiceHours);
-        int percent = Math.round((practicePassed / practiceRequired) * 100);
-        return Math.min(percent, 100);
+    private Integer getPassedPracticeHours(Course course) {
+        return drivingLessonService.getAllPassedHoursOfDrivingLessonsByCourse(course);
     }
 
     /**

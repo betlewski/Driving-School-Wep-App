@@ -54,14 +54,14 @@ public class CourseReport {
     private Integer passedCoursePercent;
 
     /**
-     * Procent ukończenia części teoretycznej
+     * Liczba ukończonych godzin w części teoretycznej
      */
-    private Integer passedTheoryPercent;
+    private Integer passedTheoryHours;
 
     /**
-     * Procent ukończenia części praktycznej
+     * Liczba ukończonych godzin w części praktycznej
      */
-    private Integer passedPracticePercent;
+    private Integer passedPracticeHours;
 
     /**
      * Status rozliczenia płatności

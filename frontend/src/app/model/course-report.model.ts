@@ -14,8 +14,8 @@ export class CourseReport {
   practiceHours: number;
   courseStatus: CourseStatus;
   passedCoursePercent: number;
-  passedTheoryPercent: number;
-  passedPracticePercent: number;
+  passedTheoryHours: number;
+  passedPracticeHours: number;
   paymentStatus: ProcessingStatus;
   extraDrivingLessonsHours: number;
   startDate: Date;
@@ -24,7 +24,7 @@ export class CourseReport {
 
   constructor(category: LicenseCategory, requiredAge: number, price: number,
               theoryHours: number, practiceHours: number, courseStatus: CourseStatus,
-              passedCoursePercent: number, passedTheoryPercent: number, passedPracticePercent: number,
+              passedCoursePercent: number, passedTheoryHours: number, passedPracticeHours: number,
               paymentStatus: ProcessingStatus, extraDrivingLessonsHours: number,
               startDate: Date, endTime: Date, comment: string) {
     this.category = category;
@@ -34,8 +34,8 @@ export class CourseReport {
     this.practiceHours = practiceHours;
     this.courseStatus = courseStatus;
     this.passedCoursePercent = passedCoursePercent;
-    this.passedTheoryPercent = passedTheoryPercent;
-    this.passedPracticePercent = passedPracticePercent;
+    this.passedTheoryHours = passedTheoryHours;
+    this.passedPracticeHours = passedPracticeHours;
     this.paymentStatus = paymentStatus;
     this.extraDrivingLessonsHours = extraDrivingLessonsHours;
     this.startDate = startDate;
