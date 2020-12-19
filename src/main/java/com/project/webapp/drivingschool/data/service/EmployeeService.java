@@ -151,10 +151,20 @@ public class EmployeeService {
      * @return edytowany pracownik
      */
     public ResponseEntity<Employee> editEmployee(String email, Employee newEmployee) {
-        Employee fullEmployee = new Employee();
-        fullEmployee.setFullName(newEmployee.getFullName());
-        fullEmployee.setPhoneNumber(newEmployee.getPhoneNumber());
-        return editEmployeeFull(email, fullEmployee);
+        Optional<Employee> oldEmployee = employeeRepository.findByEmail(email);
+        if (oldEmployee.isPresent()) {
+            Employee employee = oldEmployee.get();
+            try {
+                employee.setFullName(newEmployee.getFullName());
+                employee.setPhoneNumber(newEmployee.getPhoneNumber());
+                employee = employeeRepository.save(employee);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**

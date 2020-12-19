@@ -104,11 +104,21 @@ public class StudentService {
      * @return edytowany kursant
      */
     public ResponseEntity<Student> editStudent(String email, Student newStudent) {
-        Student fullStudent = new Student();
-        fullStudent.setFullName(newStudent.getFullName());
-        fullStudent.setAddress(newStudent.getAddress());
-        fullStudent.setPhoneNumber(newStudent.getPhoneNumber());
-        return editStudentFull(email, fullStudent);
+        Optional<Student> oldStudent = studentRepository.findByEmail(email);
+        if (oldStudent.isPresent()) {
+            Student student = oldStudent.get();
+            try {
+                student.setFullName(newStudent.getFullName());
+                student.setAddress(newStudent.getAddress());
+                student.setPhoneNumber(newStudent.getPhoneNumber());
+                studentRepository.save(student);
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     /**
