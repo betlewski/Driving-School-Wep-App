@@ -1,0 +1,54 @@
+<h2 class="mb-4"> Pracownicy </h2>
+<p> Tu możesz przeglądać oraz edytować dane personalne wszystkich pracowników. </p>
+<form class="form-margin">
+  <div class="form-group">
+    <label style="width: 400px"> Pracownik
+      <select class="browser-default custom-select" name="chosenEmployee" style="font-size: 15px"
+              [(ngModel)]="chosenEmployee" (ngModelChange)="changeEmployee()" [disabled]="!viewMode">
+        <option value=""></option>
+        <option *ngFor="let employee of employees" [ngValue]="employee">
+          {{ employee.fullName + " (" + employee.email + ")" }}
+        </option>
+      </select>
+    </label>
+  </div>
+  <div [hidden]="chosenEmployee == null">
+    <div class="form-group" style="margin-top: 50px">
+      <label> Imię i nazwisko
+        <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 300px; font-size: 14px" name="fullName" [(ngModel)]="name">
+      </label>
+      <label style="margin-left: 50px"> Adres email
+        <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 300px; font-size: 14px" name="email" [(ngModel)]="email">
+      </label>
+    </div>
+    <div class="form-group" style="margin-top: 20px">
+      <label style="width: 190px"> Rola
+        <select class="browser-default custom-select role" name="role" style="font-size: 15px"
+                [(ngModel)]="role" [disabled]="viewMode">
+          <option value=""></option>
+          <option *ngFor="let role of employeeRoles" [ngValue]="role">
+            {{ employeeRoleUtils.translate(role) }}
+          </option>
+        </select>
+      </label>
+      <label style="margin-left: 40px"> Numer telefonu
+        <input type="text" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 190px; font-size: 14px" name="phoneNumber" [(ngModel)]="phoneNumber">
+      </label>
+      <label style="margin-left: 40px"> Data rejestracji
+        <input type="date" class="form-control border bg-light" [disabled]="viewMode"
+               style="width: 190px; font-size: 14px" name="registrationDate" [(ngModel)]="registrationDate">
+      </label>
+    </div>
+    <div class="form-group" style="margin-top: 50px">
+      <button *ngIf="viewMode" type="button" class="btn btn-outline-dark" style="width: 10%"
+              (click)="editData()">Edytuj
+      </button>
+      <button *ngIf="!viewMode" type="button" class="btn btn-outline-dark" style="width: 10%; margin-left: 540px"
+              (click)="saveData()">Zapisz
+      </button>
+    </div>
+  </div>
+</form>
