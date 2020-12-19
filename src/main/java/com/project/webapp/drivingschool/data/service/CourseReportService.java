@@ -1,7 +1,6 @@
 package com.project.webapp.drivingschool.data.service;
 
 import com.project.webapp.drivingschool.data.model.Course;
-import com.project.webapp.drivingschool.data.model.Student;
 import com.project.webapp.drivingschool.data.report.CourseReport;
 import com.project.webapp.drivingschool.data.repository.StudentRepository;
 import com.project.webapp.drivingschool.data.utils.*;
@@ -68,12 +67,12 @@ public class CourseReportService {
      *
      * @return mapa studentów i raportów
      */
-    public Map<Student, CourseReport> getAllReports() {
-        Map<Student, CourseReport> resultMap = new HashMap<>();
+    public Map<String, CourseReport> getAllReports() {
+        Map<String, CourseReport> resultMap = new HashMap<>();
         studentRepository.findAll().forEach(student -> {
             Optional<CourseReport> reportOptional = courseService.getActiveCourseByEmail(student.getEmail())
                     .map(this::getReportByCourse);
-            reportOptional.ifPresent(report -> resultMap.put(student, report));
+            reportOptional.ifPresent(report -> resultMap.put(student.getEmail(), report));
         });
         return resultMap;
     }

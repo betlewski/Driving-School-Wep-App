@@ -6,7 +6,6 @@ import {AuthService} from "../../auth/auth.service";
 import {Observable} from "rxjs";
 import {CourseReport} from "../../../model/course-report.model";
 import {LicenseCategory} from "../../../utils/license-category";
-import {Student} from "../../../model/student.model";
 
 @Injectable({
   providedIn: 'root'
@@ -47,9 +46,9 @@ export class CourseService {
       {headers: headers, params: params});
   }
 
-  public getAllReports(): Observable<Map<Student, CourseReport>> {
+  public getAllReports(): Observable<Map<String, CourseReport>> {
     const headers = this.authService.getAuthHeaders();
-    return this.http.get<Map<Student, CourseReport>>(this.GET_ALL_REPORTS_URL,
+    return this.http.get<Map<String, CourseReport>>(this.GET_ALL_REPORTS_URL,
       {headers: headers});
   }
 
