@@ -84,6 +84,12 @@ public class EmployeeController {
         return employeeService.editEmployee(email, newEmployee);
     }
 
+    @PutMapping("/edit/full")
+    public ResponseEntity<Employee> editEmployeeFull(@RequestParam("email") String email,
+                                                     @RequestBody Employee newEmployee) {
+        return employeeService.editEmployeeFull(email, newEmployee);
+    }
+
     @PutMapping("/edit/password")
     public ResponseEntity<Employee> changePassword(@RequestParam("email") String email,
                                                    @RequestBody String newPassword) {

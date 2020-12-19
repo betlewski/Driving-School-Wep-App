@@ -144,19 +144,36 @@ public class EmployeeService {
     }
 
     /**
-     * Edycja danych pracownika na podstawie podanego adresu email
+     * Edycja niektórych danych pracownika na podstawie podanego adresu email.
      *
      * @param email       adres email
      * @param newEmployee pracownik ze zmienionymi danymi
      * @return edytowany pracownik
      */
     public ResponseEntity<Employee> editEmployee(String email, Employee newEmployee) {
+        Employee fullEmployee = new Employee();
+        fullEmployee.setFullName(newEmployee.getFullName());
+        fullEmployee.setPhoneNumber(newEmployee.getPhoneNumber());
+        return editEmployeeFull(email, fullEmployee);
+    }
+
+    /**
+     * Edycja wszystkich danych pracownika na podstawie podanego adresu email.
+     *
+     * @param email       adres email
+     * @param newEmployee pracownik ze zmienionymi danymi
+     * @return edytowany pracownik
+     */
+    public ResponseEntity<Employee> editEmployeeFull(String email, Employee newEmployee) {
         Optional<Employee> oldEmployee = employeeRepository.findByEmail(email);
         if (oldEmployee.isPresent()) {
             Employee employee = oldEmployee.get();
             try {
+                employee.setEmployeeRole(newEmployee.getEmployeeRole());
                 employee.setFullName(newEmployee.getFullName());
                 employee.setPhoneNumber(newEmployee.getPhoneNumber());
+                employee.setEmail(newEmployee.getEmail());
+                employee.setRegistrationDate(newEmployee.getRegistrationDate());
                 employee = employeeRepository.save(employee);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
