@@ -18,6 +18,7 @@ export class EmployeeService {
   private FIND_ALL_NOT_ADMINS_URL = this.EMPLOYEE_URL + '/all/notAdmins';
   private FIND_ALL_BY_ROLE_URL = this.EMPLOYEE_URL + '/all/byRole';
   private FIND_BY_EMAIL_URL = this.EMPLOYEE_URL + '/byEmail';
+  private ADD_URL = this.EMPLOYEE_URL + '/add';
   private EDIT_URL = this.EMPLOYEE_URL + '/edit';
   private EDIT_FULL_URL = this.EMPLOYEE_URL + '/edit/full';
 
@@ -43,6 +44,12 @@ export class EmployeeService {
     const params = new HttpParams().set("email", email);
     return this.http.get<Employee>(this.FIND_BY_EMAIL_URL,
       {headers: headers, params: params});
+  }
+
+  public add(employee: Employee): Observable<Employee> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http.post<Employee>(this.ADD_URL, employee,
+      {headers: headers});
   }
 
   public edit(email: string, newEmployee: Employee): Observable<Employee> {
