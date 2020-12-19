@@ -38,7 +38,8 @@ import {PersonalDataAdminComponent} from './component/separate/admin/personal-da
 import {StudentsComponent} from './component/separate/admin/students/students.component';
 import {OfficialAdminComponent} from './component/separate/admin/official-admin/official-admin.component';
 import {CourseAdminComponent} from './component/separate/admin/course-admin/course-admin.component';
-import {EmployeesComponent} from './component/separate/admin/employees/employees.component';
+import {EmployeesComponent} from './component/separate/admin/employee/employees/employees.component';
+import {EmployeeNewComponent} from './component/separate/admin/employee/employee-new/employee-new.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import {EmployeesComponent} from './component/separate/admin/employees/employees
     OfficialAdminComponent,
     CourseAdminComponent,
     EmployeesComponent,
+    EmployeeNewComponent,
   ],
   imports: [
     BrowserModule,
