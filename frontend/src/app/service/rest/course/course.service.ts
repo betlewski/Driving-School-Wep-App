@@ -6,6 +6,7 @@ import {AuthService} from "../../auth/auth.service";
 import {Observable} from "rxjs";
 import {CourseReport} from "../../../model/course-report.model";
 import {LicenseCategory} from "../../../utils/license-category";
+import {Student} from "../../../model/student.model";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,7 @@ export class CourseService {
   private FIND_ACTIVE_COURSE_BY_EMAIL_URL = this.COURSE_URL + '/byEmail';
   private ADD_COURSE_URL = this.COURSE_URL + '/add';
   private GET_REPORT_BY_EMAIL_URL = this.COURSE_URL + '/report/byEmail';
+  private GET_ALL_REPORTS_URL = this.COURSE_URL + '/report/all';
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
@@ -43,6 +45,12 @@ export class CourseService {
     const params = new HttpParams().set("email", email);
     return this.http.get<CourseReport>(this.GET_REPORT_BY_EMAIL_URL,
       {headers: headers, params: params});
+  }
+
+  public getAllReports(): Observable<Map<Student, CourseReport>> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http.get<Map<Student, CourseReport>>(this.GET_ALL_REPORTS_URL,
+      {headers: headers});
   }
 
 }
