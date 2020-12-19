@@ -16,6 +16,7 @@ import {TheoryInitComponent} from "./component/separate/student/theory/theory-in
 import {TheoryLessonsComponent} from "./component/separate/student/theory/theory-lessons/theory-lessons.component";
 import {PersonalDataAdminComponent} from './component/separate/admin/personal-data-admin/personal-data-admin.component';
 import {StudentsComponent} from "./component/separate/admin/students/students.component";
+import {OfficialAdminComponent} from "./component/separate/admin/official-admin/official-admin.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -86,6 +87,10 @@ const routes: Routes = [
           {
             path: 'student',
             component: StudentsComponent
+          },
+          {
+            path: 'official',
+            component: OfficialAdminComponent
           }
         ]
       },

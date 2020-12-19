@@ -34,8 +34,9 @@ import {ExamComponent} from './component/separate/student/exam/exam.component';
 import {TheoryInitComponent} from './component/separate/student/theory/theory-init/theory-init.component';
 import {TheoryLessonsComponent} from './component/separate/student/theory/theory-lessons/theory-lessons.component';
 import {LectureSeriesService} from "./service/rest/lecture-series/lecture-series.service";
-import { PersonalDataAdminComponent } from './component/separate/admin/personal-data-admin/personal-data-admin.component';
-import { StudentsComponent } from './component/separate/admin/students/students.component';
+import {PersonalDataAdminComponent} from './component/separate/admin/personal-data-admin/personal-data-admin.component';
+import {StudentsComponent} from './component/separate/admin/students/students.component';
+import {OfficialAdminComponent} from './component/separate/admin/official-admin/official-admin.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import { StudentsComponent } from './component/separate/admin/students/students.
     TheoryLessonsComponent,
     PersonalDataAdminComponent,
     StudentsComponent,
+    OfficialAdminComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,73 @@
+<h2 class="mb-4"> Dokumenty i płatności </h2>
+<p> Sprawdź, na jakim etapie rozliczenia jest kursant i odpowiadaj na jego zgłoszenia. </p>
+<br>
+<form class="form-margin">
+  <div class="form-group">
+    <label style="width: 400px"> Kursant
+      <select class="browser-default custom-select" name="chosenStudent" style="font-size: 15px"
+              [(ngModel)]="chosenStudent" (ngModelChange)="changeStudent()">
+        <option value=""></option>
+        <option *ngFor="let student of students" [ngValue]="student">
+          {{ student.fullName + " (" + student.email + ")" }}
+        </option>
+      </select>
+    </label>
+  </div>
+  <div [hidden]="chosenStudent == null">
+    <div class="form-group">
+      <!--W trakcie realizacji-->
+      <table class="table" style="width: 1050px">
+        <thead class="thead-dark text-truncate">
+        <tr>
+          <th scope="col" style="width: 300px"> Opis</th>
+          <th scope="col" style="width: 200px"> Status</th>
+          <th scope="col" style="width: 150px"> Typ</th>
+          <th scope="col" style="width: 200px"> Data zgłoszenia</th>
+          <th class="empty-header" style="width: 100px"></th>
+          <th class="empty-header" style="width: 100px"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let official of officialsRequested" style="background-color: lightyellow">
+          <td style="width: 300px">{{official.description}}</td>
+          <td style="width: 200px">{{official.status}}</td>
+          <td style="width: 150px">{{official.type}}</td>
+          <td style="width: 200px">{{official.submissionTime}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-success request-button"
+                    (click)="accept(official)">Akceptuj
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-outline-danger request-button"
+                    (click)="reject(official)">Odrzuć
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <!--Zrealizowane-->
+      <table class="table table-bordered">
+        <tbody>
+        <tr *ngFor="let official of officialsCompleted" style="background-color: #d8ffd6">
+          <td style="width: 300px">{{official.description}}</td>
+          <td style="width: 200px">{{official.status}}</td>
+          <td style="width: 150px">{{official.type}}</td>
+          <td style="width: 200px">{{official.submissionTime}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <!--Do realizacji-->
+      <table class="table table-bordered">
+        <tbody>
+        <tr *ngFor="let official of officialsToComplete" style="background-color: #ffeaea">
+          <td style="width: 300px">{{official.description}}</td>
+          <td style="width: 200px">{{official.status}}</td>
+          <td style="width: 150px">{{official.type}}</td>
+          <td style="width: 200px">{{official.submissionTime}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</form>
