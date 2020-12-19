@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../../../../service/auth/auth.service";
-import {Utils} from "../../../../utils/utils";
-import {EmployeeService} from "../../../../service/rest/employee/employee.service";
-import {Employee} from "../../../../model/employee.model";
-import {EmployeeRole} from "../../../../utils/employee-role";
+import {AuthService} from "../../../../../service/auth/auth.service";
+import {Utils} from "../../../../../utils/utils";
+import {EmployeeService} from "../../../../../service/rest/employee/employee.service";
+import {Employee} from "../../../../../model/employee.model";
+import {EmployeeRole} from "../../../../../utils/employee-role";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-employees',
@@ -28,7 +29,8 @@ export class EmployeesComponent implements OnInit {
 
   viewMode = true;
 
-  constructor(private authService: AuthService,
+  constructor(private router: Router,
+              private authService: AuthService,
               private employeeService: EmployeeService) {
   }
 
@@ -98,6 +100,10 @@ export class EmployeesComponent implements OnInit {
   private getCurrentEmail(): string {
     const currentEmail = this.chosenEmployee?.email;
     return currentEmail != null ? currentEmail : "";
+  }
+
+  public addEmployee() {
+    this.router.navigate(["/home/admin/employee/new"]);
   }
 
 }

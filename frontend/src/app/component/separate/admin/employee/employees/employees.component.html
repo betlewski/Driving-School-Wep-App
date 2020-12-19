@@ -11,6 +11,9 @@
         </option>
       </select>
     </label>
+    <button type="button" class="btn btn-outline-dark" style="margin-left: 40px"
+            [disabled]="!viewMode" (click)="addEmployee()">Dodaj nowego
+    </button>
   </div>
   <div [hidden]="chosenEmployee == null">
     <div class="form-group" style="margin-top: 50px">
