@@ -1,1 +1,35 @@
-<p>employee-new works!</p>
+<h2 class="mb-4"> Pracownicy</h2>
+<p> Tu możesz dodać nowego pracownika szkoły jazdy. Przypomnij mu o zmianie hasła po pierwszym logowaniu.</p>
+<form class="form-margin">
+  <div class="form-group">
+    <label> Imię i nazwisko
+      <input type="text" class="form-control border bg-light"
+             style="width: 300px; font-size: 14px" name="fullName" [(ngModel)]="name">
+    </label>
+    <label style="width: 250px; margin-left: 50px"> Rola
+      <select class="browser-default custom-select role" name="role"
+              style="font-size: 15px" [(ngModel)]="role">
+        <option value=""></option>
+        <option *ngFor="let role of employeeRoles" [ngValue]="role">
+          {{ employeeRoleUtils.translate(role) }}
+        </option>
+      </select>
+    </label>
+  </div>
+  <div class="form-group" style="margin-top: 20px">
+    <label> Adres email
+      <input type="text" class="form-control border bg-light"
+             style="width: 300px; font-size: 14px" name="email" [(ngModel)]="email">
+    </label>
+    <label style="margin-left: 50px"> Hasło
+      <input type="password" class="form-control border bg-light" name="password"
+             style="width: 250px; font-size: 14px" [(ngModel)]="password">
+    </label>
+  </div>
+  <div class="form-group" style="margin-top: 6%">
+    <button type="button" class="btn btn-outline-dark" style="width: 12%"
+            (click)="add()">Dodaj
+    </button>
+    <a style="margin-left: 30px">{{feedback}}</a>
+  </div>
+</form>
