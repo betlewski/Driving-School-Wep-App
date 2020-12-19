@@ -1,6 +1,7 @@
 package com.project.webapp.drivingschool.data.controller;
 
 import com.project.webapp.drivingschool.data.model.Course;
+import com.project.webapp.drivingschool.data.model.Student;
 import com.project.webapp.drivingschool.data.report.CourseReport;
 import com.project.webapp.drivingschool.data.service.CourseReportService;
 import com.project.webapp.drivingschool.data.service.CourseService;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -76,6 +78,12 @@ public class CourseController {
     @ResponseBody
     public CourseReport getReportByCourse(@RequestBody Course course) {
         return courseReportService.getReportByCourse(course);
+    }
+
+    @GetMapping("/report/all")
+    @ResponseBody
+    public Map<Student, CourseReport> getAllReports() {
+        return courseReportService.getAllReports();
     }
 
 }
