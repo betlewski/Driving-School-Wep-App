@@ -50,7 +50,6 @@ public class Employee implements UserDetails {
      * Numer telefonu komórkowego
      */
     @Pattern(regexp = "^[1-9]d{2}-d{3}-d{3}$")
-    @Column(nullable = false, unique = true)
     private String phoneNumber;
 
     /**
