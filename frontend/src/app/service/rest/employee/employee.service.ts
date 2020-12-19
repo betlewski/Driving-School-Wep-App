@@ -15,18 +15,26 @@ import {EmployeeRole} from "../../../utils/employee-role";
 export class EmployeeService {
 
   private EMPLOYEE_URL = environment.restUrl + '/employee';
-  private FIND_ALL_BY_ROLE = this.EMPLOYEE_URL + '/all/byRole';
+  private FIND_ALL_URL = this.EMPLOYEE_URL + '/all';
+  private FIND_ALL_BY_ROLE_URL = this.EMPLOYEE_URL + '/all/byRole';
   private FIND_BY_EMAIL_URL = this.EMPLOYEE_URL + '/byEmail';
   private EDIT_URL = this.EMPLOYEE_URL + '/edit';
+  private EDIT_FULL_URL = this.EMPLOYEE_URL + '/edit/full';
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
   }
 
+  public findAll(): Observable<Employee[]> {
+    const headers = this.authService.getAuthHeaders();
+    return this.http.get<Employee[]>(this.FIND_ALL_URL,
+      {headers: headers});
+  }
+
   public findAllByRole(role: EmployeeRole): Observable<Employee[]> {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("role", EmployeeRole[role]);
-    return this.http.get<Employee[]>(this.FIND_ALL_BY_ROLE,
+    return this.http.get<Employee[]>(this.FIND_ALL_BY_ROLE_URL,
       {headers: headers, params: params});
   }
 
@@ -41,6 +49,13 @@ export class EmployeeService {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
     return this.http.put<Employee>(this.EDIT_URL, newEmployee,
+      {headers: headers, params: params});
+  }
+
+  public editFull(email: string, newEmployee: Employee): Observable<Employee> {
+    const headers = this.authService.getAuthHeaders();
+    const params = new HttpParams().set("email", email);
+    return this.http.put<Employee>(this.EDIT_FULL_URL, newEmployee,
       {headers: headers, params: params});
   }
 
