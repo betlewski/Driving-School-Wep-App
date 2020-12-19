@@ -107,8 +107,8 @@ export class ExamComponent implements OnInit {
 
   public request(): void {
     // @ts-ignore
-    if (this.chosenTeacher != "" && this.chosenTeacher != null &&
-      this.possibleExamType != null && this.startTime != null && this.endTime != null) {
+    if (this.chosenTeacher != "" && this.chosenTeacher != null && this.chosenTeacher.email != null
+      && this.possibleExamType != null && this.startTime != null && this.endTime != null) {
       const studentEmail = this.authService.getUserEmail();
       const employeeEmail = this.chosenTeacher.email;
       const exam = new InternalExam(null, this.possibleExamType, null,
