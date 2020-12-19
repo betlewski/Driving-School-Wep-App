@@ -57,7 +57,7 @@ public class EmployeeService {
      * @return lista pracowników
      */
     public List<Employee> getAllEmployeesNotAdmins() {
-        return getAllActualEmployees().stream()
+        return employeeRepository.findAll().stream()
                 .filter(employee -> !employee.getEmployeeRole().equals(EmployeeRole.ADMINISTRATOR))
                 .collect(Collectors.toList());
     }

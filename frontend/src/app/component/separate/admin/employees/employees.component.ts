@@ -38,7 +38,7 @@ export class EmployeesComponent implements OnInit {
   }
 
   private findAllEmployees() {
-    this.employeeService.findAll().subscribe(
+    this.employeeService.findAllNotAdmins().subscribe(
       employees => this.employees = employees);
   }
 

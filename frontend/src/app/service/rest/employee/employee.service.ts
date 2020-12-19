@@ -15,7 +15,7 @@ import {EmployeeRole} from "../../../utils/employee-role";
 export class EmployeeService {
 
   private EMPLOYEE_URL = environment.restUrl + '/employee';
-  private FIND_ALL_URL = this.EMPLOYEE_URL + '/all';
+  private FIND_ALL_NOT_ADMINS_URL = this.EMPLOYEE_URL + '/all/notAdmins';
   private FIND_ALL_BY_ROLE_URL = this.EMPLOYEE_URL + '/all/byRole';
   private FIND_BY_EMAIL_URL = this.EMPLOYEE_URL + '/byEmail';
   private EDIT_URL = this.EMPLOYEE_URL + '/edit';
@@ -25,9 +25,9 @@ export class EmployeeService {
               private authService: AuthService) {
   }
 
-  public findAll(): Observable<Employee[]> {
+  public findAllNotAdmins(): Observable<Employee[]> {
     const headers = this.authService.getAuthHeaders();
-    return this.http.get<Employee[]>(this.FIND_ALL_URL,
+    return this.http.get<Employee[]>(this.FIND_ALL_NOT_ADMINS_URL,
       {headers: headers});
   }
 
