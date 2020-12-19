@@ -9,7 +9,12 @@
 
 .table {
   margin: 2% 5%;
-  width: 1000px;
+  width: 900px;
+}
+
+.empty-header {
+  background: white !important;
+  border: none !important;
 }
 
 .request-button {
