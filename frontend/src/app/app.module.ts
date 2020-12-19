@@ -37,6 +37,7 @@ import {LectureSeriesService} from "./service/rest/lecture-series/lecture-series
 import {PersonalDataAdminComponent} from './component/separate/admin/personal-data-admin/personal-data-admin.component';
 import {StudentsComponent} from './component/separate/admin/students/students.component';
 import {OfficialAdminComponent} from './component/separate/admin/official-admin/official-admin.component';
+import {CourseAdminComponent} from './component/separate/admin/course-admin/course-admin.component';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import {OfficialAdminComponent} from './component/separate/admin/official-admin/
     PersonalDataAdminComponent,
     StudentsComponent,
     OfficialAdminComponent,
+    CourseAdminComponent,
   ],
   imports: [
     BrowserModule,

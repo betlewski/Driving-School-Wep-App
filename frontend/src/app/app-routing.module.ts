@@ -17,6 +17,7 @@ import {TheoryLessonsComponent} from "./component/separate/student/theory/theory
 import {PersonalDataAdminComponent} from './component/separate/admin/personal-data-admin/personal-data-admin.component';
 import {StudentsComponent} from "./component/separate/admin/students/students.component";
 import {OfficialAdminComponent} from "./component/separate/admin/official-admin/official-admin.component";
+import {CourseAdminComponent} from "./component/separate/admin/course-admin/course-admin.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -91,6 +92,10 @@ const routes: Routes = [
           {
             path: 'official',
             component: OfficialAdminComponent
+          },
+          {
+            path: 'course',
+            component: CourseAdminComponent
           }
         ]
       },
