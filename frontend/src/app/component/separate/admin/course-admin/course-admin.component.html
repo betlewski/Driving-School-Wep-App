@@ -1,1 +1,29 @@
-<p>course-admin works!</p>
+<h2 class="mb-4"> Kursy nauki </h2>
+<p> Podsumowanie wszystkich aktywnych kursów prowadzonych w szkole jazdy.</p>
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark text-truncate">
+  <tr>
+    <th scope="col" style="width: 250px"> Kursant</th>
+    <th scope="col" style="width: 100px"> Kategoria</th>
+    <th scope="col" style="width: 250px"> Status <i>- stopień ukończenia</i></th>
+    <th scope="col" style="width: 200px"> Ukończono (teoria / praktyka)</th>
+    <th scope="col" style="width: 100px"> Dodatkowe jazdy</th>
+    <th scope="col" style="width: 150px"> Rozpoczęcie</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let entry of resultMap | keyvalue">
+    <td style="width: 250px">{{entry.key}}</td>
+    <td style="width: 100px">{{entry.value.category}}</td>
+    <td style="width: 250px">{{courseStatus.translate(entry.value.courseStatus)}}
+      <i>- {{entry.value.passedCoursePercent}}%</i>
+    </td>
+    <td style="width: 200px">{{entry.value.passedTheoryHours}} godzin
+      / {{entry.value.passedPracticeHours}} godzin
+    </td>
+    <td style="width: 100px">{{entry.value.extraDrivingLessonsHours}} godzin</td>
+    <td style="width: 150px">{{entry.value.startDate}}</td>
+  </tr>
+  </tbody>
+</table>
