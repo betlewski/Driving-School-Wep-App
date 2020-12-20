@@ -81,13 +81,13 @@ public class InternalExamService {
 
     /**
      * Pobranie wszystkich egzaminów wewnętrznych
-     * przeprowadzanych przez pracownika o podanym ID.
+     * przeprowadzanych przez pracownika o podanym adresie email.
      *
-     * @param id ID pracownika
+     * @param email adres email pracownika
      * @return lista egzaminów
      */
-    public Set<InternalExam> getAllInternalExamsByEmployeeId(Long id) {
-        return internalExamRepository.findAllByEmployeeId(id);
+    public Set<InternalExam> getAllInternalExamsByEmployeeEmail(String email) {
+        return internalExamRepository.findAllByEmployeeEmail(email);
     }
 
     /**

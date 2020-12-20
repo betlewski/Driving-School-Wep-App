@@ -21,4 +21,13 @@ public interface InternalExamRepository extends JpaRepository<InternalExam, Long
      */
     Set<InternalExam> findAllByEmployeeId(Long id);
 
+    /**
+     * Pobranie wszystkich egzaminów wewnętrznych
+     * przeprowadzanych przez pracownika o podanym adresie email.
+     *
+     * @param email adres email pracownika
+     * @return lista egzaminów
+     */
+    Set<InternalExam> findAllByEmployeeEmail(String email);
+
 }
