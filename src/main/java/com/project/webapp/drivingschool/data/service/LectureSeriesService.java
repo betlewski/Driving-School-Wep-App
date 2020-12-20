@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Serwis dla cyklu wykładów w szkole jazdy
@@ -61,6 +62,19 @@ public class LectureSeriesService {
      */
     public List<LectureSeries> getAllLectureSeriesByEmployeeEmail(String email) {
         return lectureSeriesRepository.findAllByEmployeeEmail(email);
+    }
+
+    /**
+     * Pobranie wszystkich wykładów
+     * przeprowadzanych przez pracownika o podanym adresie email.
+     *
+     * @param email adres email pracownika
+     * @return zbiór wykładów
+     */
+    public Set<Lecture> getAllLecturesByEmployeeEmail(String email) {
+        return lectureSeriesRepository.findAllByEmployeeEmail(email).stream()
+                .flatMap(series -> series.getLectures().stream())
+                .collect(Collectors.toSet());
     }
 
     /**

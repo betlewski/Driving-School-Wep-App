@@ -27,13 +27,13 @@ public class InternalExamController {
         this.internalExamService = internalExamService;
     }
 
-    @GetMapping("/all/byStudent")
+    @GetMapping("/all/byEmail")
     @ResponseBody
     public Set<InternalExam> getAllInternalExamsByStudentEmail(@RequestParam("email") String email) {
         return internalExamService.getAllInternalExamsByEmail(email);
     }
 
-    @GetMapping("/all/byStudent/byType")
+    @GetMapping("/all/byEmail/byType")
     @ResponseBody
     public Set<InternalExam> getAllInternalExamsByStudentEmailAndExamType(@RequestParam("email") String email,
                                                                           @RequestParam("type") ExamType type) {

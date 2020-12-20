@@ -1,5 +1,6 @@
 package com.project.webapp.drivingschool.data.controller;
 
+import com.project.webapp.drivingschool.data.model.Lecture;
 import com.project.webapp.drivingschool.data.model.LectureSeries;
 import com.project.webapp.drivingschool.data.service.LectureSeriesService;
 import com.project.webapp.drivingschool.data.utils.LectureSeriesStatus;
@@ -35,6 +36,12 @@ public class LectureSeriesController {
     @ResponseBody
     public List<LectureSeries> getAllLectureSeriesByEmployeeEmail(@RequestParam("email") String email) {
         return lectureSeriesService.getAllLectureSeriesByEmployeeEmail(email);
+    }
+
+    @GetMapping("/lectures/all/byEmployee")
+    @ResponseBody
+    public Set<Lecture> getAllLecturesByEmployeeEmail(@RequestParam("email") String email) {
+        return lectureSeriesService.getAllLecturesByEmployeeEmail(email);
     }
 
     @PostMapping("/add")
