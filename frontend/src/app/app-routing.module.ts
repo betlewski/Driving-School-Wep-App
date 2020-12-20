@@ -20,6 +20,7 @@ import {OfficialAdminComponent} from "./component/separate/admin/official-admin/
 import {CourseAdminComponent} from "./component/separate/admin/course-admin/course-admin.component";
 import {EmployeesComponent} from "./component/separate/admin/employee/employees/employees.component";
 import {EmployeeNewComponent} from "./component/separate/admin/employee/employee-new/employee-new.component";
+import {AdminCalendarComponent} from "./component/separate/admin/admin-calendar/admin-calendar.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -106,6 +107,10 @@ const routes: Routes = [
           {
             path: 'employee/new',
             component: EmployeeNewComponent
+          },
+          {
+            path: 'calendar',
+            component: AdminCalendarComponent
           }
         ]
       },
