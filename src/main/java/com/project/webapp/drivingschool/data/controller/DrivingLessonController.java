@@ -28,14 +28,14 @@ public class DrivingLessonController {
 
     @GetMapping("/all/byEmail")
     @ResponseBody
-    public Set<DrivingLesson> getAllDrivingLessonsByStudentId(@RequestParam("email") String email) {
+    public Set<DrivingLesson> getAllDrivingLessonsByStudentEmail(@RequestParam("email") String email) {
         return drivingLessonService.getAllDrivingLessonsByEmail(email);
     }
 
-    @GetMapping("/all/byEmployeeId")
+    @GetMapping("/all/byEmployee")
     @ResponseBody
-    public Set<DrivingLesson> getAllDrivingLessonsByEmployeeId(@RequestParam("id") Long id) {
-        return drivingLessonService.getAllDrivingLessonsByEmployeeId(id);
+    public Set<DrivingLesson> getAllDrivingLessonsByEmployeeEmail(@RequestParam("email") String email) {
+        return drivingLessonService.getAllDrivingLessonsByEmployeeEmail(email);
     }
 
     @GetMapping("/hours/passed/byCourse")

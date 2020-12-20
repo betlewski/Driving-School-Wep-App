@@ -21,4 +21,13 @@ public interface DrivingLessonRepository extends JpaRepository<DrivingLesson, Lo
      */
     Set<DrivingLesson> findAllByEmployeeId(Long id);
 
+    /**
+     * Pobranie wszystkich jazd przeprowadzanych
+     * przez pracownika o podanym adresie email.
+     *
+     * @param email adres email pracownika
+     * @return lista jazd
+     */
+    Set<DrivingLesson> findAllByEmployeeEmail(String email);
+
 }

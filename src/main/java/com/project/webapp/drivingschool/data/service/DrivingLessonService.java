@@ -55,13 +55,13 @@ public class DrivingLessonService {
 
     /**
      * Pobranie wszystkich jazd przeprowadzanych
-     * przez pracownika o podanym ID.
+     * przez pracownika o podanym adresie email.
      *
-     * @param id ID pracownika
+     * @param email adres email pracownika
      * @return lista jazd
      */
-    public Set<DrivingLesson> getAllDrivingLessonsByEmployeeId(Long id) {
-        return drivingLessonRepository.findAllByEmployeeId(id);
+    public Set<DrivingLesson> getAllDrivingLessonsByEmployeeEmail(String email) {
+        return drivingLessonRepository.findAllByEmployeeEmail(email);
     }
 
     /**
