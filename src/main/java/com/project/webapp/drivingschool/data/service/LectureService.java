@@ -43,13 +43,13 @@ public class LectureService {
 
     /**
      * Pobranie wszystkich wykładów
-     * przeprowadzanych przez pracownika o podanym ID.
+     * przeprowadzanych przez pracownika o podanym adresie email.
      *
-     * @param id ID pracownika
+     * @param email adres email pracownika
      * @return lista wykładów
      */
-    public Set<Lecture> getAllLecturesByEmployeeId(Long id) {
-        return lectureSeriesRepository.findAllByEmployeeId(id).stream()
+    public Set<Lecture> getAllLecturesByEmployeeEmail(String email) {
+        return lectureSeriesRepository.findAllByEmployeeEmail(email).stream()
                 .map(LectureSeries::getLectures)
                 .flatMap(Set::stream)
                 .collect(Collectors.toSet());
@@ -95,13 +95,13 @@ public class LectureService {
 
     /**
      * Pobranie wszystkich nowych lub trwających wykładów
-     * przeprowadzanych przez pracownika o podanym ID.
+     * przeprowadzanych przez pracownika o podanym adresie email.
      *
-     * @param id ID pracownika
+     * @param email adrs email pracownika
      * @return lista wykładów
      */
-    public Set<Lecture> getAllNewOrOngoingLecturesByEmployeeId(Long id) {
-        return lectureSeriesRepository.findAllByEmployeeId(id).stream()
+    public Set<Lecture> getAllNewOrOngoingLecturesByEmployeeEmail(String email) {
+        return lectureSeriesRepository.findAllByEmployeeEmail(email).stream()
                 .filter(series -> series.getStatus().equals(LectureSeriesStatus.NEW) ||
                         series.getStatus().equals(LectureSeriesStatus.ONGOING))
                 .map(LectureSeries::getLectures)

@@ -23,10 +23,10 @@ public class LectureController {
         this.lectureService = lectureService;
     }
 
-    @GetMapping("/all/byEmployeeId")
+    @GetMapping("/all/byEmployee")
     @ResponseBody
-    public Set<Lecture> getAllLecturesByEmployeeId(@RequestParam("id") Long id) {
-        return lectureService.getAllLecturesByEmployeeId(id);
+    public Set<Lecture> getAllLecturesByEmployeeEmail(@RequestParam("email") String email) {
+        return lectureService.getAllLecturesByEmployeeEmail(email);
     }
 
     @GetMapping("/all/bySeriesId")
@@ -47,10 +47,10 @@ public class LectureController {
         return lectureService.checkExistingInLectureSeriesByLectureId(id);
     }
 
-    @GetMapping("all/newOrOngoing/byEmployeeId")
+    @GetMapping("all/newOrOngoing/byEmployee")
     @ResponseBody
-    public Set<Lecture> getAllNewOrOngoingLecturesByEmployeeId(@RequestParam("id") Long id) {
-        return lectureService.getAllNewOrOngoingLecturesByEmployeeId(id);
+    public Set<Lecture> getAllNewOrOngoingLecturesByEmployeeEmail(@RequestParam("email") String email) {
+        return lectureService.getAllNewOrOngoingLecturesByEmployeeEmail(email);
     }
 
     @GetMapping("/hours/all/bySeriesId")

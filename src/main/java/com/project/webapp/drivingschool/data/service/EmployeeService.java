@@ -93,14 +93,14 @@ public class EmployeeService {
     }
 
     /**
-     * Sprawdzenie, czy pracownik o podanym ID ma przypisaną podaną rolę
+     * Sprawdzenie, czy pracownik o podanym adresie email ma przypisaną podaną rolę.
      *
-     * @param id   ID pracownika
-     * @param role rola pracownika
+     * @param email adres email pracownika
+     * @param role  rola pracownika
      * @return true - jeśli warunek jest spełniony, false - w przeciwnym razie
      */
-    public Boolean checkExistingByEmployeeIdAndEmployeeRole(Long id, EmployeeRole role) {
-        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+    public Boolean checkExistingByEmployeeEmailAndEmployeeRole(String email, EmployeeRole role) {
+        Optional<Employee> optionalEmployee = employeeRepository.findByEmail(email);
         return optionalEmployee.map(
                 employee -> employee.getEmployeeRole().equals(role))
                 .orElse(false);
