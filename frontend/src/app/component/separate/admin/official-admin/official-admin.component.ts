@@ -36,7 +36,12 @@ export class OfficialAdminComponent implements OnInit {
 
   private findAllStudents() {
     this.studentService.findAll().subscribe(
-      students => this.students = students);
+      students => {
+        this.students = students;
+        this.students = this.students.sort(
+          // @ts-ignore
+          (a, b) => a.fullName?.localeCompare(b.fullName));
+      });
   }
 
   public changeStudent() {

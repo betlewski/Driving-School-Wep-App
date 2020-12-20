@@ -27,7 +27,10 @@ export class CourseAdminComponent implements OnInit {
 
   private getAllReports(): void {
     this.courseService.getAllReports().subscribe(
-      map => this.resultMap = map);
+      map => {
+        this.resultMap = map;
+        this.resultMap = new Map([...this.resultMap].sort());
+      });
   }
 
 }

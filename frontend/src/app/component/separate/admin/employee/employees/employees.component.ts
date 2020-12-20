@@ -41,7 +41,12 @@ export class EmployeesComponent implements OnInit {
 
   private findAllEmployees() {
     this.employeeService.findAllNotAdmins().subscribe(
-      employees => this.employees = employees);
+      employees => {
+        this.employees = employees;
+        this.employees = this.employees.sort(
+          // @ts-ignore
+          (a, b) => a.fullName?.localeCompare(b.fullName));
+      });
   }
 
   private fillEmployeeRoles(): void {

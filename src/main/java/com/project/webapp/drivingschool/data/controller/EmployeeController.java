@@ -60,11 +60,11 @@ public class EmployeeController {
         return employeeService.getAllEmployeeRoles();
     }
 
-    @GetMapping("/exist/byEmployeeId/byRole")
+    @GetMapping("/exist/byEmployee/byRole")
     @ResponseBody
-    public Boolean checkExistingByEmployeeIdAndEmployeeRole(@RequestParam("id") Long id,
-                                                            @RequestParam("role") EmployeeRole role) {
-        return employeeService.checkExistingByEmployeeIdAndEmployeeRole(id, role);
+    public Boolean checkExistingByEmployeeEmailAndEmployeeRole(@RequestParam("email") String email,
+                                                               @RequestParam("role") EmployeeRole role) {
+        return employeeService.checkExistingByEmployeeEmailAndEmployeeRole(email, role);
     }
 
     @GetMapping("/email/exist")
