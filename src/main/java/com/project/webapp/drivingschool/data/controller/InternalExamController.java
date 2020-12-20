@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
@@ -42,8 +43,8 @@ public class InternalExamController {
 
     @GetMapping("/all/byEmployee")
     @ResponseBody
-    public Set<InternalExam> getAllInternalExamsByEmployeeEmail(@RequestParam("email") String email) {
-        return internalExamService.getAllInternalExamsByEmployeeEmail(email);
+    public Map<InternalExam, String> getMapOfInternalExamsAndStudentEmailByEmployeeEmail(@RequestParam("email") String email) {
+        return internalExamService.getMapOfInternalExamsAndStudentEmailByEmployeeEmail(email);
     }
 
     @GetMapping("/course")

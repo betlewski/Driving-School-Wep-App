@@ -24,6 +24,7 @@ public class DrivingLessonService {
     private CourseRepository courseRepository;
     private PaymentRepository paymentRepository;
     private CourseService courseService;
+    private StudentService studentService;
     private EmployeeRepository employeeRepository;
 
     @Autowired
@@ -32,12 +33,14 @@ public class DrivingLessonService {
                                 CourseRepository courseRepository,
                                 PaymentRepository paymentRepository,
                                 CourseService courseService,
+                                StudentService studentService,
                                 EmployeeRepository employeeRepository) {
         this.drivingLessonRepository = drivingLessonRepository;
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.paymentRepository = paymentRepository;
         this.courseService = courseService;
+        this.studentService = studentService;
         this.employeeRepository = employeeRepository;
     }
 
@@ -54,14 +57,22 @@ public class DrivingLessonService {
     }
 
     /**
-     * Pobranie wszystkich jazd przeprowadzanych
-     * przez pracownika o podanym adresie email.
+     * Pobranie mapy adresów email kursantów i jazd szkoleniowych
+     * przeprowadzanych przez pracownika o podanym adresie email.
      *
      * @param email adres email pracownika
-     * @return lista jazd
+     * @return mapa kursantów i jazd
      */
-    public Set<DrivingLesson> getAllDrivingLessonsByEmployeeEmail(String email) {
-        return drivingLessonRepository.findAllByEmployeeEmail(email);
+    public Map<DrivingLesson, String> getAllDrivingLessonsByEmployeeEmail(String email) {
+        Map<DrivingLesson, String> resultMap = new HashMap<>();
+        drivingLessonRepository.findAllByEmployeeEmail(email).forEach(lesson -> {
+            Optional<Course> optionalCourse = findCourseByDrivingLessonId(lesson.getId());
+            if (optionalCourse.isPresent()) {
+                Optional<Student> optionalStudent = studentService.findStudentByCourse(optionalCourse.get());
+                optionalStudent.ifPresent(student -> resultMap.put(lesson, student.getEmail()));
+            }
+        });
+        return resultMap;
     }
 
     /**

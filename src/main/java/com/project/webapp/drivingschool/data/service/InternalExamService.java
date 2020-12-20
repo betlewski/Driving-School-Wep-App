@@ -1,9 +1,6 @@
 package com.project.webapp.drivingschool.data.service;
 
-import com.project.webapp.drivingschool.data.model.Course;
-import com.project.webapp.drivingschool.data.model.Employee;
-import com.project.webapp.drivingschool.data.model.InternalExam;
-import com.project.webapp.drivingschool.data.model.Student;
+import com.project.webapp.drivingschool.data.model.*;
 import com.project.webapp.drivingschool.data.repository.CourseRepository;
 import com.project.webapp.drivingschool.data.repository.EmployeeRepository;
 import com.project.webapp.drivingschool.data.repository.InternalExamRepository;
@@ -32,6 +29,7 @@ public class InternalExamService {
     private StudentRepository studentRepository;
     private CourseRepository courseRepository;
     private CourseService courseService;
+    private StudentService studentService;
     private PaymentService paymentService;
     private EmployeeRepository employeeRepository;
 
@@ -40,12 +38,14 @@ public class InternalExamService {
                                StudentRepository studentRepository,
                                CourseRepository courseRepository,
                                CourseService courseService,
+                               StudentService studentService,
                                @Lazy PaymentService paymentService,
                                EmployeeRepository employeeRepository) {
         this.internalExamRepository = internalExamRepository;
         this.studentRepository = studentRepository;
         this.courseRepository = courseRepository;
         this.courseService = courseService;
+        this.studentService = studentService;
         this.paymentService = paymentService;
         this.employeeRepository = employeeRepository;
     }
@@ -80,14 +80,22 @@ public class InternalExamService {
     }
 
     /**
-     * Pobranie wszystkich egzaminów wewnętrznych
+     * Pobranie mapy adresów email kursantów i egzaminów wewnętrznych
      * przeprowadzanych przez pracownika o podanym adresie email.
      *
      * @param email adres email pracownika
-     * @return lista egzaminów
+     * @return mapa kursantów i egzaminów
      */
-    public Set<InternalExam> getAllInternalExamsByEmployeeEmail(String email) {
-        return internalExamRepository.findAllByEmployeeEmail(email);
+    public Map<InternalExam, String> getMapOfInternalExamsAndStudentEmailByEmployeeEmail(String email) {
+        Map<InternalExam, String> resultMap = new HashMap<>();
+        internalExamRepository.findAllByEmployeeEmail(email).forEach(exam -> {
+            Optional<Course> optionalCourse = findCourseByInternalExamId(exam.getId());
+            if (optionalCourse.isPresent()) {
+                Optional<Student> optionalStudent = studentService.findStudentByCourse(optionalCourse.get());
+                optionalStudent.ifPresent(student -> resultMap.put(exam, student.getEmail()));
+            }
+        });
+        return resultMap;
     }
 
     /**
