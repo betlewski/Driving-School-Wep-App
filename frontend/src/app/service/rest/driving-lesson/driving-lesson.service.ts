@@ -14,7 +14,8 @@ import {DrivingLesson} from "../../../model/driving-lesson.model";
 export class DrivingLessonService {
 
   private DRIVING_LESSON_URL = environment.restUrl + '/driving';
-  private FIND_ALL_BY_EMAIL_URL = this.DRIVING_LESSON_URL + '/all/byEmail';
+  private FIND_ALL_BY_STUDENT_URL = this.DRIVING_LESSON_URL + '/all/byEmail';
+  private FIND_ALL_BY_EMPLOYEE_URL = this.DRIVING_LESSON_URL + '/all/byEmployee';
   private ADD_LESSON_URL = this.DRIVING_LESSON_URL + '/add';
 
   constructor(private http: HttpClient,
@@ -24,7 +25,14 @@ export class DrivingLessonService {
   public findAllByEmail(email: string): Observable<DrivingLesson[]> {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
-    return this.http.get<DrivingLesson[]>(this.FIND_ALL_BY_EMAIL_URL,
+    return this.http.get<DrivingLesson[]>(this.FIND_ALL_BY_STUDENT_URL,
+      {headers: headers, params: params});
+  }
+
+  public findAllByEmployee(email: string): Observable<DrivingLesson[]> {
+    const headers = this.authService.getAuthHeaders();
+    const params = new HttpParams().set("email", email);
+    return this.http.get<DrivingLesson[]>(this.FIND_ALL_BY_EMPLOYEE_URL,
       {headers: headers, params: params});
   }
 
