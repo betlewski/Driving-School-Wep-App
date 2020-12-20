@@ -86,7 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/rest/payment/delete",
                         "/rest/payment/edit/status").hasRole(ADMIN)
                 .antMatchers("/rest/payment/**").hasAnyRole(ADMIN, STUDENT)
-                .antMatchers("/rest/theory/all/byEmployeeId",
+                .antMatchers("/rest/theory/all/byEmployee",
                         "/rest/theory/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
                 .antMatchers("/rest/theory/**").hasAnyRole(ADMIN, STUDENT)
                 .antMatchers("/rest/series/all/free").authenticated()
@@ -94,10 +94,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rest/lecture/all/bySeriesId",
                         "/rest/lecture/hours/passed/bySeriesId").hasAnyRole(ADMIN, STUDENT)
                 .antMatchers("/rest/lecture/**").hasAnyRole(ADMIN, EMPLOYEE)
-                .antMatchers("/rest/driving/all/byEmployeeId",
+                .antMatchers("/rest/driving/all/byEmployee",
                         "/rest/driving/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
                 .antMatchers("/rest/driving/**").hasAnyRole(ADMIN, STUDENT)
-                .antMatchers("/rest/exam/all/byEmployeeId",
+                .antMatchers("/rest/exam/all/byEmployee",
                         "/rest/exam/edit/**").hasAnyRole(ADMIN, EMPLOYEE)
                 .antMatchers("/rest/exam/**").hasAnyRole(ADMIN, STUDENT)
                 .anyRequest().authenticated();
