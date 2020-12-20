@@ -54,26 +54,26 @@ public class LectureSeriesService {
 
     /**
      * Pobranie wszystkich cyklów wykładów
-     * przeprowadzanych przez pracownika o podanym ID.
+     * przeprowadzanych przez pracownika o podanym adresie email.
      *
-     * @param id ID pracownika
+     * @param email adres email pracownika
      * @return lista cyklów wykładów
      */
-    public List<LectureSeries> getAllLectureSeriesByEmployeeId(Long id) {
-        return lectureSeriesRepository.findAllByEmployeeId(id);
+    public List<LectureSeries> getAllLectureSeriesByEmployeeEmail(String email) {
+        return lectureSeriesRepository.findAllByEmployeeEmail(email);
     }
 
     /**
-     * Dodanie cyklu wykładów prowadzonego przez wykładowcę o podanym ID
-     * i zawierającego wykłady o podanych ID.
+     * Dodanie cyklu wykładów prowadzonego przez wykładowcę
+     * o podanym adresie email i zawierającego wykłady o podanych ID.
      *
-     * @param employeeId  ID wykładowcy
-     * @param lecturesIds zbiór ID wykładów
+     * @param employeeEmail adres email wykładowcy
+     * @param lecturesIds   zbiór ID wykładów
      * @return dodany cykl wykładów
      */
-    public ResponseEntity<LectureSeries> addLectureSeries(Long employeeId, Set<Long> lecturesIds) {
+    public ResponseEntity<LectureSeries> addLectureSeries(String employeeEmail, Set<Long> lecturesIds) {
         Boolean isLecturer =
-                employeeService.checkExistingByEmployeeIdAndEmployeeRole(employeeId, EmployeeRole.LECTURER);
+                employeeService.checkExistingByEmployeeEmailAndEmployeeRole(employeeEmail, EmployeeRole.LECTURER);
         if (isLecturer) {
             Set<Lecture> lecturesSet = new HashSet<>(lectureRepository.findAllById(lecturesIds));
             Boolean sumEqualsRequiredTheoryHours =
@@ -81,7 +81,7 @@ public class LectureSeriesService {
             if (sumEqualsRequiredTheoryHours) {
                 LectureSeries series = new LectureSeries();
                 try {
-                    series.setEmployee(employeeRepository.findById(employeeId).orElse(null));
+                    series.setEmployee(employeeRepository.findByEmail(employeeEmail).orElse(null));
                     series.setLectures(lecturesSet);
                     series.setStatus(LectureSeriesStatus.NEW);
                     series = lectureSeriesRepository.save(series);

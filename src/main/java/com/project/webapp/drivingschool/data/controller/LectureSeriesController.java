@@ -31,16 +31,16 @@ public class LectureSeriesController {
         return lectureSeriesService.getAllLectureSeriesPossibleToJoin();
     }
 
-    @GetMapping("/all/byEmployeeId")
+    @GetMapping("/all/byEmployee")
     @ResponseBody
-    public List<LectureSeries> getAllLectureSeriesByEmployeeId(@RequestParam("id") Long id) {
-        return lectureSeriesService.getAllLectureSeriesByEmployeeId(id);
+    public List<LectureSeries> getAllLectureSeriesByEmployeeEmail(@RequestParam("email") String email) {
+        return lectureSeriesService.getAllLectureSeriesByEmployeeEmail(email);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<LectureSeries> addLectureSeries(@RequestParam("id") Long employeeId,
+    public ResponseEntity<LectureSeries> addLectureSeries(@RequestParam("email") String employeeEmail,
                                                           @RequestBody Set<Long> lecturesIds) {
-        return lectureSeriesService.addLectureSeries(employeeId, lecturesIds);
+        return lectureSeriesService.addLectureSeries(employeeEmail, lecturesIds);
     }
 
     @PutMapping("/edit/status")

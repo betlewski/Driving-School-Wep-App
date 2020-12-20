@@ -23,6 +23,15 @@ public interface LectureSeriesRepository extends JpaRepository<LectureSeries, Lo
     List<LectureSeries> findAllByEmployeeId(Long id);
 
     /**
+     * Pobranie wszystkich cyklów wykładów prowadzonych
+     * przez pracownika o podanym adresie email.
+     *
+     * @param email adres email pracownika
+     * @return lista cyklów wykładów
+     */
+    List<LectureSeries> findAllByEmployeeEmail(String email);
+
+    /**
      * Pobranie cyklów wykładów o podanym statusie przebiegu
      *
      * @param status status przebiegu cyklu wykładów
