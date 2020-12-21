@@ -84,8 +84,12 @@ public class Employee implements UserDetails {
         String roleName;
         if (employeeRole.equals(EmployeeRole.ADMINISTRATOR)) {
             roleName = "ADMINISTRATOR";
+        } else if (employeeRole.isLecturer()) {
+            roleName = "LECTURER";
+        } else if (employeeRole.isInstructor()) {
+            roleName = "INSTRUCTOR";
         } else {
-            roleName = "EMPLOYEE";
+            roleName = "DELETED";
         }
         return Collections.singletonList(
                 new SimpleGrantedAuthority("ROLE_" + roleName));

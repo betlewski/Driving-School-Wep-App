@@ -28,6 +28,24 @@ public enum EmployeeRole {
     /**
      * Pracownik usunięty
      */
-    DELETED
+    DELETED;
+
+    /**
+     * Sprawdzanie, czy pracownik jest wykładowcą.
+     *
+     * @return true - jeśli tak, false - w przeciwnym razie
+     */
+    public boolean isLecturer() {
+        return LECTURER.equals(this);
+    }
+
+    /**
+     * Sprawdzanie, czy pracownik jest instruktorem jazdy.
+     *
+     * @return true - jeśli tak, false - w przeciwnym razie
+     */
+    public boolean isInstructor() {
+        return DRIVING_INSTRUCTOR_A.equals(this) || DRIVING_INSTRUCTOR_B.equals(this);
+    }
 
 }
