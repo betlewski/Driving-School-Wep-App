@@ -33,6 +33,17 @@ public enum LessonStatus {
      * Etap trzeci:
      * zgłoszenie nie zostaje zrealizowane (zajęcia nie odbywają się)
      */
-    FAILED
+    FAILED;
+
+    /**
+     * Sprawdzenie, czy wydarzenie o podanym statusie
+     * jest wydarzeniem trwającym tzn. nieodrzuconym.
+     *
+     * @return true - jeśli wydarzenie trwające, false - w przeciwnym razie
+     */
+    public boolean isOngoing() {
+        return LessonStatus.ACCEPTED.equals(this) || LessonStatus.PASSED.equals(this)
+                || LessonStatus.FAILED.equals(this);
+    }
 
 }
