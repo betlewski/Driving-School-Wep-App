@@ -6,6 +6,9 @@ import {AuthService} from "../../../service/auth/auth.service";
 import {TheoryLessonsService} from "../../../service/rest/theory-lessons/theory-lessons.service";
 import {DrivingLessonService} from "../../../service/rest/driving-lesson/driving-lesson.service";
 import {InternalExamService} from "../../../service/rest/internal-exam/internal-exam.service";
+import {EmployeeService} from "../../../service/rest/employee/employee.service";
+import {StudentService} from "../../../service/rest/student/student.service";
+import {LectureSeriesService} from "../../../service/rest/lecture-series/lecture-series.service";
 
 /**
  * Kolory wykorzystywane do oznaczania typu wydarzeń:
@@ -43,7 +46,10 @@ export class CalendarComponent {
                      protected authService: AuthService,
                      protected theoryLessonsService: TheoryLessonsService,
                      protected drivingLessonService: DrivingLessonService,
-                     protected internalExamService: InternalExamService) {
+                     protected internalExamService: InternalExamService,
+                     protected lectureSeriesService: LectureSeriesService,
+                     protected employeeService: EmployeeService,
+                     protected studentService: StudentService) {
   }
 
   @ViewChild('modalContent', {static: true}) modalContent: TemplateRef<any> | undefined;
