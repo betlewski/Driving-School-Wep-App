@@ -94,10 +94,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rest/lecture/all/bySeriesId",
                         "/rest/lecture/hours/passed/bySeriesId").hasAnyRole(ADMIN, STUDENT)
                 .antMatchers("/rest/lecture/**").hasAnyRole(ADMIN, EMPLOYEE)
-                .antMatchers("/rest/driving/all/byEmployee",
+                .antMatchers("/rest/driving/all/ongoing/byEmployee",
                         "/rest/driving/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
                 .antMatchers("/rest/driving/**").hasAnyRole(ADMIN, STUDENT)
-                .antMatchers("/rest/exam/all/byEmployee",
+                .antMatchers("/rest/exam/all/ongoing/byEmployee",
                         "/rest/exam/edit/**").hasAnyRole(ADMIN, EMPLOYEE)
                 .antMatchers("/rest/exam/**").hasAnyRole(ADMIN, STUDENT)
                 .anyRequest().authenticated();

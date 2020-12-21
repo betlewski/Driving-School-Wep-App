@@ -57,22 +57,29 @@ public class DrivingLessonService {
     }
 
     /**
-     * Pobranie mapy adresów email kursantów i jazd szkoleniowych
+     * Pobranie wszystkich trwających (nieodrzuconych) jazd szkoleniowych
      * przeprowadzanych przez pracownika o podanym adresie email.
      *
      * @param email adres email pracownika
-     * @return mapa kursantów i jazd
+     * @return trwające jazdy szkoleniowe
      */
-    public Map<DrivingLesson, String> getAllDrivingLessonsByEmployeeEmail(String email) {
-        Map<DrivingLesson, String> resultMap = new HashMap<>();
-        drivingLessonRepository.findAllByEmployeeEmail(email).forEach(lesson -> {
-            Optional<Course> optionalCourse = findCourseByDrivingLessonId(lesson.getId());
-            if (optionalCourse.isPresent()) {
-                Optional<Student> optionalStudent = studentService.findStudentByCourse(optionalCourse.get());
-                optionalStudent.ifPresent(student -> resultMap.put(lesson, student.getEmail()));
-            }
-        });
-        return resultMap;
+    public Set<DrivingLessonRest> getAllOngoingDrivingLessonsByEmployeeEmail(String email) {
+        Set<DrivingLessonRest> resultSet = new HashSet<>();
+        drivingLessonRepository.findAllByEmployeeEmail(email).stream()
+                .filter(lesson -> lesson.getLessonStatus().isOngoing())
+                .forEach(lesson -> {
+                    Optional<Course> optionalCourse = findCourseByDrivingLessonId(lesson.getId());
+                    if (optionalCourse.isPresent()) {
+                        Optional<Student> optionalStudent = studentService.findStudentByCourse(optionalCourse.get());
+                        if (optionalStudent.isPresent()) {
+                            DrivingLessonRest lessonRest = new DrivingLessonRest();
+                            lessonRest.setStudent(optionalStudent.get());
+                            lessonRest.setDrivingLesson(lesson);
+                            resultSet.add(lessonRest);
+                        }
+                    }
+                });
+        return resultSet;
     }
 
     /**

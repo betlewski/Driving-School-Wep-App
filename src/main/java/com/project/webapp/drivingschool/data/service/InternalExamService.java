@@ -5,10 +5,7 @@ import com.project.webapp.drivingschool.data.repository.CourseRepository;
 import com.project.webapp.drivingschool.data.repository.EmployeeRepository;
 import com.project.webapp.drivingschool.data.repository.InternalExamRepository;
 import com.project.webapp.drivingschool.data.repository.StudentRepository;
-import com.project.webapp.drivingschool.data.utils.CourseStatus;
-import com.project.webapp.drivingschool.data.utils.DataUtils;
-import com.project.webapp.drivingschool.data.utils.ExamType;
-import com.project.webapp.drivingschool.data.utils.LessonStatus;
+import com.project.webapp.drivingschool.data.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -80,22 +77,29 @@ public class InternalExamService {
     }
 
     /**
-     * Pobranie mapy adresów email kursantów i egzaminów wewnętrznych
+     * Pobranie wszystkich trwających (nieodrzuconych) egzaminów wewnętrznych
      * przeprowadzanych przez pracownika o podanym adresie email.
      *
      * @param email adres email pracownika
-     * @return mapa kursantów i egzaminów
+     * @return trwające egzaminy wewnętrzne
      */
-    public Map<InternalExam, String> getMapOfInternalExamsAndStudentEmailByEmployeeEmail(String email) {
-        Map<InternalExam, String> resultMap = new HashMap<>();
-        internalExamRepository.findAllByEmployeeEmail(email).forEach(exam -> {
-            Optional<Course> optionalCourse = findCourseByInternalExamId(exam.getId());
-            if (optionalCourse.isPresent()) {
-                Optional<Student> optionalStudent = studentService.findStudentByCourse(optionalCourse.get());
-                optionalStudent.ifPresent(student -> resultMap.put(exam, student.getEmail()));
-            }
-        });
-        return resultMap;
+    public Set<InternalExamRest> getAllOngoingInternalExamsByEmployeeEmail(String email) {
+        Set<InternalExamRest> resultSet = new HashSet<>();
+        internalExamRepository.findAllByEmployeeEmail(email).stream()
+                .filter(exam -> exam.getLessonStatus().isOngoing())
+                .forEach(exam -> {
+                    Optional<Course> optionalCourse = findCourseByInternalExamId(exam.getId());
+                    if (optionalCourse.isPresent()) {
+                        Optional<Student> optionalStudent = studentService.findStudentByCourse(optionalCourse.get());
+                        if (optionalStudent.isPresent()) {
+                            InternalExamRest examRest = new InternalExamRest();
+                            examRest.setStudent(optionalStudent.get());
+                            examRest.setInternalExam(exam);
+                            resultSet.add(examRest);
+                        }
+                    }
+                });
+        return resultSet;
     }
 
     /**

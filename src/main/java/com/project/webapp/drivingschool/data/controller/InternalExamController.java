@@ -4,6 +4,7 @@ import com.project.webapp.drivingschool.data.model.Course;
 import com.project.webapp.drivingschool.data.model.InternalExam;
 import com.project.webapp.drivingschool.data.service.InternalExamService;
 import com.project.webapp.drivingschool.data.utils.ExamType;
+import com.project.webapp.drivingschool.data.utils.InternalExamRest;
 import com.project.webapp.drivingschool.data.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,10 +42,10 @@ public class InternalExamController {
         return internalExamService.getAllInternalExamsByEmailAndExamType(email, type);
     }
 
-    @GetMapping("/all/byEmployee")
+    @GetMapping("/all/ongoing/byEmployee")
     @ResponseBody
-    public Map<InternalExam, String> getMapOfInternalExamsAndStudentEmailByEmployeeEmail(@RequestParam("email") String email) {
-        return internalExamService.getMapOfInternalExamsAndStudentEmailByEmployeeEmail(email);
+    public Set<InternalExamRest> getAllOngoingInternalExamsByEmployeeEmail(@RequestParam("email") String email) {
+        return internalExamService.getAllOngoingInternalExamsByEmployeeEmail(email);
     }
 
     @GetMapping("/course")

@@ -3,6 +3,7 @@ package com.project.webapp.drivingschool.data.controller;
 import com.project.webapp.drivingschool.data.model.Course;
 import com.project.webapp.drivingschool.data.model.DrivingLesson;
 import com.project.webapp.drivingschool.data.service.DrivingLessonService;
+import com.project.webapp.drivingschool.data.utils.DrivingLessonRest;
 import com.project.webapp.drivingschool.data.utils.LessonStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,10 +34,10 @@ public class DrivingLessonController {
         return drivingLessonService.getAllDrivingLessonsByEmail(email);
     }
 
-    @GetMapping("/all/byEmployee")
+    @GetMapping("/all/ongoing/byEmployee")
     @ResponseBody
-    public Map<DrivingLesson, String> getMapOfDrivingLessonsAndStudentEmailByEmployeeEmail(@RequestParam("email") String email) {
-        return drivingLessonService.getAllDrivingLessonsByEmployeeEmail(email);
+    public Set<DrivingLessonRest> getAllOngoingDrivingLessonsByEmployeeEmail(@RequestParam("email") String email) {
+        return drivingLessonService.getAllOngoingDrivingLessonsByEmployeeEmail(email);
     }
 
     @GetMapping("/hours/passed/byCourse")
