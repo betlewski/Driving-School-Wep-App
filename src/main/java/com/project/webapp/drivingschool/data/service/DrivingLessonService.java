@@ -57,16 +57,16 @@ public class DrivingLessonService {
     }
 
     /**
-     * Pobranie wszystkich trwających (nieodrzuconych) jazd szkoleniowych
+     * Pobranie wszystkich aktualnych (nieodrzuconych) jazd szkoleniowych
      * przeprowadzanych przez pracownika o podanym adresie email.
      *
      * @param email adres email pracownika
-     * @return trwające jazdy szkoleniowe
+     * @return aktualne jazdy szkoleniowe
      */
-    public Set<DrivingLessonRest> getAllOngoingDrivingLessonsByEmployeeEmail(String email) {
+    public Set<DrivingLessonRest> getAllActualDrivingLessonsByEmployeeEmail(String email) {
         Set<DrivingLessonRest> resultSet = new HashSet<>();
         drivingLessonRepository.findAllByEmployeeEmail(email).stream()
-                .filter(lesson -> lesson.getLessonStatus().isOngoing())
+                .filter(lesson -> lesson.getLessonStatus().isActual())
                 .forEach(lesson -> {
                     Optional<Course> optionalCourse = findCourseByDrivingLessonId(lesson.getId());
                     if (optionalCourse.isPresent()) {

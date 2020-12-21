@@ -37,11 +37,11 @@ public enum LessonStatus {
 
     /**
      * Sprawdzenie, czy wydarzenie o podanym statusie
-     * jest wydarzeniem trwającym tzn. nieodrzuconym.
+     * jest wydarzeniem aktualnym tzn. nieodrzuconym.
      *
-     * @return true - jeśli wydarzenie trwające, false - w przeciwnym razie
+     * @return true - jeśli wydarzenie aktualne, false - w przeciwnym razie
      */
-    public boolean isOngoing() {
+    public boolean isActual() {
         return LessonStatus.ACCEPTED.equals(this) || LessonStatus.PASSED.equals(this)
                 || LessonStatus.FAILED.equals(this);
     }

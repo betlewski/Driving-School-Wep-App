@@ -34,10 +34,10 @@ public class DrivingLessonController {
         return drivingLessonService.getAllDrivingLessonsByEmail(email);
     }
 
-    @GetMapping("/all/ongoing/byEmployee")
+    @GetMapping("/all/actual/byEmployee")
     @ResponseBody
-    public Set<DrivingLessonRest> getAllOngoingDrivingLessonsByEmployeeEmail(@RequestParam("email") String email) {
-        return drivingLessonService.getAllOngoingDrivingLessonsByEmployeeEmail(email);
+    public Set<DrivingLessonRest> getAllActualDrivingLessonsByEmployeeEmail(@RequestParam("email") String email) {
+        return drivingLessonService.getAllActualDrivingLessonsByEmployeeEmail(email);
     }
 
     @GetMapping("/hours/passed/byCourse")

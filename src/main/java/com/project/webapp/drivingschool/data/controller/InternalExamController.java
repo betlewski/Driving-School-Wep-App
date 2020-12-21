@@ -42,10 +42,10 @@ public class InternalExamController {
         return internalExamService.getAllInternalExamsByEmailAndExamType(email, type);
     }
 
-    @GetMapping("/all/ongoing/byEmployee")
+    @GetMapping("/all/actual/byEmployee")
     @ResponseBody
-    public Set<InternalExamRest> getAllOngoingInternalExamsByEmployeeEmail(@RequestParam("email") String email) {
-        return internalExamService.getAllOngoingInternalExamsByEmployeeEmail(email);
+    public Set<InternalExamRest> getAllActualInternalExamsByEmployeeEmail(@RequestParam("email") String email) {
+        return internalExamService.getAllActualInternalExamsByEmployeeEmail(email);
     }
 
     @GetMapping("/course")

@@ -16,7 +16,7 @@ export class DrivingLessonService {
 
   private DRIVING_LESSON_URL = environment.restUrl + '/driving';
   private FIND_ALL_BY_STUDENT_URL = this.DRIVING_LESSON_URL + '/all/byEmail';
-  private FIND_ALL_ONGOING_BY_EMPLOYEE_URL = this.DRIVING_LESSON_URL + '/all/ongoing/byEmployee';
+  private FIND_ALL_ACTUAL_BY_EMPLOYEE_URL = this.DRIVING_LESSON_URL + '/all/actual/byEmployee';
   private ADD_LESSON_URL = this.DRIVING_LESSON_URL + '/add';
 
   constructor(private http: HttpClient,
@@ -30,10 +30,10 @@ export class DrivingLessonService {
       {headers: headers, params: params});
   }
 
-  public findAllOngoingByEmployee(email: string): Observable<DrivingLessonRest[]> {
+  public findAllActualByEmployee(email: string): Observable<DrivingLessonRest[]> {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
-    return this.http.get<DrivingLessonRest[]>(this.FIND_ALL_ONGOING_BY_EMPLOYEE_URL,
+    return this.http.get<DrivingLessonRest[]>(this.FIND_ALL_ACTUAL_BY_EMPLOYEE_URL,
       {headers: headers, params: params});
   }
 

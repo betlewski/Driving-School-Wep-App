@@ -77,16 +77,16 @@ public class InternalExamService {
     }
 
     /**
-     * Pobranie wszystkich trwających (nieodrzuconych) egzaminów wewnętrznych
+     * Pobranie wszystkich aktualnych (nieodrzuconych) egzaminów wewnętrznych
      * przeprowadzanych przez pracownika o podanym adresie email.
      *
      * @param email adres email pracownika
-     * @return trwające egzaminy wewnętrzne
+     * @return aktualne egzaminy wewnętrzne
      */
-    public Set<InternalExamRest> getAllOngoingInternalExamsByEmployeeEmail(String email) {
+    public Set<InternalExamRest> getAllActualInternalExamsByEmployeeEmail(String email) {
         Set<InternalExamRest> resultSet = new HashSet<>();
         internalExamRepository.findAllByEmployeeEmail(email).stream()
-                .filter(exam -> exam.getLessonStatus().isOngoing())
+                .filter(exam -> exam.getLessonStatus().isActual())
                 .forEach(exam -> {
                     Optional<Course> optionalCourse = findCourseByInternalExamId(exam.getId());
                     if (optionalCourse.isPresent()) {
