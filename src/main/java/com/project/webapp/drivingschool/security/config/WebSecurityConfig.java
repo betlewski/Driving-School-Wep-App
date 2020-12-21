@@ -67,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rest/authenticate").permitAll()
                 .antMatchers("/rest/employee/byEmail",
                         "/rest/employee/edit",
-                        "/rest/employee/edit/password").hasAnyRole(ADMIN, EMPLOYEE)
+                        "/rest/employee/edit/password").hasAnyRole(ADMIN, LECTURER, INSTRUCTOR)
                 .antMatchers("/rest/employee/all/byRole").hasAnyRole(ADMIN, STUDENT)
                 .antMatchers("/rest/employee/**").hasRole(ADMIN)
                 .antMatchers("/rest/student/all",
@@ -87,18 +87,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/rest/payment/edit/status").hasRole(ADMIN)
                 .antMatchers("/rest/payment/**").hasAnyRole(ADMIN, STUDENT)
                 .antMatchers("/rest/theory/all/byEmployee",
-                        "/rest/theory/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
+                        "/rest/theory/edit/status").hasAnyRole(ADMIN, LECTURER)
                 .antMatchers("/rest/theory/**").hasAnyRole(ADMIN, STUDENT)
                 .antMatchers("/rest/series/all/free").authenticated()
-                .antMatchers("/rest/series/**").hasAnyRole(ADMIN, EMPLOYEE)
+                .antMatchers("/rest/series/**").hasAnyRole(ADMIN, LECTURER)
                 .antMatchers("/rest/lecture/all/bySeriesId",
                         "/rest/lecture/hours/passed/bySeriesId").hasAnyRole(ADMIN, STUDENT)
-                .antMatchers("/rest/lecture/**").hasAnyRole(ADMIN, EMPLOYEE)
+                .antMatchers("/rest/lecture/**").hasAnyRole(ADMIN, LECTURER)
                 .antMatchers("/rest/driving/all/actual/byEmployee",
-                        "/rest/driving/edit/status").hasAnyRole(ADMIN, EMPLOYEE)
+                        "/rest/driving/edit/status").hasAnyRole(ADMIN, INSTRUCTOR)
                 .antMatchers("/rest/driving/**").hasAnyRole(ADMIN, STUDENT)
                 .antMatchers("/rest/exam/all/actual/byEmployee",
-                        "/rest/exam/edit/**").hasAnyRole(ADMIN, EMPLOYEE)
+                        "/rest/exam/edit/**").hasAnyRole(ADMIN, LECTURER, INSTRUCTOR)
                 .antMatchers("/rest/exam/**").hasAnyRole(ADMIN, STUDENT)
                 .anyRequest().authenticated();
 
@@ -106,10 +106,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
-     * Role użytkownika, na podstawie których przydzielany jest dostęp
+     * Role użytkownika, na podstawie których przydzielany jest dostęp:
      */
     private static final String ADMIN = "ADMINISTRATOR";
-    private static final String EMPLOYEE = "EMPLOYEE";
+    private static final String LECTURER = "LECTURER";
+    private static final String INSTRUCTOR = "INSTRUCTOR";
     private static final String STUDENT = "STUDENT";
 
 }
