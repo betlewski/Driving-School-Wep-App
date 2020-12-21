@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
     const userRole = this.authService.getUserRole();
     if (userRole == UserRole.STUDENT) {
       this.router.navigate(["/home/student"]);
-    } else if (userRole == UserRole.EMPLOYEE) {
+    } else if (userRole == UserRole.LECTURER || userRole == UserRole.INSTRUCTOR) {
       this.router.navigate(["/home/employee"]);
     } else if (userRole == UserRole.ADMINISTRATOR) {
       this.router.navigate(["/home/admin"]);
