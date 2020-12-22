@@ -198,27 +198,25 @@ public class EmployeeService {
      * Zmiana hasła pracownika o podanym adresie email
      *
      * @param email       adres email
+     * @param oldPassword obecne hasło
      * @param newPassword nowe hasło
      * @return edytowany pracownik
      */
-    public ResponseEntity<Employee> changePassword(String email, String newPassword) {
+    public ResponseEntity<Employee> changePassword(String email, String oldPassword, String newPassword) {
         if (DataUtils.isPasswordCorrect(newPassword)) {
-            Optional<Employee> employee = employeeRepository.findByEmail(email);
-            if (employee.isPresent()) {
-                Employee employeeSave = employee.get();
+            Employee employee = employeeRepository.findByEmail(email).orElse(null);
+            if (employee != null && passwordEncoder.matches(oldPassword, employee.getPassword())) {
                 try {
-                    employeeSave.setPassword(passwordEncoder.encode(newPassword));
-                    employeeSave = employeeRepository.save(employeeSave);
+                    employee.setPassword(passwordEncoder.encode(newPassword));
+                    employee = employeeRepository.save(employee);
                 } catch (Exception e) {
                     return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
                 }
-                return new ResponseEntity<>(employeeSave, HttpStatus.OK);
-            } else {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(employee, HttpStatus.OK);
             }
-        } else {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     /**

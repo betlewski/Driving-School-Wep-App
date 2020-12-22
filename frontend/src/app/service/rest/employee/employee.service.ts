@@ -21,6 +21,7 @@ export class EmployeeService {
   private ADD_URL = this.EMPLOYEE_URL + '/add';
   private EDIT_URL = this.EMPLOYEE_URL + '/edit';
   private EDIT_FULL_URL = this.EMPLOYEE_URL + '/edit/full';
+  private CHANGE_PASSWORD_URL = this.EMPLOYEE_URL + '/edit/password';
 
   constructor(private http: HttpClient,
               private authService: AuthService) {
@@ -63,6 +64,16 @@ export class EmployeeService {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
     return this.http.put<Employee>(this.EDIT_FULL_URL, newEmployee,
+      {headers: headers, params: params});
+  }
+
+  public changePassword(oldPassword: string, newPassword: string): Observable<Employee> {
+    const email = this.authService.getUserEmail();
+    const headers = this.authService.getAuthHeaders();
+    const params = new HttpParams()
+      .set("email", email)
+      .set("old", oldPassword);
+    return this.http.put<Employee>(this.CHANGE_PASSWORD_URL, newPassword,
       {headers: headers, params: params});
   }
 

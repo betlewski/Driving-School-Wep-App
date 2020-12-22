@@ -92,8 +92,9 @@ public class EmployeeController {
 
     @PutMapping("/edit/password")
     public ResponseEntity<Employee> changePassword(@RequestParam("email") String email,
+                                                   @RequestParam("old") String oldPassword,
                                                    @RequestBody String newPassword) {
-        return employeeService.changePassword(email, newPassword);
+        return employeeService.changePassword(email, oldPassword, newPassword);
     }
 
     @PutMapping("/edit/role")
