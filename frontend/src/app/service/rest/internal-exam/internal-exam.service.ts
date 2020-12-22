@@ -16,6 +16,7 @@ export class InternalExamService {
 
   private INTERNAL_EXAM_URL = environment.restUrl + '/exam';
   private FIND_ALL_BY_STUDENT_URL = this.INTERNAL_EXAM_URL + '/all/byEmail';
+  private FIND_ALL_ACTUAL_BY_STUDENT_URL = this.INTERNAL_EXAM_URL + '/all/actual/byStudent';
   private FIND_ALL_ACTUAL_BY_EMPLOYEE_URL = this.INTERNAL_EXAM_URL + '/all/actual/byEmployee';
   private ADD_EXAM_URL = this.INTERNAL_EXAM_URL + '/add';
 
@@ -27,6 +28,13 @@ export class InternalExamService {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
     return this.http.get<InternalExam[]>(this.FIND_ALL_BY_STUDENT_URL,
+      {headers: headers, params: params});
+  }
+
+  public findAllActualByStudent(email: string): Observable<InternalExam[]> {
+    const headers = this.authService.getAuthHeaders();
+    const params = new HttpParams().set("email", email);
+    return this.http.get<InternalExam[]>(this.FIND_ALL_ACTUAL_BY_STUDENT_URL,
       {headers: headers, params: params});
   }
 

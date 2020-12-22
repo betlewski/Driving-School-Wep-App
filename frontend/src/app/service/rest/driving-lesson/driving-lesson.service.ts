@@ -16,6 +16,7 @@ export class DrivingLessonService {
 
   private DRIVING_LESSON_URL = environment.restUrl + '/driving';
   private FIND_ALL_BY_STUDENT_URL = this.DRIVING_LESSON_URL + '/all/byEmail';
+  private FIND_ALL_ACTUAL_BY_STUDENT_URL = this.DRIVING_LESSON_URL + '/all/actual/byStudent';
   private FIND_ALL_ACTUAL_BY_EMPLOYEE_URL = this.DRIVING_LESSON_URL + '/all/actual/byEmployee';
   private ADD_LESSON_URL = this.DRIVING_LESSON_URL + '/add';
 
@@ -27,6 +28,13 @@ export class DrivingLessonService {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
     return this.http.get<DrivingLesson[]>(this.FIND_ALL_BY_STUDENT_URL,
+      {headers: headers, params: params});
+  }
+
+  public findAllActualByStudent(email: string): Observable<DrivingLesson[]> {
+    const headers = this.authService.getAuthHeaders();
+    const params = new HttpParams().set("email", email);
+    return this.http.get<DrivingLesson[]>(this.FIND_ALL_ACTUAL_BY_STUDENT_URL,
       {headers: headers, params: params});
   }
 

@@ -35,6 +35,12 @@ public class InternalExamController {
         return internalExamService.getAllInternalExamsByEmail(email);
     }
 
+    @GetMapping("/all/actual/byStudent")
+    @ResponseBody
+    public Set<InternalExam> getAllActualInternalExamsByStudentEmail(@RequestParam("email") String email) {
+        return internalExamService.getAllActualInternalExamsByStudentEmail(email);
+    }
+
     @GetMapping("/all/byEmail/byType")
     @ResponseBody
     public Set<InternalExam> getAllInternalExamsByStudentEmailAndExamType(@RequestParam("email") String email,

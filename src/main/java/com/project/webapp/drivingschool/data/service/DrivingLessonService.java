@@ -51,9 +51,22 @@ public class DrivingLessonService {
      * @param email adres email kursanta
      * @return lista jazd
      */
-    public Set<DrivingLesson> getAllDrivingLessonsByEmail(String email) {
+    public Set<DrivingLesson> getAllDrivingLessonsByStudentEmail(String email) {
         Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(Course::getDrivingLessons).orElse(new HashSet<>());
+    }
+
+    /**
+     * Pobranie wszystkich aktualnych (nieodrzuconych) jazd szkoleniowych
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
+     *
+     * @param email adres email kursanta
+     * @return lista jazd
+     */
+    public Set<DrivingLesson> getAllActualDrivingLessonsByStudentEmail(String email) {
+        return getAllDrivingLessonsByStudentEmail(email).stream()
+                .filter(lesson -> lesson.getLessonStatus().isActual())
+                .collect(Collectors.toSet());
     }
 
     /**

@@ -61,6 +61,19 @@ public class InternalExamService {
     }
 
     /**
+     * Pobranie wszystkich aktualnych (nieodrzuconych) egzaminów wewnętrznych
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
+     *
+     * @param email adres email kursanta
+     * @return lista egzaminów
+     */
+    public Set<InternalExam> getAllActualInternalExamsByStudentEmail(String email) {
+        return getAllInternalExamsByEmail(email).stream()
+                .filter(lesson -> lesson.getLessonStatus().isActual())
+                .collect(Collectors.toSet());
+    }
+
+    /**
      * Pobranie egzaminów wewnętrznych o podanym typie
      * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *

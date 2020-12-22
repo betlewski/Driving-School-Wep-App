@@ -201,7 +201,7 @@ export class CalendarComponent {
   }
 
   private getAllDrivingLessonsForStudent() {
-    this.drivingLessonService.findAllByEmail(this.email)
+    this.drivingLessonService.findAllActualByStudent(this.email)
       .subscribe(lessons => {
         lessons.forEach(lesson => {
           this.events = [
@@ -218,7 +218,7 @@ export class CalendarComponent {
   }
 
   private getAllInternalExamsForStudent() {
-    this.internalExamService.findAllByEmail(this.email)
+    this.internalExamService.findAllActualByStudent(this.email)
       .subscribe(exams => {
         exams.forEach(exam => {
           this.events = [
