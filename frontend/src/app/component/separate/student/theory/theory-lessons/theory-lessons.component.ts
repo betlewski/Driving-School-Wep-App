@@ -32,7 +32,7 @@ export class TheoryLessonsComponent implements OnInit {
   }
 
   private findActiveTheoryAndLectures(email: string) {
-    this.theoryLessonsService.findActiveByEmail(email)
+    this.theoryLessonsService.findActiveByStudent(email)
       .subscribe(theory => {
         this.activeTheory = theory;
         this.getLecturesForActive();

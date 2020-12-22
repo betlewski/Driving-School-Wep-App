@@ -59,7 +59,7 @@ export class ExamComponent implements OnInit {
   }
 
   private getAllExams(email: string) {
-    this.internalExamService.findAllByEmail(email)
+    this.internalExamService.findAllByStudent(email)
       .subscribe(exams => this.sortExamsByStatusAndPassed(exams));
   }
 

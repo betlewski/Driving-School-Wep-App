@@ -64,7 +64,7 @@ export class HomeStudentComponent implements OnInit {
   }
 
   private checkIfActiveTheoryExist() {
-    this.theoryLessonsService.isActiveByEmail(this.email)
+    this.theoryLessonsService.isActiveByStudent(this.email)
       .subscribe(isActive => this.theoryActive = isActive);
   }
 

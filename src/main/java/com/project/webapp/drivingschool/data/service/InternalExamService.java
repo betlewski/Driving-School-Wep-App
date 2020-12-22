@@ -54,7 +54,7 @@ public class InternalExamService {
      * @param email adres email kursanta
      * @return lista egzaminów
      */
-    public Set<InternalExam> getAllInternalExamsByEmail(String email) {
+    public Set<InternalExam> getAllInternalExamsByStudentEmail(String email) {
         Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(course -> new HashSet<>(course.getInternalExams()))
                 .orElse(new HashSet<>());
@@ -68,7 +68,7 @@ public class InternalExamService {
      * @return lista egzaminów
      */
     public Set<InternalExam> getAllActualInternalExamsByStudentEmail(String email) {
-        return getAllInternalExamsByEmail(email).stream()
+        return getAllInternalExamsByStudentEmail(email).stream()
                 .filter(lesson -> lesson.getLessonStatus().isActual())
                 .collect(Collectors.toSet());
     }
@@ -81,7 +81,7 @@ public class InternalExamService {
      * @param type  typ egzaminu
      * @return lista egzaminów
      */
-    public Set<InternalExam> getAllInternalExamsByEmailAndExamType(String email, ExamType type) {
+    public Set<InternalExam> getAllInternalExamsByStudentEmailAndExamType(String email, ExamType type) {
         Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(course -> course.getInternalExams().stream()
                 .filter(exam -> exam.getExamType().equals(type))

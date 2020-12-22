@@ -15,7 +15,7 @@ import {DrivingLessonRest} from "../../../utils/driving-lesson-rest";
 export class DrivingLessonService {
 
   private DRIVING_LESSON_URL = environment.restUrl + '/driving';
-  private FIND_ALL_BY_STUDENT_URL = this.DRIVING_LESSON_URL + '/all/byEmail';
+  private FIND_ALL_BY_STUDENT_URL = this.DRIVING_LESSON_URL + '/all/byStudent';
   private FIND_ALL_ACTUAL_BY_STUDENT_URL = this.DRIVING_LESSON_URL + '/all/actual/byStudent';
   private FIND_ALL_ACTUAL_BY_EMPLOYEE_URL = this.DRIVING_LESSON_URL + '/all/actual/byEmployee';
   private ADD_LESSON_URL = this.DRIVING_LESSON_URL + '/add';

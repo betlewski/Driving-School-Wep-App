@@ -53,7 +53,7 @@ public class TheoryLessonsService {
      * @param email adres email kursanta
      * @return lista zajęć teoretycznych
      */
-    public Set<TheoryLessons> getAllTheoryLessonsByEmail(String email) {
+    public Set<TheoryLessons> getAllTheoryLessonsByStudentEmail(String email) {
         Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(Course::getTheoryLessons).orElse(new HashSet<>());
     }
@@ -66,7 +66,7 @@ public class TheoryLessonsService {
      * @param status status przebiegu
      * @return zajęcia teoretyczne
      */
-    public Set<TheoryLessons> getTheoryLessonsByEmailAndLessonStatus(String email, LessonStatus status) {
+    public Set<TheoryLessons> getTheoryLessonsByStudentEmailAndLessonStatus(String email, LessonStatus status) {
         Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(course -> course.getTheoryLessons().stream()
                 .filter(lesson -> lesson.getLessonStatus().equals(status))
@@ -81,7 +81,7 @@ public class TheoryLessonsService {
      * @param email adres email kursanta
      * @return aktywne zajęcia teoretyczne
      */
-    public Optional<TheoryLessons> getActiveTheoryLessonsByEmail(String email) {
+    public Optional<TheoryLessons> getActiveTheoryLessonsByStudentEmail(String email) {
         Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.flatMap(course -> course.getTheoryLessons().stream()
                 .filter(lesson -> !lesson.getLessonStatus().equals(LessonStatus.REJECTED) &&
@@ -188,7 +188,7 @@ public class TheoryLessonsService {
      * @param email adres email kursanta
      * @return true - jeśli takie zajęcia istnieją, false - w przeciwnym razie
      */
-    public Boolean isTheoryLessonsActiveByEmail(String email) {
+    public Boolean isTheoryLessonsActiveByStudentEmail(String email) {
         Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
         return activeCourse.map(course -> course.getTheoryLessons().stream()
                 .anyMatch(lesson -> !lesson.getLessonStatus().equals(LessonStatus.REJECTED) &&
@@ -204,7 +204,7 @@ public class TheoryLessonsService {
      * @return dodane zajęcia
      */
     public ResponseEntity<TheoryLessons> addTheoryLessons(String email, Long lectureSeriesId) {
-        if (!isTheoryLessonsActiveByEmail(email)) {
+        if (!isTheoryLessonsActiveByStudentEmail(email)) {
             Optional<Course> optionalCourse = courseService.getActiveCourseByEmail(email);
             Optional<LectureSeries> seriesOptional = lectureSeriesRepository.findById(lectureSeriesId);
             if (optionalCourse.isPresent() && seriesOptional.isPresent()) {

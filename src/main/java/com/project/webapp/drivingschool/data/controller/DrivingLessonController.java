@@ -28,7 +28,7 @@ public class DrivingLessonController {
         this.drivingLessonService = drivingLessonService;
     }
 
-    @GetMapping("/all/byEmail")
+    @GetMapping("/all/byStudent")
     @ResponseBody
     public Set<DrivingLesson> getAllDrivingLessonsByStudentEmail(@RequestParam("email") String email) {
         return drivingLessonService.getAllDrivingLessonsByStudentEmail(email);

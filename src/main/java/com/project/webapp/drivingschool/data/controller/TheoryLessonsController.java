@@ -27,23 +27,23 @@ public class TheoryLessonsController {
         this.theoryLessonsService = theoryLessonsService;
     }
 
-    @GetMapping("/all/byEmail")
+    @GetMapping("/all/byStudent")
     @ResponseBody
     public Set<TheoryLessons> getAllTheoryLessonsByStudentEmail(@RequestParam("email") String email) {
-        return theoryLessonsService.getAllTheoryLessonsByEmail(email);
+        return theoryLessonsService.getAllTheoryLessonsByStudentEmail(email);
     }
 
-    @GetMapping("/all/byEmail/byStatus")
+    @GetMapping("/all/byStudent/byStatus")
     @ResponseBody
     public Set<TheoryLessons> getTheoryLessonsByStudentEmailAndLessonStatus(@RequestParam("email") String email,
                                                                             @RequestParam("status") LessonStatus status) {
-        return theoryLessonsService.getTheoryLessonsByEmailAndLessonStatus(email, status);
+        return theoryLessonsService.getTheoryLessonsByStudentEmailAndLessonStatus(email, status);
     }
 
-    @GetMapping("/active/byEmail")
+    @GetMapping("/active/byStudent")
     @ResponseBody
     public Optional<TheoryLessons> getActiveTheoryLessonsByStudentEmail(@RequestParam("email") String email) {
-        return theoryLessonsService.getActiveTheoryLessonsByEmail(email);
+        return theoryLessonsService.getActiveTheoryLessonsByStudentEmail(email);
     }
 
     @GetMapping("/lectures/actual/byStudent")
@@ -76,10 +76,10 @@ public class TheoryLessonsController {
         return theoryLessonsService.isTheoryLessonsPassedByCourse(course);
     }
 
-    @GetMapping("/isActive/byEmail")
+    @GetMapping("/isActive/byStudent")
     @ResponseBody
     public Boolean isTheoryLessonsActiveByStudentEmail(@RequestParam("email") String email) {
-        return theoryLessonsService.isTheoryLessonsActiveByEmail(email);
+        return theoryLessonsService.isTheoryLessonsActiveByStudentEmail(email);
     }
 
     @PostMapping("/add")
