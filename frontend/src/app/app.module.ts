@@ -42,6 +42,7 @@ import {EmployeesComponent} from './component/separate/admin/employee/employees/
 import {EmployeeNewComponent} from './component/separate/admin/employee/employee-new/employee-new.component';
 import {AdminCalendarComponent} from './component/separate/admin/admin-calendar/admin-calendar.component';
 import {PersonalDataEmployeeComponent} from './component/separate/employee/personal-data-employee/personal-data-employee.component';
+import {ChangePasswordComponent} from './component/separate/employee/change-password/change-password.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +70,7 @@ import {PersonalDataEmployeeComponent} from './component/separate/employee/perso
     EmployeeNewComponent,
     AdminCalendarComponent,
     PersonalDataEmployeeComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     BrowserModule,
