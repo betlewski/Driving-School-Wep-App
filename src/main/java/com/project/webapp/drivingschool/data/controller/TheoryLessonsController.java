@@ -46,10 +46,10 @@ public class TheoryLessonsController {
         return theoryLessonsService.getActiveTheoryLessonsByEmail(email);
     }
 
-    @GetMapping("/lectures/all/byEmail")
+    @GetMapping("/lectures/actual/byStudent")
     @ResponseBody
-    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByStudentEmail(@RequestParam("email") String email) {
-        return theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByEmail(email);
+    public Set<Lecture> getAllLecturesForActualTheoryLessonsByStudentEmail(@RequestParam("email") String email) {
+        return theoryLessonsService.getAllLecturesForActualTheoryLessonsByStudentEmail(email);
     }
 
     @GetMapping("/hours/passed/byCourse")

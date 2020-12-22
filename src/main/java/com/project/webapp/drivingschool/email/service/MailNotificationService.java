@@ -63,7 +63,7 @@ public class MailNotificationService {
      */
     private void getLectureNotificationsToSend(List<MailNotification> list) {
         Map<Student, List<Lecture>> map =
-                lectureService.getMapStudentsWithAcceptedLecturesByLectureStartDate(getEventDateToSend());
+                lectureService.getMapStudentsWithActualLecturesByLectureStartDate(getEventDateToSend());
         for (Student student : map.keySet()) {
             String mailTo = student.getEmail();
             String eventType = MailEventType.LECTURE.text;

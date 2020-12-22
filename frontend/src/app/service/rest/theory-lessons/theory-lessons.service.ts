@@ -16,7 +16,7 @@ import {LessonStatus} from "../../../utils/lesson-status";
 export class TheoryLessonsService {
 
   private THEORY_LESSONS_URL = environment.restUrl + '/theory';
-  private FIND_ALL_LECTURES_BY_EMAIL_URL = this.THEORY_LESSONS_URL + '/lectures/all/byEmail';
+  private FIND_ACTUAL_LECTURES_BY_STUDENT_URL = this.THEORY_LESSONS_URL + '/lectures/actual/byStudent';
   private IS_ACTIVE_BY_EMAIL_URL = this.THEORY_LESSONS_URL + '/isActive/byEmail';
   private ADD_URL = this.THEORY_LESSONS_URL + '/add';
   private FIND_ALL_BY_EMAIL_AND_STATUS_URL = this.THEORY_LESSONS_URL + '/all/byEmail/byStatus';
@@ -26,10 +26,10 @@ export class TheoryLessonsService {
               private authService: AuthService) {
   }
 
-  public findAllLecturesByEmail(email: string): Observable<Lecture[]> {
+  public findActualLecturesByStudent(email: string): Observable<Lecture[]> {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
-    return this.http.get<Lecture[]>(this.FIND_ALL_LECTURES_BY_EMAIL_URL,
+    return this.http.get<Lecture[]>(this.FIND_ACTUAL_LECTURES_BY_STUDENT_URL,
       {headers: headers, params: params});
   }
 

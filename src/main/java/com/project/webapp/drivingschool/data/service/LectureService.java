@@ -163,11 +163,11 @@ public class LectureService {
      * @param startDate data rozpoczęcia wykładu
      * @return mapa: student - lista wykładów
      */
-    public Map<Student, List<Lecture>> getMapStudentsWithAcceptedLecturesByLectureStartDate(LocalDate startDate) {
+    public Map<Student, List<Lecture>> getMapStudentsWithActualLecturesByLectureStartDate(LocalDate startDate) {
         Map<Student, List<Lecture>> resultMap = new HashMap<>();
         studentRepository.findAll().forEach(student -> {
             List<Lecture> lecturesToMap = new ArrayList<>();
-            Set<Lecture> allLectures = theoryLessonsService.getAllLecturesForAcceptedTheoryLessonsByEmail(student.getEmail());
+            Set<Lecture> allLectures = theoryLessonsService.getAllLecturesForActualTheoryLessonsByStudentEmail(student.getEmail());
             allLectures.stream()
                     .filter(lecture -> lecture.getStartTime().toLocalDate().isEqual(startDate))
                     .forEach(lecturesToMap::add);

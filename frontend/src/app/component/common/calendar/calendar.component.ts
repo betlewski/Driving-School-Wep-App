@@ -184,7 +184,7 @@ export class CalendarComponent {
   }
 
   private getAllLecturesForStudent() {
-    this.theoryLessonsService.findAllLecturesByEmail(this.email)
+    this.theoryLessonsService.findActualLecturesByStudent(this.email)
       .subscribe(lectures => {
         lectures.forEach(lecture => {
           this.events = [

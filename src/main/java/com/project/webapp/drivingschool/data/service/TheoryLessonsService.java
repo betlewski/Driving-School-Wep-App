@@ -90,16 +90,22 @@ public class TheoryLessonsService {
     }
 
     /**
-     * Pobranie obecnie trwających wykładów
+     * Pobranie wszystkich aktualnych (nieodrzuconych) wykładów
      * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *
      * @param email adres email kursanta
      * @return lista wykładów
      */
-    public Set<Lecture> getAllLecturesForAcceptedTheoryLessonsByEmail(String email) {
-        Set<TheoryLessons> theoryLessonsSet = getTheoryLessonsByEmailAndLessonStatus(email, LessonStatus.ACCEPTED);
-        if (!theoryLessonsSet.isEmpty()) {
-            return theoryLessonsSet.iterator().next().getLectureSeries().getLectures();
+    public Set<Lecture> getAllLecturesForActualTheoryLessonsByStudentEmail(String email) {
+        Optional<Course> activeCourse = courseService.getActiveCourseByEmail(email);
+        if (activeCourse.isPresent()) {
+            Optional<TheoryLessons> optionalTheory = activeCourse.get().getTheoryLessons().stream()
+                    .filter(theory -> theory.getLessonStatus().equals(LessonStatus.ACCEPTED) ||
+                            theory.getLessonStatus().equals(LessonStatus.PASSED))
+                    .findFirst();
+            if (optionalTheory.isPresent()) {
+                return optionalTheory.get().getLectureSeries().getLectures();
+            }
         }
         return new HashSet<>();
     }
