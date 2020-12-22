@@ -15,4 +15,10 @@ export class TextConstants {
   public static readonly LESSON_NEW_INVALID_TIME = "Czas rozpoczęcia (najwcześniej 6:00) musi następować po czasie zakończenia (najpóźniej 20:00)";
   public static readonly LESSON_NEW_INCOMPLETE_DATA = "Nie wybrano wszystkich danych.";
 
+  public static readonly CHANGE_PWD_INCOMPLETE_DATA = "Należy uzupełnić wszystkie dane.";
+  public static readonly CHANGE_PWD_NOT_EQUALS_NEW = "Nowe hasło nie zostało poprawnie potwierdzone.";
+  public static readonly CHANGE_PWD_WEAK_NEW = "Nowe hasło jest za słabe.";
+  public static readonly CHANGE_PWD_INVALID_OLD = "Obecne hasło jest niewłaściwe.";
+  public static readonly CHANGE_PWD_SUCCESSFUL = "Hasło zostało pomyślnie zmienione.";
+
 }
