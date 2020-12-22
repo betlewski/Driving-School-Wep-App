@@ -1,0 +1,114 @@
+<!--Nagłówki kalendarza-->
+<div class="row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-outline-dark"
+        mwlCalendarPreviousView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"> Poprzedni
+      </div>
+      <div
+        class="btn btn-outline-dark"
+        mwlCalendarToday
+        [class.active]="todayOpened === true"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="openToday()"> Dzisiaj
+      </div>
+      <div
+        class="btn btn-outline-dark"
+        mwlCalendarNextView
+        [view]="view"
+        [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()"> Następny
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div
+        class="btn btn-outline-dark"
+        (click)="setView(CalendarView.Day)"
+        [class.active]="view === CalendarView.Day"> Dzień
+      </div>
+      <div
+        class="btn btn-outline-dark"
+        (click)="setView(CalendarView.Week)"
+        [class.active]="view === CalendarView.Week"> Tydzień
+      </div>
+      <div
+        class="btn btn-outline-dark"
+        (click)="setView(CalendarView.Month)"
+        [class.active]="view === CalendarView.Month"> Miesiąc
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+
+<!--Kalendarz z wydarzeniami-->
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view
+    *ngSwitchCase="CalendarView.Month"
+    [viewDate]="viewDate"
+    [events]="events"
+    [weekStartsOn]="1"
+    [activeDayIsOpen]="activeDayIsOpen"
+    (dayClicked)="dayClicked($event.day)"
+    (eventClicked)="handleEvent($event.event)">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view
+    *ngSwitchCase="CalendarView.Week"
+    [viewDate]="viewDate"
+    [events]="events"
+    [weekStartsOn]="1"
+    [hourSegments]="1"
+    [hourSegmentHeight]="35"
+    [dayStartHour]="6"
+    [dayEndHour]="20"
+    (eventClicked)="handleEvent($event.event)">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view
+    *ngSwitchCase="CalendarView.Day"
+    [viewDate]="viewDate"
+    [events]="events"
+    [hourSegments]="2"
+    [hourSegmentHeight]="18"
+    [dayStartHour]="6"
+    [dayEndHour]="20"
+    (eventClicked)="handleEvent($event.event)">
+  </mwl-calendar-day-view>
+</div>
+
+<!--Okno szczegółów wydarzenia-->
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">Wydarzenie</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div>
+      <pre class="font-italic">{{ event === undefined ? "" : event.title }}</pre>
+    </div>
+    <div> Rozpoczęcie:
+      <pre><strong>{{ event == undefined || event.start == undefined ? "" :
+        event.start.toLocaleDateString().concat("  ")
+          .concat(event.start.toLocaleTimeString()) }}</strong></pre>
+    </div>
+    <div> Zakończenie:
+      <pre><strong>{{ event == undefined || event.end == undefined ? "" :
+        event.end.toLocaleDateString().concat("  ")
+          .concat(event.end.toLocaleTimeString()) }}</strong></pre>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="close()"> Zamknij
+    </button>
+  </div>
+</ng-template>
