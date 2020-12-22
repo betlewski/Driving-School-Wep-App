@@ -53,8 +53,7 @@ export class PersonalDataAdminComponent implements OnInit {
   }
 
   private checkIfDataNotEmpty(): boolean {
-    return Utils.checkStringIfNotEmpty(this.name) &&
-      Utils.checkStringIfNotEmpty(this.phoneNumber);
+    return Utils.checkStringIfNotEmpty(this.name);
   }
 
 }
