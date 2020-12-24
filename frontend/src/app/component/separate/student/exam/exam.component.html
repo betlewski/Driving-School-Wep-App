@@ -50,7 +50,7 @@
   </thead>
   <tbody>
   <tr *ngFor="let exam of waitingExams" style="background-color: lightyellow">
-    <td style="width: 200px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 200px">{{utils.convertPersonToText(exam.employee)}}</td>
     <td style="width: 150px">{{utils.translateExamTypeByText(exam.examType)}}</td>
     <td style="width: 190px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
     <td style="width: 100px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
@@ -65,7 +65,7 @@
 <table class="table table-bordered">
   <tbody>
   <tr *ngFor="let exam of failedExams" style="background-color: #ffeaea">
-    <td style="width: 200px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 200px">{{utils.convertPersonToText(exam.employee)}}</td>
     <td style="width: 150px">{{utils.translateExamTypeByText(exam.examType)}}</td>
     <td style="width: 190px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
     <td style="width: 100px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
@@ -80,7 +80,7 @@
 <table class="table table-bordered">
   <tbody>
   <tr *ngFor="let exam of passedExams" style="background-color: #d8ffd6">
-    <td style="width: 200px">{{utils.convertEmployeeToText(exam.employee)}}</td>
+    <td style="width: 200px">{{utils.convertPersonToText(exam.employee)}}</td>
     <td style="width: 150px">{{utils.translateExamTypeByText(exam.examType)}}</td>
     <td style="width: 190px">{{utils.translateLessonStatus(exam.lessonStatus)}}</td>
     <td style="width: 100px">{{utils.convertExamIsPassedToText(exam.isPassed)}}</td>
