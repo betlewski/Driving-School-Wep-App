@@ -45,7 +45,7 @@ public class DrivingLessonService {
     }
 
     /**
-     * Pobranie jazd szkoleniowych w ramach aktywnego kursu
+     * Pobranie wszystkich jazd szkoleniowych w ramach aktywnego kursu
      * dla kursanta o podanym adresie email.
      *
      * @param email adres email kursanta
@@ -57,29 +57,15 @@ public class DrivingLessonService {
     }
 
     /**
-     * Pobranie wszystkich aktualnych (nieodrzuconych) jazd szkoleniowych
-     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
-     *
-     * @param email adres email kursanta
-     * @return lista jazd
-     */
-    public Set<DrivingLesson> getAllActualDrivingLessonsByStudentEmail(String email) {
-        return getAllDrivingLessonsByStudentEmail(email).stream()
-                .filter(lesson -> lesson.getLessonStatus().isActual())
-                .collect(Collectors.toSet());
-    }
-
-    /**
-     * Pobranie wszystkich aktualnych (nieodrzuconych) jazd szkoleniowych
+     * Pobranie wszystkich jazd szkoleniowych
      * przeprowadzanych przez pracownika o podanym adresie email.
      *
      * @param email adres email pracownika
-     * @return aktualne jazdy szkoleniowe
+     * @return jazdy szkoleniowe
      */
-    public Set<DrivingLessonRest> getAllActualDrivingLessonsByEmployeeEmail(String email) {
+    public Set<DrivingLessonRest> getAllDrivingLessonsByEmployeeEmail(String email) {
         Set<DrivingLessonRest> resultSet = new HashSet<>();
-        drivingLessonRepository.findAllByEmployeeEmail(email).stream()
-                .filter(lesson -> lesson.getLessonStatus().isActual())
+        drivingLessonRepository.findAllByEmployeeEmail(email)
                 .forEach(lesson -> {
                     Optional<Course> optionalCourse = findCourseByDrivingLessonId(lesson.getId());
                     if (optionalCourse.isPresent()) {
@@ -93,6 +79,32 @@ public class DrivingLessonService {
                     }
                 });
         return resultSet;
+    }
+
+    /**
+     * Pobranie aktualnych (nieodrzuconych) jazd szkoleniowych
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
+     *
+     * @param email adres email kursanta
+     * @return lista jazd
+     */
+    public Set<DrivingLesson> getAllActualDrivingLessonsByStudentEmail(String email) {
+        return getAllDrivingLessonsByStudentEmail(email).stream()
+                .filter(lesson -> lesson.getLessonStatus().isActual())
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Pobranie aktualnych (nieodrzuconych) jazd szkoleniowych
+     * przeprowadzanych przez pracownika o podanym adresie email.
+     *
+     * @param email adres email pracownika
+     * @return aktualne jazdy szkoleniowe
+     */
+    public Set<DrivingLessonRest> getAllActualDrivingLessonsByEmployeeEmail(String email) {
+        return getAllDrivingLessonsByEmployeeEmail(email).stream()
+                .filter(restLesson -> restLesson.getDrivingLesson().getLessonStatus().isActual())
+                .collect(Collectors.toSet());
     }
 
     /**
