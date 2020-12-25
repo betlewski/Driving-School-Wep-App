@@ -61,19 +61,6 @@ public class InternalExamService {
     }
 
     /**
-     * Pobranie wszystkich aktualnych (nieodrzuconych) egzaminów wewnętrznych
-     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
-     *
-     * @param email adres email kursanta
-     * @return lista egzaminów
-     */
-    public Set<InternalExam> getAllActualInternalExamsByStudentEmail(String email) {
-        return getAllInternalExamsByStudentEmail(email).stream()
-                .filter(lesson -> lesson.getLessonStatus().isActual())
-                .collect(Collectors.toSet());
-    }
-
-    /**
      * Pobranie egzaminów wewnętrznych o podanym typie
      * w ramach aktywnego kursu dla kursanta o podanym adresie email.
      *
@@ -90,16 +77,15 @@ public class InternalExamService {
     }
 
     /**
-     * Pobranie wszystkich aktualnych (nieodrzuconych) egzaminów wewnętrznych
+     * Pobranie wszystkich egzaminów wewnętrznych
      * przeprowadzanych przez pracownika o podanym adresie email.
      *
      * @param email adres email pracownika
-     * @return aktualne egzaminy wewnętrzne
+     * @return egzaminy wewnętrzne
      */
-    public Set<InternalExamRest> getAllActualInternalExamsByEmployeeEmail(String email) {
+    public Set<InternalExamRest> getAllInternalExamsByEmployeeEmail(String email) {
         Set<InternalExamRest> resultSet = new HashSet<>();
-        internalExamRepository.findAllByEmployeeEmail(email).stream()
-                .filter(exam -> exam.getLessonStatus().isActual())
+        internalExamRepository.findAllByEmployeeEmail(email)
                 .forEach(exam -> {
                     Optional<Course> optionalCourse = findCourseByInternalExamId(exam.getId());
                     if (optionalCourse.isPresent()) {
@@ -113,6 +99,32 @@ public class InternalExamService {
                     }
                 });
         return resultSet;
+    }
+
+    /**
+     * Pobranie aktualnych (nieodrzuconych) egzaminów wewnętrznych
+     * w ramach aktywnego kursu dla kursanta o podanym adresie email.
+     *
+     * @param email adres email kursanta
+     * @return lista egzaminów
+     */
+    public Set<InternalExam> getAllActualInternalExamsByStudentEmail(String email) {
+        return getAllInternalExamsByStudentEmail(email).stream()
+                .filter(lesson -> lesson.getLessonStatus().isActual())
+                .collect(Collectors.toSet());
+    }
+
+    /**
+     * Pobranie aktualnych (nieodrzuconych) egzaminów wewnętrznych
+     * przeprowadzanych przez pracownika o podanym adresie email.
+     *
+     * @param email adres email pracownika
+     * @return aktualne egzaminy wewnętrzne
+     */
+    public Set<InternalExamRest> getAllActualInternalExamsByEmployeeEmail(String email) {
+        return getAllInternalExamsByEmployeeEmail(email).stream()
+                .filter(restExam -> restExam.getInternalExam().getLessonStatus().isActual())
+                .collect(Collectors.toSet());
     }
 
     /**
