@@ -24,6 +24,7 @@ import {AdminCalendarComponent} from "./component/separate/admin/admin-calendar/
 import {PersonalDataEmployeeComponent} from "./component/separate/employee/personal-data-employee/personal-data-employee.component";
 import {ChangePasswordComponent} from "./component/separate/employee/change-password/change-password.component";
 import {EmployeeCalendarComponent} from "./component/separate/employee/employee-calendar/employee-calendar.component";
+import {DrivingLessonsEmployeeComponent} from "./component/separate/employee/driving-lessons-employee/driving-lessons-employee.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -93,6 +94,10 @@ const routes: Routes = [
           {
             path: 'calendar',
             component: EmployeeCalendarComponent
+          },
+          {
+            path: 'driving',
+            component: DrivingLessonsEmployeeComponent
           }
         ]
       },

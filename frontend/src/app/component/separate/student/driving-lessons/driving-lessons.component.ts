@@ -55,7 +55,7 @@ export class DrivingLessonsComponent implements OnInit {
   }
 
   private getAllDrivingLessons(email: string) {
-    this.drivingLessonService.findAllByEmail(email)
+    this.drivingLessonService.findAllByStudent(email)
       .subscribe(lessons => this.sortLessonsByStatus(lessons));
   }
 
