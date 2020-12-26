@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CalendarComponent} from "../../../common/calendar/calendar.component";
+import {UserRole} from "../../../../utils/user-role";
 
 @Component({
   selector: 'app-employee-calendar',
@@ -14,7 +15,12 @@ export class EmployeeCalendarComponent extends CalendarComponent implements OnIn
 
   ngOnInit(): void {
     const email = this.authService.getUserEmail();
-    this.getAllEventsForEmployee(email);
+    const userRole = this.authService.getUserRole();
+    if (userRole == UserRole.LECTURER) {
+      this.getAllEventsForLecturer(email);
+    } else if (userRole == UserRole.INSTRUCTOR) {
+      this.getAllEventsForInstructor(email);
+    }
   }
 
 }

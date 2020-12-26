@@ -117,6 +117,18 @@ export class CalendarComponent {
     this.getAllInternalExamsForEmployee();
   }
 
+  protected getAllEventsForLecturer(email: string) {
+    this.email = email;
+    this.getAllLecturesForEmployee();
+    this.getAllInternalExamsForEmployee();
+  }
+
+  protected getAllEventsForInstructor(email: string) {
+    this.email = email;
+    this.getAllDrivingLessonsForEmployee();
+    this.getAllInternalExamsForEmployee();
+  }
+
   private getAllLecturesForEmployee() {
     this.lectureSeriesService.findAllLecturesByEmployee(this.email)
       .subscribe(lectures => {
