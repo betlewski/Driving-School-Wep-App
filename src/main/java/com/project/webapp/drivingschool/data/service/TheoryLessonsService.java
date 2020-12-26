@@ -1,15 +1,10 @@
 package com.project.webapp.drivingschool.data.service;
 
-import com.project.webapp.drivingschool.data.model.Course;
-import com.project.webapp.drivingschool.data.model.Lecture;
-import com.project.webapp.drivingschool.data.model.LectureSeries;
-import com.project.webapp.drivingschool.data.model.TheoryLessons;
+import com.project.webapp.drivingschool.data.model.*;
 import com.project.webapp.drivingschool.data.repository.CourseRepository;
 import com.project.webapp.drivingschool.data.repository.LectureSeriesRepository;
 import com.project.webapp.drivingschool.data.repository.TheoryLessonsRepository;
-import com.project.webapp.drivingschool.data.utils.Constants;
-import com.project.webapp.drivingschool.data.utils.CourseStatus;
-import com.project.webapp.drivingschool.data.utils.LessonStatus;
+import com.project.webapp.drivingschool.data.utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatus;
@@ -32,18 +27,21 @@ public class TheoryLessonsService {
     private CourseRepository courseRepository;
     private CourseService courseService;
     private LectureService lectureService;
+    private StudentService studentService;
 
     @Autowired
     public TheoryLessonsService(TheoryLessonsRepository theoryLessonsRepository,
                                 LectureSeriesRepository lectureSeriesRepository,
                                 CourseRepository courseRepository,
                                 CourseService courseService,
-                                @Lazy LectureService lectureService) {
+                                @Lazy LectureService lectureService,
+                                StudentService studentService) {
         this.theoryLessonsRepository = theoryLessonsRepository;
         this.lectureSeriesRepository = lectureSeriesRepository;
         this.courseRepository = courseRepository;
         this.courseService = courseService;
         this.lectureService = lectureService;
+        this.studentService = studentService;
     }
 
     /**
@@ -72,6 +70,31 @@ public class TheoryLessonsService {
                 .filter(lesson -> lesson.getLessonStatus().equals(status))
                 .collect(Collectors.toSet()))
                 .orElse(new HashSet<>());
+    }
+
+    /**
+     * Pobranie wszystkich zajęć teoretycznych
+     * przeprowadzanych przez pracownika o podanym adresie email.
+     *
+     * @param email adres email pracownika
+     * @return zajęcia teoretyczne
+     */
+    public Set<TheoryLessonsRest> getAllTheoryLessonsByEmployeeEmail(String email) {
+        Set<TheoryLessonsRest> resultSet = new HashSet<>();
+        theoryLessonsRepository.findAllByLectureSeriesEmployeeEmail(email)
+                .forEach(lessons -> {
+                    Optional<Course> optionalCourse = findCourseByTheoryLessonsId(lessons.getId());
+                    if (optionalCourse.isPresent()) {
+                        Optional<Student> optionalStudent = studentService.findStudentByCourse(optionalCourse.get());
+                        if (optionalStudent.isPresent()) {
+                            TheoryLessonsRest lessonsRest = new TheoryLessonsRest();
+                            lessonsRest.setStudent(optionalStudent.get());
+                            lessonsRest.setTheoryLessons(lessons);
+                            resultSet.add(lessonsRest);
+                        }
+                    }
+                });
+        return resultSet;
     }
 
     /**
@@ -126,19 +149,6 @@ public class TheoryLessonsService {
             return lectureService.getCurrentlyPassedHoursOfLecturesByLectureSeriesId(acceptedSeriesId);
         }
         return 0;
-    }
-
-    /**
-     * Pobranie wszystkich zajęć teoretycznych
-     * przeprowadzanych przez pracownika o podanym ID.
-     *
-     * @param id ID pracownika
-     * @return lista zajęć teoretycznych
-     */
-    public Set<TheoryLessons> getAllTheoryLessonsByEmployeeId(Long id) {
-        return theoryLessonsRepository.findAll().stream()
-                .filter(lesson -> lesson.getLectureSeries().getEmployee().getId().equals(id))
-                .collect(Collectors.toSet());
     }
 
     /**

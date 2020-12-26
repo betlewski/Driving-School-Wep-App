@@ -5,6 +5,7 @@ import com.project.webapp.drivingschool.data.model.Lecture;
 import com.project.webapp.drivingschool.data.model.TheoryLessons;
 import com.project.webapp.drivingschool.data.service.TheoryLessonsService;
 import com.project.webapp.drivingschool.data.utils.LessonStatus;
+import com.project.webapp.drivingschool.data.utils.TheoryLessonsRest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +41,12 @@ public class TheoryLessonsController {
         return theoryLessonsService.getTheoryLessonsByStudentEmailAndLessonStatus(email, status);
     }
 
+    @GetMapping("/all/byEmployee")
+    @ResponseBody
+    public Set<TheoryLessonsRest> getAllTheoryLessonsByEmployeeEmail(@RequestParam("email") String email) {
+        return theoryLessonsService.getAllTheoryLessonsByEmployeeEmail(email);
+    }
+
     @GetMapping("/active/byStudent")
     @ResponseBody
     public Optional<TheoryLessons> getActiveTheoryLessonsByStudentEmail(@RequestParam("email") String email) {
@@ -56,12 +63,6 @@ public class TheoryLessonsController {
     @ResponseBody
     public Integer getCurrentlyPassedHoursOfTheoryLessonsByCourse(@RequestBody Course course) {
         return theoryLessonsService.getCurrentlyPassedHoursOfTheoryLessonsByCourse(course);
-    }
-
-    @GetMapping("/all/byEmployeeId")
-    @ResponseBody
-    public Set<TheoryLessons> getAllTheoryLessonsByEmployeeId(@RequestParam("id") Long id) {
-        return theoryLessonsService.getAllTheoryLessonsByEmployeeId(id);
     }
 
     @GetMapping("/course")
