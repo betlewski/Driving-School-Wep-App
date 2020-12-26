@@ -23,6 +23,16 @@
           <span class="fa fa-car mr-3"></span> Jazdy szkoleniowe
         </a>
       </li>
+      <li class="active" *ngIf="lecturerLogged">
+        <a routerLink="theory">
+          <span class="fa fa-file-text mr-3"></span> Zajęcia teoretyczne
+        </a>
+      </li>
+      <li class="active" *ngIf="lecturerLogged">
+        <a routerLink="lecture">
+          <span class="fa fa-book mr-3"></span> Wykłady
+        </a>
+      </li>
       <li class="active">
         <a routerLink="exam">
           <span class="fa fa-flag mr-3"></span> Egzaminy wewnętrzne

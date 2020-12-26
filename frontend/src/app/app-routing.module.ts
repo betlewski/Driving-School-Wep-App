@@ -26,6 +26,7 @@ import {ChangePasswordComponent} from "./component/separate/employee/change-pass
 import {EmployeeCalendarComponent} from "./component/separate/employee/employee-calendar/employee-calendar.component";
 import {DrivingLessonsEmployeeComponent} from "./component/separate/employee/driving-lessons-employee/driving-lessons-employee.component";
 import {ExamEmployeeComponent} from "./component/separate/employee/exam-employee/exam-employee.component";
+import {TheoryLessonsEmployeeComponent} from "./component/separate/employee/theory-lessons-employee/theory-lessons-employee.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -103,6 +104,10 @@ const routes: Routes = [
           {
             path: 'exam',
             component: ExamEmployeeComponent
+          },
+          {
+            path: 'theory',
+            component: TheoryLessonsEmployeeComponent
           }
         ]
       },
