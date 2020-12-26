@@ -1,1 +1,59 @@
-<p>theory-lessons-employee works!</p>
+<h2 class="mb-4"> Zajęcia teoretyczne </h2>
+<p> Reaguj na zgłoszone propozycje zajęć i oceniaj te już przeprowadzone.</p>
+
+<form class="form-margin">
+  <div class="form-group">
+    <table class="table table-bordered">
+      <thead class="thead-dark text-truncate">
+      <tr>
+        <th scope="col" style="width: 300px"> Kursant</th>
+        <th scope="col" style="width: 200px"> Status zajęć</th>
+        <th scope="col" style="width: 300px"> Cykl wykładów</th>
+        <th scope="col" style="width: 230px"> Zmiana statusu</th>
+      </tr>
+      </thead>
+    </table>
+    <!--Zajęcia oczekujące na decyzję (zgłoszone)-->
+    <table class="table table-bordered">
+      <tbody>
+      <tr *ngFor="let value of requestedLessons" style="background-color: lightyellow">
+        <td style="width: 300px">{{utils.convertPersonToText(value.student)}}</td>
+        <td style="width: 200px">{{utils.translateLessonStatus(value.theoryLessons.lessonStatus)}}</td>
+        <td style="width: 300px">Cykl nr {{value.theoryLessons.lectureSeries.id}}
+          - status: {{utils.translateLecturesSeriesStatus(value.theoryLessons.lectureSeries.status)}}</td>
+        <td style="width: 110px">
+          <button type="button" class="btn btn-outline-success request-button"
+                  (click)="acceptRequest(value.theoryLessons)">Akceptacja
+          </button>
+        </td>
+        <td style="width: 110px">
+          <button type="button" class="btn btn-outline-danger request-button"
+                  (click)="rejectRequest(value.theoryLessons)">Odrzucenie
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <!--Zajęcia oczekujące na zaliczenie (zaakceptowane)-->
+    <table class="table table-bordered">
+      <tbody>
+      <tr *ngFor="let value of activeLessons">
+        <td style="width: 300px">{{utils.convertPersonToText(value.student)}}</td>
+        <td style="width: 200px">{{utils.translateLessonStatus(value.theoryLessons.lessonStatus)}}</td>
+        <td style="width: 300px">Cykl nr {{value.theoryLessons.lectureSeries.id}}
+          - status: {{utils.translateLecturesSeriesStatus(value.theoryLessons.lectureSeries.status)}}</td>
+        <td style="width: 110px">
+          <button type="button" class="btn btn-outline-success request-button"
+                  (click)="passLesson(value.theoryLessons)">Zaliczony
+          </button>
+        </td>
+        <td style="width: 110px">
+          <button type="button" class="btn btn-outline-danger request-button"
+                  (click)="failLesson(value.theoryLessons)">Niezaliczony
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</form>

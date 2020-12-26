@@ -1,0 +1,23 @@
+@import url('../../../../../assets/styles/dashboard-style.css');
+@import url('https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900');
+@import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
+
+.table th, td {
+  text-align: center;
+  vertical-align: middle !important;
+}
+
+.table {
+  margin: 2% 2%;
+  width: 1030px;
+}
+
+.form-margin {
+  margin-top: 7%;
+}
+
+.request-button {
+  width: 100%;
+  font-size: 11px;
+  background-color: white;
+}
