@@ -51,7 +51,7 @@ export class ExamComponent implements OnInit {
       .subscribe(course => {
         if (course != null && course.licenseCategory != null) {
           this.possibleExamType = ExamType.getExamTypeByCourseStatus(course.courseStatus);
-          const role = EmployeeRole.getInstructorRoleByCourseCategory(course.licenseCategory);
+          const role = EmployeeRole.getEmployeeRoleForExam(course.licenseCategory, this.possibleExamType);
           this.employeeService.findAllByRole(role).subscribe(
             employees => this.teachers = employees);
         }
@@ -95,6 +95,7 @@ export class ExamComponent implements OnInit {
 
   private sortExamsByStartTime(exams: InternalExam[]): void {
     exams.sort((a, b) =>
+      // @ts-ignore
       new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
   }
 

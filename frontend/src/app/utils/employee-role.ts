@@ -1,4 +1,5 @@
 import {LicenseCategory} from "./license-category";
+import {ExamType} from "./exam-type";
 
 /**
  * Role pracowników.
@@ -52,17 +53,21 @@ export namespace EmployeeRole {
       EmployeeRole.DRIVING_INSTRUCTOR_B, EmployeeRole.LECTURER, EmployeeRole.DELETED];
   }
 
-  export function getInstructorRoleByCourseCategory(category: LicenseCategory): EmployeeRole {
-    switch (category.toString()) {
-      case "AM":
-      case "A1":
-      case "A2":
-      case "A":
-        return EmployeeRole.DRIVING_INSTRUCTOR_A;
-      case "B":
-        return EmployeeRole.DRIVING_INSTRUCTOR_B;
-      default:
-        return EmployeeRole.NONE;
+  export function getEmployeeRoleForExam(category: LicenseCategory, examType: ExamType | null): EmployeeRole {
+    if (examType == ExamType.THEORETICAL) {
+      return EmployeeRole.LECTURER;
+    } else {
+      switch (category.toString()) {
+        case "AM":
+        case "A1":
+        case "A2":
+        case "A":
+          return EmployeeRole.DRIVING_INSTRUCTOR_A;
+        case "B":
+          return EmployeeRole.DRIVING_INSTRUCTOR_B;
+        default:
+          return EmployeeRole.NONE;
+      }
     }
   }
 
