@@ -1,0 +1,86 @@
+<h2 class="mb-4"> Egzaminy wewnętrzne </h2>
+<p> Reaguj na zgłoszone propozycje egzaminów i oceniaj te już przeprowadzone.</p>
+
+<form class="form-margin">
+  <div class="form-group">
+    <label style="width: 400px"> Egzamin do oceny
+      <select class="browser-default custom-select" name="chosenStudent" style="font-size: 15px"
+              [(ngModel)]="chosenExam" (ngModelChange)="changeExam()" [disabled]="!viewMode">
+        <option value=""></option>
+        <option *ngFor="let examRest of activeExams" [ngValue]="examRest.internalExam">
+          {{ utils.convertInternalExamRestToText(examRest) }}
+        </option>
+      </select>
+    </label>
+    <label style="margin-left: 50px"> Rozpoczęcie
+      <input type="datetime-local" class="form-control border bg-light"
+             style="width: 190px" name="startTime" [(ngModel)]="startTime" disabled>
+    </label>
+    <label style="margin-left: 30px"> Zakończenie
+      <input type="datetime-local" class="form-control border bg-light"
+             style="width: 190px" name="endTime" [(ngModel)]="endTime" disabled>
+    </label>
+  </div>
+  <div>
+    <div class="form-group" style="margin-top: 20px">
+      <label style="width: 190px"> Status
+        <select class="browser-default custom-select isPassed" name="examStatus" style="font-size: 14px; height: 40px"
+                [(ngModel)]="examStatus" [disabled]="viewMode" (ngModelChange)="changeExamStatus()">
+          <option value=""></option>
+          <option value="PASSED">Zrealizowano</option>
+          <option value="FAILED">Niezrealizowano</option>
+        </select>
+      </label>
+      <label style="margin-left: 30px"> Wynik procentowy
+        <input type="number" class="form-control border bg-light"
+               style="width: 150px; font-size: 14px" name="result" [(ngModel)]="result" [disabled]="!resultsView">
+      </label>
+      <label style="margin-left: 30px; width: 150px"> Zaliczony
+        <select class="browser-default custom-select isPassed" name="isPassed"
+                style="font-size: 14px; height: 40px" [(ngModel)]="isPassed" [disabled]="!resultsView">
+          <option value=""></option>
+          <option value="true">Tak</option>
+          <option value="false">Nie</option>
+        </select>
+      </label>
+      <button *ngIf="viewMode" type="button" class="btn btn-outline-dark" style="width: 11%; margin-left: 70px"
+              (click)="editData()">Oceń
+      </button>
+      <button *ngIf="!viewMode" type="button" class="btn btn-outline-dark" style="width: 11%; margin-left: 195px"
+              (click)="saveData()">Zapisz
+      </button>
+    </div>
+  </div>
+</form>
+<table class="table table-bordered">
+  <thead class="thead-dark text-truncate">
+  <tr>
+    <th scope="col" style="width: 300px"> Kursant</th>
+    <th scope="col" style="width: 200px"> Status</th>
+    <th scope="col" style="width: 180px"> Rozpoczęcie</th>
+    <th scope="col" style="width: 180px"> Zakończenie</th>
+    <th scope="col" style="width: 230px"> Zmiana statusu</th>
+  </tr>
+  </thead>
+</table>
+<!--Zajęcia oczekujące na decyzję (zgłoszone)-->
+<table class="table table-bordered">
+  <tbody>
+  <tr *ngFor="let value of requestedExams" style="background-color: lightyellow">
+    <td style="width: 300px">{{utils.convertPersonToText(value.student)}}</td>
+    <td style="width: 200px">{{utils.translateLessonStatus(value.internalExam.lessonStatus)}}</td>
+    <td style="width: 180px">{{utils.convertEventDateToText(value.internalExam.startTime)}}</td>
+    <td style="width: 180px">{{utils.convertEventDateToText(value.internalExam.endTime)}}</td>
+    <td style="width: 110px">
+      <button type="button" class="btn btn-outline-success request-button"
+              (click)="acceptRequest(value.internalExam)">Akceptacja
+      </button>
+    </td>
+    <td style="width: 110px">
+      <button type="button" class="btn btn-outline-danger request-button"
+              (click)="rejectRequest(value.internalExam)">Odrzucenie
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
