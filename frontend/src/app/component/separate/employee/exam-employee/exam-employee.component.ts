@@ -135,6 +135,7 @@ export class ExamEmployeeComponent implements OnInit {
   }
 
   private cleanData(): void {
+    this.chosenExam = null;
     this.requestedExams = [];
     this.activeExams = [];
     this.cleanFormData();
