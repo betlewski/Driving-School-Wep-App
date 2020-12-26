@@ -21,6 +21,7 @@ export class InternalExamService {
   private FIND_ALL_ACTUAL_BY_STUDENT_URL = this.INTERNAL_EXAM_URL + '/all/actual/byStudent';
   private FIND_ALL_ACTUAL_BY_EMPLOYEE_URL = this.INTERNAL_EXAM_URL + '/all/actual/byEmployee';
   private ADD_EXAM_URL = this.INTERNAL_EXAM_URL + '/add';
+  private EDIT_EXAM_URL = this.INTERNAL_EXAM_URL + '/edit';
   private EDIT_EXAM_STATUS_URL = this.INTERNAL_EXAM_URL + '/edit/status';
 
   constructor(private http: HttpClient,
@@ -61,6 +62,13 @@ export class InternalExamService {
       .set("student", studentEmail)
       .set("employee", employeeEmail);
     return this.http.post<InternalExam>(this.ADD_EXAM_URL, exam,
+      {headers: headers, params: params});
+  }
+
+  public editExam(examId: number, exam: InternalExam): Observable<InternalExam> {
+    const headers = this.authService.getAuthHeaders();
+    const params = new HttpParams().set("id", examId.toString());
+    return this.http.put<InternalExam>(this.EDIT_EXAM_URL, exam,
       {headers: headers, params: params});
   }
 

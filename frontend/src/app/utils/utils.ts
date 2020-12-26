@@ -3,6 +3,7 @@ import {LessonStatus} from "./lesson-status";
 import {Employee} from "../model/employee.model";
 import {LectureSeries} from "../model/lecture-series.model";
 import {Student} from "../model/student.model";
+import {InternalExamRest} from "./internal-exam-rest";
 
 /**
  * Narzędzia do przetwarzania / tłumaczenia danych
@@ -74,6 +75,15 @@ export class Utils {
     if (series.employee.fullName != null) {
       return "Seria nr ".concat(series.id.toString())
         .concat(" - prowadzący: ").concat(series.employee.fullName);
+    } else {
+      return "ERROR";
+    }
+  }
+
+  public convertInternalExamRestToText(examRest: InternalExamRest): string {
+    if (examRest.student.fullName != null && examRest.internalExam.id != null) {
+      return "Egzamin nr ".concat(examRest.internalExam.id.toString())
+        .concat(" - kursant: ").concat(examRest.student.fullName);
     } else {
       return "ERROR";
     }

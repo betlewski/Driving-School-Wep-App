@@ -178,7 +178,7 @@ public class InternalExamService {
         if (course != null) {
             return course.getInternalExams().stream()
                     .filter(exam -> exam.getExamType().equals(type))
-                    .anyMatch(InternalExam::getIsPassed);
+                    .anyMatch(exam -> Boolean.TRUE.equals(exam.getIsPassed()));
         } else {
             return Boolean.FALSE;
         }

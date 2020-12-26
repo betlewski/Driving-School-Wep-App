@@ -10,14 +10,14 @@ export class InternalExam {
   id: number | null;
   examType: ExamType | null;
   employee: Employee | null;
-  startTime: Date;
-  endTime: Date;
+  startTime: Date | null;
+  endTime: Date | null;
   lessonStatus: LessonStatus | null;
   result: number | null;
   isPassed: boolean | null;
 
   constructor(id: number | null, examType: ExamType | null, employee: Employee | null,
-              startTime: Date, endTime: Date, lessonStatus: LessonStatus | null,
+              startTime: Date | null, endTime: Date | null, lessonStatus: LessonStatus | null,
               result: number | null, isPassed: boolean | null) {
     this.id = id;
     this.examType = examType;

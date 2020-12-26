@@ -91,13 +91,11 @@ export class DrivingLessonsComponent implements OnInit {
   }
 
   public request(): void {
-    // @ts-ignore
-    if (this.instructor != null && this.instructor != "" && this.startTime != null && this.endTime != null) {
+    if (this.checkIfDataNotEmpty()) {
       const studentEmail = this.authService.getUserEmail();
-      // @ts-ignore
-      const employeeEmail = this.instructor.email;
       const lesson = new DrivingLesson(null, null, null, this.startTime, this.endTime);
-      this.drivingLessonService.addLesson(studentEmail, employeeEmail, lesson).subscribe(
+      // @ts-ignore
+      this.drivingLessonService.addLesson(studentEmail, this.instructor.email, lesson).subscribe(
         () => {
           this.refreshData();
           this.feedback = TextConstants.LESSON_NEW_SUCCESSFUL;
@@ -110,6 +108,13 @@ export class DrivingLessonsComponent implements OnInit {
     } else {
       this.feedback = TextConstants.LESSON_NEW_INCOMPLETE_DATA;
     }
+  }
+
+  private checkIfDataNotEmpty(): boolean {
+    // @ts-ignore
+    return this.instructor != null && this.instructor != ""
+      && this.startTime != null && this.endTime != null
+      && Utils.checkStringIfNotEmpty(this.instructor.email);
   }
 
   private refreshData(): void {
