@@ -28,6 +28,7 @@ import {DrivingLessonsEmployeeComponent} from "./component/separate/employee/dri
 import {ExamEmployeeComponent} from "./component/separate/employee/exam-employee/exam-employee.component";
 import {TheoryLessonsEmployeeComponent} from "./component/separate/employee/theory-lessons-employee/theory-lessons-employee.component";
 import {LectureSeriesComponent} from "./component/separate/employee/lectures/lecture-series/lecture-series.component";
+import {LectureSeriesInitComponent} from "./component/separate/employee/lectures/lecture-series-init/lecture-series-init.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -113,6 +114,10 @@ const routes: Routes = [
           {
             path: 'lecture',
             component: LectureSeriesComponent
+          },
+          {
+            path: 'lecture/init',
+            component: LectureSeriesInitComponent
           }
         ]
       },

@@ -49,6 +49,7 @@ import {ExamEmployeeComponent} from './component/separate/employee/exam-employee
 import {TheoryLessonsEmployeeComponent} from './component/separate/employee/theory-lessons-employee/theory-lessons-employee.component';
 import {LectureSeriesComponent} from "./component/separate/employee/lectures/lecture-series/lecture-series.component";
 import {LectureService} from "./service/rest/lecture/lecture.service";
+import {LectureSeriesInitComponent} from './component/separate/employee/lectures/lecture-series-init/lecture-series-init.component';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import {LectureService} from "./service/rest/lecture/lecture.service";
     ExamEmployeeComponent,
     TheoryLessonsEmployeeComponent,
     LectureSeriesComponent,
+    LectureSeriesInitComponent,
   ],
   imports: [
     BrowserModule,
