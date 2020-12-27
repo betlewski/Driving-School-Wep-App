@@ -48,6 +48,7 @@ import {DrivingLessonsEmployeeComponent} from './component/separate/employee/dri
 import {ExamEmployeeComponent} from './component/separate/employee/exam-employee/exam-employee.component';
 import {TheoryLessonsEmployeeComponent} from './component/separate/employee/theory-lessons-employee/theory-lessons-employee.component';
 import {LectureSeriesComponent} from "./component/separate/employee/lectures/lecture-series/lecture-series.component";
+import {LectureService} from "./service/rest/lecture/lecture.service";
 
 @NgModule({
   declarations: [
@@ -101,7 +102,8 @@ import {LectureSeriesComponent} from "./component/separate/employee/lectures/lec
     InternalExamService,
     TheoryLessonsService,
     EmployeeService,
-    LectureSeriesService
+    LectureSeriesService,
+    LectureService
   ],
   bootstrap: [AppComponent]
 })
