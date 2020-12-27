@@ -15,8 +15,9 @@ export namespace LectureSeriesStatus {
   const ONGOING_TRANSLATION = "Trwający";
   const FINISHED_TRANSLATION = "Zakończony";
 
-  export function translate(status: LectureSeriesStatus): string {
+  export function translate(status: LectureSeriesStatus | string): string {
     let translator: string;
+    // @ts-ignore
     switch (LectureSeriesStatus[status] as unknown) {
       case LectureSeriesStatus.NEW:
         translator = NEW_TRANSLATION;
@@ -32,6 +33,10 @@ export namespace LectureSeriesStatus {
         break;
     }
     return translator;
+  }
+
+  export function stringValues(): string[] {
+    return ["NEW", "ONGOING", "FINISHED"];
   }
 
 }

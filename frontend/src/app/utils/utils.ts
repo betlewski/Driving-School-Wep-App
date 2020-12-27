@@ -37,7 +37,7 @@ export class Utils {
         return LessonStatus.translate(status);
     }
 
-    public translateLecturesSeriesStatus(status: LectureSeriesStatus): string {
+    public translateLecturesSeriesStatus(status: LectureSeriesStatus | string): string {
         return LectureSeriesStatus.translate(status);
     }
 

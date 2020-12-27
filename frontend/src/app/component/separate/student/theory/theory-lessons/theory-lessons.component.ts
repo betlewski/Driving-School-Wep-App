@@ -48,7 +48,7 @@ export class TheoryLessonsComponent implements OnInit {
   private splitLecturesByStartTime(): void {
     const now = new Date();
     this.activeTheory?.lectureSeries.lectures.forEach(lecture => {
-      if (new Date(lecture.startTime).getTime() <= now.getTime()) {
+      if (new Date(lecture.endTime).getTime() <= now.getTime()) {
         this.pastLectures.push(lecture);
       } else {
         this.futureLectures.push(lecture);
