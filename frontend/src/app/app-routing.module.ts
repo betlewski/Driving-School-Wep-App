@@ -27,6 +27,7 @@ import {EmployeeCalendarComponent} from "./component/separate/employee/employee-
 import {DrivingLessonsEmployeeComponent} from "./component/separate/employee/driving-lessons-employee/driving-lessons-employee.component";
 import {ExamEmployeeComponent} from "./component/separate/employee/exam-employee/exam-employee.component";
 import {TheoryLessonsEmployeeComponent} from "./component/separate/employee/theory-lessons-employee/theory-lessons-employee.component";
+import {LectureSeriesComponent} from "./component/separate/employee/lectures/lecture-series/lecture-series.component";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -108,6 +109,10 @@ const routes: Routes = [
           {
             path: 'theory',
             component: TheoryLessonsEmployeeComponent
+          },
+          {
+            path: 'lecture',
+            component: LectureSeriesComponent
           }
         ]
       },
