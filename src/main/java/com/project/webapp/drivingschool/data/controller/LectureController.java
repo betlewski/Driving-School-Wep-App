@@ -65,7 +65,7 @@ public class LectureController {
         return lectureService.getCurrentlyPassedHoursOfLecturesByLectureSeriesId(id);
     }
 
-    @GetMapping("/hours/isEnough/byLecturesSet")
+    @PostMapping("/hours/isEnough/byLecturesSet")
     @ResponseBody
     public Boolean checkIfSumEqualsRequiredTheoryHoursForLecturesSet(@RequestBody Set<Lecture> lectures) {
         return lectureService.checkIfSumEqualsRequiredTheoryHoursForLecturesSet(lectures);
@@ -80,6 +80,11 @@ public class LectureController {
     public ResponseEntity<Lecture> editLecture(@RequestParam("id") Long id,
                                                @RequestBody Lecture newLecture) {
         return lectureService.editLecture(id, newLecture);
+    }
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<Boolean> deleteLecture(@RequestParam("id") Long id) {
+        return lectureService.deleteLecture(id);
     }
 
 }

@@ -150,10 +150,10 @@ public class LectureService {
      */
     public Boolean checkIfSumEqualsRequiredTheoryHoursForLecturesSet(Set<Lecture> lectures) {
         Integer theoryHoursSum = lectures.stream()
-                .mapToInt(lecture -> (int) ChronoUnit.HOURS.between(
+                .mapToInt(lecture -> (int) ChronoUnit.MINUTES.between(
                         lecture.getStartTime(), lecture.getEndTime()))
                 .sum();
-        return theoryHoursSum.equals(Constants.REQUIRED_THEORY_HOURS);
+        return theoryHoursSum.equals(Constants.REQUIRED_THEORY_HOURS * 60);
     }
 
     /**
@@ -187,6 +187,11 @@ public class LectureService {
     public ResponseEntity<Lecture> addLecture(Lecture lecture) {
         if (DataUtils.isStartAndEndTimeCorrect(lecture.getStartTime(), lecture.getEndTime())) {
             try {
+                Lecture newLecture = new Lecture();
+                newLecture.setSubject(lecture.getSubject());
+                newLecture.setStartTime(lecture.getStartTime());
+                newLecture.setEndTime(lecture.getEndTime());
+                newLecture.setAdditionalInfo(lecture.getAdditionalInfo());
                 lecture = lectureRepository.save(lecture);
             } catch (Exception e) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -220,6 +225,26 @@ public class LectureService {
             return new ResponseEntity<>(lecture, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    /**
+     * Usunięcie wykładu o podanym numerze ID.
+     *
+     * @param id ID wykładu do usunięcia
+     * @return usunięty wykład
+     */
+    public ResponseEntity<Boolean> deleteLecture(Long id) {
+        Optional<Lecture> optionalLecture = lectureRepository.findById(id);
+        if (optionalLecture.isPresent()) {
+            try {
+                lectureRepository.delete(optionalLecture.get());
+            } catch (Exception e) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

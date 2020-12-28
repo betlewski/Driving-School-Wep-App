@@ -19,6 +19,7 @@ export class LectureSeriesService {
   private FIND_ALL_FREE_SERIES_URL = this.LECTURE_SERIES_URL + '/all/free';
   private FIND_ALL_SERIES_BY_EMPLOYEE_URL = this.LECTURE_SERIES_URL + '/all/byEmployee';
   private FIND_ALL_LECTURES_BY_EMPLOYEE_URL = this.LECTURE_SERIES_URL + '/lectures/all/byEmployee';
+  private ADD_SERIES_URL = this.LECTURE_SERIES_URL + '/add';
   private EDIT_SERIES_STATUS_URL = this.LECTURE_SERIES_URL + '/edit/status';
 
   constructor(private http: HttpClient,
@@ -42,6 +43,13 @@ export class LectureSeriesService {
     const headers = this.authService.getAuthHeaders();
     const params = new HttpParams().set("email", email);
     return this.http.get<Lecture[]>(this.FIND_ALL_LECTURES_BY_EMPLOYEE_URL,
+      {headers: headers, params: params});
+  }
+
+  public addSeries(email: string, lectureIds: number[]): Observable<LectureSeries> {
+    const headers = this.authService.getAuthHeaders();
+    const params = new HttpParams().set("email", email);
+    return this.http.post<LectureSeries>(this.ADD_SERIES_URL, lectureIds,
       {headers: headers, params: params});
   }
 
