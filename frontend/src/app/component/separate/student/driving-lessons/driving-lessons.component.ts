@@ -47,7 +47,7 @@ export class DrivingLessonsComponent implements OnInit {
   private getAllInstructorsByCourseCategory(email: string) {
     this.courseService.findActiveCourseByEmail(email).subscribe(course => {
       if (course != null && course.licenseCategory != null) {
-        const role = EmployeeRole.getInstructorRoleByCourseCategory(course.licenseCategory);
+        const role = EmployeeRole.getInstructorRoleForDrivingLesson(course.licenseCategory);
         this.employeeService.findAllByRole(role).subscribe(
           employees => this.instructors = employees)
       }

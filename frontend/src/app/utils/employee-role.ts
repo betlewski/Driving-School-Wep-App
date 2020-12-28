@@ -71,4 +71,18 @@ export namespace EmployeeRole {
     }
   }
 
+  export function getInstructorRoleForDrivingLesson(category: LicenseCategory): EmployeeRole {
+    switch (category.toString()) {
+      case "AM":
+      case "A1":
+      case "A2":
+      case "A":
+        return EmployeeRole.DRIVING_INSTRUCTOR_A;
+      case "B":
+        return EmployeeRole.DRIVING_INSTRUCTOR_B;
+      default:
+        return EmployeeRole.NONE;
+    }
+  }
+
 }
