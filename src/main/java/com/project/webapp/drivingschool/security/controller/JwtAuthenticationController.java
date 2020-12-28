@@ -79,4 +79,28 @@ public class JwtAuthenticationController {
         }
     }
 
+    /**
+     * Metoda domyślna wykorzystywana do uwierzytelnienia kursanta
+     * na podstawie poprawności tokenu JWT.
+     */
+    @GetMapping(value = "/rest/activate/student")
+    public void canActivateStudent() {
+    }
+
+    /**
+     * Metoda domyślna wykorzystywana do uwierzytelnienia pracownika
+     * na podstawie poprawności tokenu JWT.
+     */
+    @GetMapping(value = "/rest/activate/employee")
+    public void canActivateEmployee() {
+    }
+
+    /**
+     * Metoda domyślna wykorzystywana do uwierzytelnienia administratora
+     * na podstawie poprawności tokenu JWT.
+     */
+    @GetMapping(value = "/rest/activate/admin")
+    public void canActivateAdmin() {
+    }
+
 }

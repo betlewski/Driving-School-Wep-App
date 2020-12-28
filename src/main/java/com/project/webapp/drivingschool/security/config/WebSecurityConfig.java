@@ -65,6 +65,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/rest/authenticate").permitAll()
+                .antMatchers("/rest/activate/student").hasRole(STUDENT)
+                .antMatchers("/rest/activate/employee").hasAnyRole(LECTURER, INSTRUCTOR)
+                .antMatchers("/rest/activate/admin").hasRole(ADMIN)
                 .antMatchers("/rest/employee/byEmail",
                         "/rest/employee/edit",
                         "/rest/employee/edit/password").hasAnyRole(ADMIN, LECTURER, INSTRUCTOR)
