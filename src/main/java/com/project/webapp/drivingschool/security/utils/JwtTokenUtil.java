@@ -26,8 +26,11 @@ public class JwtTokenUtil {
     /**
      * Klucz szyfrujący token
      */
-    @Value("${jwt.secret}")
     private String secret;
+
+    public JwtTokenUtil(@Value("${jwt.secret}") String secret) {
+        this.secret = secret;
+    }
 
     public String getUsernameFromToken(String token) {
         return getAllClaimsFromToken(token).getSubject();
@@ -44,7 +47,7 @@ public class JwtTokenUtil {
                 .getBody();
     }
 
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         Date expirationDate = getExpirationDateFromToken(token);
         return expirationDate.before(new Date());
     }
