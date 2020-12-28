@@ -21,4 +21,9 @@ export class TextConstants {
   public static readonly CHANGE_PWD_INVALID_OLD = "Obecne hasło jest niewłaściwe.";
   public static readonly CHANGE_PWD_SUCCESSFUL = "Hasło zostało pomyślnie zmienione.";
 
+  public static readonly LECTURE_SERIES_INIT = "Aby móc utworzyć nowy cykl, liczba godzin wykładów, które się na niego składają, musi być równa wymaganej.";
+  public static readonly LECTURE_SERIES_INCOMPLETE_DATA = "Należy uzupełnić wszystkie dane.";
+  public static readonly LECTURE_SERIES_CORRECT_HOURS = "Cykl wykładów spełnia wymagania, może zostać utworzony.";
+  public static readonly LECTURE_SERIES_SUCCESSFUL = "Cykl wykładów został pomyślnie utworzony.";
+
 }
