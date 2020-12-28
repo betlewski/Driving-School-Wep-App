@@ -1,3 +1,83 @@
 <h2 class="mb-4"> Wykłady </h2>
 <p> Twórz nowe cykle, wybierając terminy i tematy wykładów, które się na nie składają.
 </p>
+<form class="form-margin">
+  <div class="form-group">
+    <label> Liczba godzin
+      <input type="text" class="form-control border bg-light" disabled
+             style="width: 150px; font-size: 14px" name="currentlyHours" [(ngModel)]="currentlyHours">
+    </label>
+    <label style="margin-left: 40px"> Wymaganych godzin
+      <input type="text" class="form-control border bg-light" disabled
+             style="width: 150px; font-size: 14px" name="requiredHours" [(ngModel)]="requiredHours">
+    </label>
+    <button type="button" class="btn btn-outline-dark" style="width: 14%; margin-left: 70px" [disabled]="!correctHours"
+            (click)="addSeries()">Utwórz
+    </button>
+  </div>
+  <div class="form-group" style="margin-top: 3%">
+    <a>{{feedback}}</a>
+  </div>
+</form>
+<table class="table table-bordered" style="margin-top: 4%">
+  <thead class="thead-dark text-truncate">
+  <tr>
+    <th scope="col" style="width: 50px"> Nr</th>
+    <th scope="col" style="width: 280px"> Temat</th>
+    <th scope="col" style="width: 280px"> Dodatkowe informacje</th>
+    <th scope="col" style="width: 220px"> Rozpoczęcie</th>
+    <th scope="col" style="width: 220px"> Zakończenie</th>
+    <th scope="col" style="width: 50px"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr style="background-color: lightyellow">
+    <td></td>
+    <td>
+      <label>
+        <input type="text" class="form-control border bg-light"
+               style="font-size: 14px; width: 240px" name="subject" [(ngModel)]="subject">
+      </label>
+    </td>
+    <td>
+      <label>
+        <input type="text" class="form-control border bg-light"
+               style="font-size: 14px; width: 240px" name="addInfo" [(ngModel)]="addInfo">
+      </label>
+    </td>
+    <td>
+      <label>
+        <input type="datetime-local" class="form-control border bg-light"
+               style="font-size: 14px; width: 200px" name="startTime" [(ngModel)]="startTime">
+      </label>
+    </td>
+    <td>
+      <label>
+        <input type="datetime-local" class="form-control border bg-light"
+               style="font-size: 14px; width: 200px" name="startTime" [(ngModel)]="endTime">
+      </label>
+    </td>
+    <td>
+      <button type="button" class="btn btn-success action-button"
+              (click)="addLecture()">+
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<table class="table table-bordered">
+  <tbody>
+  <tr *ngFor="let lecture of lectures">
+    <td style="width: 50px">{{lectures.indexOf(lecture) + 1}}</td>
+    <td style="width: 280px">{{lecture.subject}}</td>
+    <td style="width: 280px">{{utils.convertTextIfEmpty(lecture.additionalInfo)}}</td>
+    <td style="width: 220px">{{utils.convertEventDateToText(lecture.startTime)}}</td>
+    <td style="width: 220px">{{utils.convertEventDateToText(lecture.endTime)}}</td>
+    <td style="width: 50px">
+      <button type="button" class="btn btn-danger action-button"
+              (click)="removeLecture(lecture)">-
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>

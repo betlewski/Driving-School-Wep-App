@@ -25,5 +25,6 @@ export class TextConstants {
   public static readonly LECTURE_SERIES_INCOMPLETE_DATA = "Należy uzupełnić wszystkie dane.";
   public static readonly LECTURE_SERIES_CORRECT_HOURS = "Cykl wykładów spełnia wymagania, może zostać utworzony.";
   public static readonly LECTURE_SERIES_SUCCESSFUL = "Cykl wykładów został pomyślnie utworzony.";
+  public static readonly LECTURE_SERIES_ERROR = "Wystąpiły problemy podczas tworzenia cyklu wykładów. Spróbuj ponownie!";
 
 }
