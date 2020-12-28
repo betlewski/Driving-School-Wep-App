@@ -50,6 +50,9 @@ import {TheoryLessonsEmployeeComponent} from './component/separate/employee/theo
 import {LectureSeriesComponent} from "./component/separate/employee/lectures/lecture-series/lecture-series.component";
 import {LectureService} from "./service/rest/lecture/lecture.service";
 import {LectureSeriesInitComponent} from './component/separate/employee/lectures/lecture-series-init/lecture-series-init.component';
+import {AuthGuardStudent} from "./service/auth-guard/student/auth-guard-student.service";
+import {AuthGuardEmployee} from "./service/auth-guard/employee/auth-guard-employee.service";
+import {AuthGuardAdmin} from "./service/auth-guard/admin/auth-guard-admin.service";
 
 @NgModule({
   declarations: [
@@ -95,6 +98,9 @@ import {LectureSeriesInitComponent} from './component/separate/employee/lectures
   ],
   providers: [
     AuthService,
+    AuthGuardStudent,
+    AuthGuardEmployee,
+    AuthGuardAdmin,
     CryptoJsService,
     StudentService,
     CourseService,

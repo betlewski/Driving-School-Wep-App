@@ -29,6 +29,9 @@ import {ExamEmployeeComponent} from "./component/separate/employee/exam-employee
 import {TheoryLessonsEmployeeComponent} from "./component/separate/employee/theory-lessons-employee/theory-lessons-employee.component";
 import {LectureSeriesComponent} from "./component/separate/employee/lectures/lecture-series/lecture-series.component";
 import {LectureSeriesInitComponent} from "./component/separate/employee/lectures/lecture-series-init/lecture-series-init.component";
+import {AuthGuardStudent} from "./service/auth-guard/student/auth-guard-student.service";
+import {AuthGuardEmployee} from "./service/auth-guard/employee/auth-guard-employee.service";
+import {AuthGuardAdmin} from "./service/auth-guard/admin/auth-guard-admin.service";
 
 const routes: Routes = [
   {path: 'login', component: LoginComponent},
@@ -39,119 +42,146 @@ const routes: Routes = [
       {
         path: 'student',
         component: HomeStudentComponent,
+        canActivate: [AuthGuardStudent],
         children: [
           {
             path: 'course',
             children: [
               {
                 path: '',
-                component: CourseComponent
+                component: CourseComponent,
+                canActivate: [AuthGuardStudent]
               },
               {
                 path: 'init',
-                component: CourseInitComponent
+                component: CourseInitComponent,
+                canActivate: [AuthGuardStudent]
               }
             ]
           },
           {
             path: 'data',
-            component: PersonalDataComponent
+            component: PersonalDataComponent,
+            canActivate: [AuthGuardStudent]
           },
           {
             path: 'official',
-            component: OfficialComponent
+            component: OfficialComponent,
+            canActivate: [AuthGuardStudent]
           },
           {
             path: 'calendar',
-            component: StudentCalendarComponent
+            component: StudentCalendarComponent,
+            canActivate: [AuthGuardStudent]
           },
           {
             path: 'driving',
-            component: DrivingLessonsComponent
+            component: DrivingLessonsComponent,
+            canActivate: [AuthGuardStudent]
           },
           {
             path: 'theory',
-            component: TheoryLessonsComponent
+            component: TheoryLessonsComponent,
+            canActivate: [AuthGuardStudent]
           },
           {
             path: 'theory/init',
-            component: TheoryInitComponent
+            component: TheoryInitComponent,
+            canActivate: [AuthGuardStudent]
           },
           {
             path: 'exam',
-            component: ExamComponent
+            component: ExamComponent,
+            canActivate: [AuthGuardStudent]
           }
         ]
       },
       {
         path: 'employee',
         component: HomeEmployeeComponent,
+        canActivate: [AuthGuardEmployee],
         children: [
           {
             path: 'data',
-            component: PersonalDataEmployeeComponent
+            component: PersonalDataEmployeeComponent,
+            canActivate: [AuthGuardEmployee]
           },
           {
             path: 'data/password',
-            component: ChangePasswordComponent
+            component: ChangePasswordComponent,
+            canActivate: [AuthGuardEmployee]
           },
           {
             path: 'calendar',
-            component: EmployeeCalendarComponent
+            component: EmployeeCalendarComponent,
+            canActivate: [AuthGuardEmployee]
           },
           {
             path: 'driving',
-            component: DrivingLessonsEmployeeComponent
+            component: DrivingLessonsEmployeeComponent,
+            canActivate: [AuthGuardEmployee]
           },
           {
             path: 'exam',
-            component: ExamEmployeeComponent
+            component: ExamEmployeeComponent,
+            canActivate: [AuthGuardEmployee]
           },
           {
             path: 'theory',
-            component: TheoryLessonsEmployeeComponent
+            component: TheoryLessonsEmployeeComponent,
+            canActivate: [AuthGuardEmployee]
           },
           {
             path: 'lecture',
-            component: LectureSeriesComponent
+            component: LectureSeriesComponent,
+            canActivate: [AuthGuardEmployee]
           },
           {
             path: 'lecture/init',
-            component: LectureSeriesInitComponent
+            component: LectureSeriesInitComponent,
+            canActivate: [AuthGuardEmployee]
           }
         ]
       },
       {
         path: 'admin',
         component: HomeAdminComponent,
+        canActivate: [AuthGuardAdmin],
         children: [
           {
             path: 'data',
-            component: PersonalDataAdminComponent
+            component: PersonalDataAdminComponent,
+            canActivate: [AuthGuardAdmin]
           },
           {
             path: 'student',
-            component: StudentsComponent
+            component: StudentsComponent,
+            canActivate: [AuthGuardAdmin]
           },
           {
             path: 'official',
-            component: OfficialAdminComponent
+            component: OfficialAdminComponent,
+            canActivate: [AuthGuardAdmin]
           },
           {
             path: 'course',
-            component: CourseAdminComponent
+            component: CourseAdminComponent,
+            canActivate: [AuthGuardAdmin]
           },
           {
             path: 'employee',
-            component: EmployeesComponent
+            component: EmployeesComponent,
+            canActivate: [AuthGuardAdmin]
           },
           {
             path: 'employee/new',
-            component: EmployeeNewComponent
+            component: EmployeeNewComponent,
+            canActivate: [AuthGuardAdmin]
           },
           {
             path: 'calendar',
-            component: AdminCalendarComponent
+            component: AdminCalendarComponent,
+            canActivate: [AuthGuardAdmin]
           }
         ]
       },

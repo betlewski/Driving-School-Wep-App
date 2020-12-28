@@ -20,6 +20,9 @@ export class AuthService {
   private USER_ROLE = "user-role";
 
   private AUTH_URL = environment.restUrl + "/authenticate";
+  private CAN_ACTIVATE_STUDENT_URL = environment.restUrl + "/activate/student";
+  private CAN_ACTIVATE_EMPLOYEE_URL = environment.restUrl + "/activate/employee";
+  private CAN_ACTIVATE_ADMIN_URL = environment.restUrl + "/activate/admin";
 
   constructor(private http: HttpClient,
               private cryptoJsService: CryptoJsService) {
@@ -31,6 +34,24 @@ export class AuthService {
       .pipe(map(jwtResponse => {
         this.setItemsFromResponse(jwtResponse);
       }));
+  }
+
+  public canActivateStudent() {
+    const headers = this.getAuthHeaders();
+    return this.http.get(this.CAN_ACTIVATE_STUDENT_URL,
+      {headers: headers});
+  }
+
+  public canActivateEmployee() {
+    const headers = this.getAuthHeaders();
+    return this.http.get(this.CAN_ACTIVATE_EMPLOYEE_URL,
+      {headers: headers});
+  }
+
+  public canActivateAdmin() {
+    const headers = this.getAuthHeaders();
+    return this.http.get(this.CAN_ACTIVATE_ADMIN_URL,
+      {headers: headers});
   }
 
   private setItemsFromResponse(jwtResponse: JwtResponse) {
