@@ -84,7 +84,7 @@ public class CourseReportService {
      * @param report   raport do edycji
      * @param category kategoria prawa jazdy
      */
-    private void setReportedDataByLicenseCategory(CourseReport report, LicenceCategory category) {
+    public void setReportedDataByLicenseCategory(CourseReport report, LicenceCategory category) {
         if (category != null) {
             report.setCategory(category);
             report.setRequiredAge(category.requiredAge);
@@ -101,7 +101,7 @@ public class CourseReportService {
      * @param report raport do edycji
      * @param course kurs
      */
-    private void setReportedDataByCourse(CourseReport report, Course course) {
+    public void setReportedDataByCourse(CourseReport report, Course course) {
         if (course != null) {
             report.setCourseStatus(course.getCourseStatus());
             report.setPassedCoursePercent(calculatePassedCoursePercent(course));
@@ -213,7 +213,7 @@ public class CourseReportService {
      *
      * @param report raport do edycji
      */
-    private void setReportedComment(CourseReport report) {
+    public void setReportedComment(CourseReport report) {
         String comment;
         Integer passedCoursePercent = report.getPassedCoursePercent();
         if (passedCoursePercent < 25) {
