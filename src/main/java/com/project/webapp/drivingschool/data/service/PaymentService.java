@@ -231,7 +231,6 @@ public class PaymentService {
             if (notCompleted.isEmpty()) {
                 Integer coursePrice = course.getLicenseCategory().price;
                 int courseFees = allPayments.stream()
-                        .filter(payment -> payment.getProcessingStatus().equals(ProcessingStatus.COMPLETED))
                         .filter(payment -> payment.getPaymentType().equals(PaymentType.COURSE_FEE))
                         .mapToInt(Payment::getPrice).sum();
                 if (courseFees >= coursePrice) {
