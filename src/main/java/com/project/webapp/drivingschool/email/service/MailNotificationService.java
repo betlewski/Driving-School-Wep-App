@@ -136,7 +136,7 @@ public class MailNotificationService {
      * @param addData   dane dodatkowe
      * @return treść wiadomości
      */
-    private String createMailText(String eventType, String startTime, String endTime, String addData) {
+    public String createMailText(String eventType, String startTime, String endTime, String addData) {
         return MailConstants.TEXT
                 .replaceAll(EVENT_TYPE_HASH, eventType)
                 .replaceAll(START_TIME_HASH, startTime)
@@ -150,7 +150,7 @@ public class MailNotificationService {
      *
      * @return data wydarzenia
      */
-    private LocalDate getEventDateToSend() {
+    public LocalDate getEventDateToSend() {
         return LocalDate.now().plusDays(NUMBER_OF_DAYS_BEFORE_EVENT_TO_SEND);
     }
 
@@ -160,11 +160,11 @@ public class MailNotificationService {
      * @param exam egzamin wewnętrzny
      * @return tekst wykorzystywany w powiadomieniu
      */
-    private String getMailEventTypeByExam(InternalExam exam) {
+    public String getMailEventTypeByExam(InternalExam exam) {
         MailEventType eventType = null;
-        if (exam.getExamType().equals(ExamType.THEORETICAL)) {
+        if (ExamType.THEORETICAL.equals(exam.getExamType())) {
             eventType = THEORY_INTERNAL_EXAM;
-        } else if (exam.getExamType().equals(ExamType.PRACTICAL)) {
+        } else if (ExamType.PRACTICAL.equals(exam.getExamType())) {
             eventType = PRACTICAL_INTERNAL_EXAM;
         }
         return eventType == null ? "" : eventType.text;

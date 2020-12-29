@@ -30,7 +30,7 @@ public final class MailConstants {
     /**
      * Adres URL aplikacji
      */
-    private static final String APP_URL_ADDRESS = "http://localhost:8080/";
+    public static final String APP_URL_ADDRESS = "http://localhost:8080/";
 
     /**
      * Wyrażenie zastępowane przez dane właściwe:
