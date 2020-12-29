@@ -15,7 +15,8 @@ import java.util.HashSet;
  */
 public class DocumentServiceTest {
 
-    private static final DocumentService documentService = new DocumentService(null, null, null, null);
+    private static final DocumentService documentService =
+            new DocumentService(null, null, null, null);
 
     @Test
     public void test_checkIfMedicalExamsCompleted_emptyDocuments() {

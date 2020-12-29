@@ -15,7 +15,8 @@ import java.time.LocalDate;
  */
 public class MailNotificationServiceTest {
 
-    private static final MailNotificationService mailNotificationService = new MailNotificationService(null, null, null);
+    private static final MailNotificationService mailNotificationService =
+            new MailNotificationService(null, null, null);
 
     @Test
     public void test_createMailText() {
