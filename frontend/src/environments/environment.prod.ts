@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  restUrl: 'http://localhost:8080/rest'
+  restUrl: 'https://szkola-jazdy.herokuapp.com/rest'
 };
