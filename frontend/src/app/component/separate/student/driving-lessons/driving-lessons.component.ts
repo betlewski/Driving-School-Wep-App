@@ -87,6 +87,7 @@ export class DrivingLessonsComponent implements OnInit {
 
   private sortLessonsByStartTime(lessons: DrivingLesson[]): void {
     lessons.sort((a, b) =>
+      // @ts-ignore
       new Date(a.startTime).getTime() - new Date(b.startTime).getTime());
   }
 

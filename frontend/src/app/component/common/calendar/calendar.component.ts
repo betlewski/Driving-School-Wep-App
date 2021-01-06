@@ -152,12 +152,14 @@ export class CalendarComponent {
         lessons.forEach(restLesson => {
           const student = restLesson.student;
           const lesson = restLesson.drivingLesson;
+          const startTime = lesson.startTime != null ? lesson.startTime : "";
+          const endTime = lesson.endTime != null ? lesson.endTime : "";
           this.events = [
             ...this.events,
             {
               title: this.getEventTitleFromDrivingLessonForEmployee(lesson, student),
-              start: parseISO(lesson.startTime.toString()),
-              end: parseISO(lesson.endTime.toString()),
+              start: parseISO(startTime.toString()),
+              end: parseISO(endTime.toString()),
               color: this.drivingLessonColor
             }
           ];
@@ -171,12 +173,14 @@ export class CalendarComponent {
         exams.forEach(restExam => {
           const student = restExam.student;
           const exam = restExam.internalExam;
+          const startTime = exam.startTime != null ? exam.startTime : "";
+          const endTime = exam.endTime != null ? exam.endTime : "";
           this.events = [
             ...this.events,
             {
               title: this.getEventTitleFromInternalExamForEmployee(exam, student),
-              start: parseISO(exam.startTime.toString()),
-              end: parseISO(exam.endTime.toString()),
+              start: parseISO(startTime.toString()),
+              end: parseISO(endTime.toString()),
               color: this.internalExamColor
             }
           ];
@@ -216,12 +220,14 @@ export class CalendarComponent {
     this.drivingLessonService.findAllActualByStudent(this.email)
       .subscribe(lessons => {
         lessons.forEach(lesson => {
+          const startTime = lesson.startTime != null ? lesson.startTime : "";
+          const endTime = lesson.endTime != null ? lesson.endTime : "";
           this.events = [
             ...this.events,
             {
               title: this.getEventTitleFromDrivingLessonForStudent(lesson),
-              start: parseISO(lesson.startTime.toString()),
-              end: parseISO(lesson.endTime.toString()),
+              start: parseISO(startTime.toString()),
+              end: parseISO(endTime.toString()),
               color: this.drivingLessonColor
             }
           ];
@@ -233,12 +239,14 @@ export class CalendarComponent {
     this.internalExamService.findAllActualByStudent(this.email)
       .subscribe(exams => {
         exams.forEach(exam => {
+          const startTime = exam.startTime != null ? exam.startTime : "";
+          const endTime = exam.endTime != null ? exam.endTime : "";
           this.events = [
             ...this.events,
             {
               title: this.getEventTitleFromInternalExamForStudent(exam),
-              start: parseISO(exam.startTime.toString()),
-              end: parseISO(exam.endTime.toString()),
+              start: parseISO(startTime.toString()),
+              end: parseISO(endTime.toString()),
               color: this.internalExamColor
             }
           ];

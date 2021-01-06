@@ -56,6 +56,7 @@ export class DrivingLessonsEmployeeComponent implements OnInit {
 
   private sortLessonsByStartTime(lessons: DrivingLessonRest[]): void {
     lessons.sort((a, b) =>
+      // @ts-ignore
       new Date(a.drivingLesson.startTime).getTime() - new Date(b.drivingLesson.startTime).getTime());
   }
 

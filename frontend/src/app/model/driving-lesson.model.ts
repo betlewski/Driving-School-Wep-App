@@ -10,11 +10,11 @@ export class DrivingLesson {
   id: number | null;
   employee: Employee | null;
   lessonStatus: LessonStatus | null;
-  startTime: Date;
-  endTime: Date;
+  startTime: Date | null;
+  endTime: Date | null;
 
   constructor(id: number | null, employee: Employee | null, lessonStatus: LessonStatus | null,
-              startTime: Date, endTime: Date) {
+              startTime: Date | null, endTime: Date | null) {
     this.id = id;
     this.employee = employee;
     this.lessonStatus = lessonStatus;

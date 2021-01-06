@@ -6,17 +6,17 @@
     <label> Cykl wykładów
       <input type="text" class="form-control border bg-light" disabled
              style="width: 450px; font-size: 15px" name="activeTheory"
-             [ngModel]="utils.convertLectureSeriesToText(activeTheory.lectureSeries)">
+             [ngModel]="activeTheory != null ? utils.convertLectureSeriesToText(activeTheory.lectureSeries) : ''">
     </label>
     <label style="margin-left: 50px"> Status cyklu
       <input type="text" class="form-control border bg-light" disabled
              style="width: 200px; font-size: 15px" name="seriesStatus"
-             [ngModel]="utils.translateLecturesSeriesStatus(activeTheory.lectureSeries.status)">
+             [ngModel]="activeTheory != null ? utils.translateLecturesSeriesStatus(activeTheory.lectureSeries.status) : ''">
     </label>
     <label style="margin-left: 50px"> Status zajęć
       <input type="text" class="form-control border bg-light" disabled
              style="width: 200px; font-size: 15px" name="theoryStatus"
-             [ngModel]="utils.translateLessonStatus(activeTheory.lessonStatus)">
+             [ngModel]="activeTheory != null ? utils.translateLessonStatus(activeTheory.lessonStatus) : ''">
     </label>
   </div>
 </form>
