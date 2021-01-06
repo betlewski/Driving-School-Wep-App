@@ -56,7 +56,7 @@ public class DocumentService {
 
     /**
      * Pobranie dokumentów o podanym statusie przetworzenia
-     * związanych z aktywnym kursem dla kursanta o podanym ID.
+     * związanych z aktywnym kursem dla kursanta o podanym adresie email.
      *
      * @param email  adres email kursanta
      * @param status status przetworzenia dokumentu
