@@ -11,9 +11,9 @@ public final class MailConstants {
     /**
      * Wyrażenie określające czas uruchomienia zadania cyklicznego
      * generującego wysyłkę powiadomień mailowych
-     * (domyślnie: codziennie o godz. 06:00)
+     * (domyślnie: codziennie o godz. 05:00 UTC)
      */
-    public static final String SEND_MAIL_JOB_CRON = "0 0 6 * * ?";
+    public static final String SEND_MAIL_JOB_CRON = "0 0 5 * * ?";
 
     /**
      * Liczba dni poprzedzających datę wydarzenia,

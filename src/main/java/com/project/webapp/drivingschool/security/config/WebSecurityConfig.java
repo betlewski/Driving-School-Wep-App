@@ -105,7 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/rest/exam/all/actual/byEmployee",
                         "/rest/exam/edit/**").hasAnyRole(ADMIN, LECTURER, INSTRUCTOR)
                 .antMatchers("/rest/exam/**").hasAnyRole(ADMIN, STUDENT)
-                .anyRequest().authenticated();
+                .anyRequest().permitAll();
 
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
