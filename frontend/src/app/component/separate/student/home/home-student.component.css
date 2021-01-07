@@ -3,7 +3,7 @@
 @import url('https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css');
 
 .background-image {
-  background-image: url('src/assets/images/background.png');
+  background-image: url('../../../../../assets/images/background.png');
 }
 
 .email-text {
@@ -11,5 +11,5 @@
 }
 
 .student-icon {
-  background-image: url('src/assets/images/student.png');
+  background-image: url('../../../../../assets/images/student.png');
 }
