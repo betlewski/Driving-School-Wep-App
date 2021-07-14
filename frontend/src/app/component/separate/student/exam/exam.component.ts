@@ -101,7 +101,7 @@ export class ExamComponent implements OnInit {
 
   public setEndTime(startTime: Date): void {
     let newTime = new Date(startTime);
-    newTime.setHours(newTime.getHours() + 2);
+    newTime.setHours(newTime.getHours() + 3);
     // @ts-ignore
     this.endTime = newTime.toISOString().substr(0, 19);
   }
