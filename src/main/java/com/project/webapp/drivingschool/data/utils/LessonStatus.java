@@ -46,4 +46,14 @@ public enum LessonStatus {
                 || LessonStatus.FAILED.equals(this);
     }
 
+    /**
+     * Sprawdzenie, czy wydarzenie o podanym statusie
+     * jest wydarzeniem aktywnym tzn. przyjętyum lub zrealizowanym.
+     *
+     * @return true - jeśli wydarzenie aktywne, false - w przeciwnym razie
+     */
+    public boolean isActive() {
+        return LessonStatus.ACCEPTED.equals(this) || LessonStatus.PASSED.equals(this);
+    }
+
 }

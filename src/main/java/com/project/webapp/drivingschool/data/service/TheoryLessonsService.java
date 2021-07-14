@@ -142,7 +142,7 @@ public class TheoryLessonsService {
      */
     public Integer getCurrentlyPassedHoursOfTheoryLessonsByCourse(Course course) {
         Optional<TheoryLessons> acceptedLessons = course.getTheoryLessons().stream()
-                .filter(lesson -> lesson.getLessonStatus().equals(LessonStatus.ACCEPTED))
+                .filter(lesson -> lesson.getLessonStatus().isActive())
                 .findFirst();
         if (acceptedLessons.isPresent()) {
             Long acceptedSeriesId = acceptedLessons.get().getLectureSeries().getId();
