@@ -1,22 +1,20 @@
-<div class="container">
-  <div class="background">
-    <div class="form">
-      <div class="title">SZKOŁA JAZDY
-        <p>Dopiero zaczynasz naukę? <a routerLink="/register"><strong>Załóż konto!</strong></a></p>
-      </div>
-      <form name="form">
-        <div class="row justify-content-center">
-          <label>
-            <input type="text" placeholder="Adres email" [(ngModel)]="email" name="email"/>
-          </label>
-        </div>
-        <div class="row justify-content-center">
-          <label>
-            <input type="password" placeholder="Hasło" [(ngModel)]="password" name="password"/>
-          </label>
-        </div>
-        <button (click)=login()>ZALOGUJ SIĘ</button>
-      </form>
+<div class="background">
+  <div class="form">
+    <div class="title">SZKOŁA JAZDY
+      <p>Dopiero zaczynasz naukę? <a routerLink="/register"><strong>Załóż konto!</strong></a></p>
     </div>
+    <form name="form">
+      <div class="row justify-content-center">
+        <label>
+          <input type="text" placeholder="Adres email" [(ngModel)]="email" name="email"/>
+        </label>
+      </div>
+      <div class="row justify-content-center">
+        <label>
+          <input type="password" placeholder="Hasło" [(ngModel)]="password" name="password"/>
+        </label>
+      </div>
+      <button (click)=login()>ZALOGUJ SIĘ</button>
+    </form>
   </div>
 </div>
