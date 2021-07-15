@@ -39,6 +39,7 @@ export class HomeStudentComponent implements OnInit {
       .subscribe(course => {
         if (course != null && course.courseStatus != null) {
           this.isActiveCourse = true;
+          this.router.navigate(["/home/student/course"]);
           switch (CourseStatus[course.courseStatus] as unknown) {
             case CourseStatus.LECTURES:
               this.setDashboardTabs(true, false, false);
@@ -53,6 +54,8 @@ export class HomeStudentComponent implements OnInit {
               this.setDashboardTabs(true, true, true);
               break;
           }
+        } else {
+          this.router.navigate(["/home/student/course/init"]);
         }
       });
   }

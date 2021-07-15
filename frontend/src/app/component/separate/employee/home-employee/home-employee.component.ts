@@ -24,6 +24,7 @@ export class HomeEmployeeComponent implements OnInit {
   ngOnInit(): void {
     this.email = this.authService.getUserEmail();
     this.setUserLogged();
+    this.router.navigate(["/home/employee/calendar"]);
   }
 
   private setUserLogged(): void {

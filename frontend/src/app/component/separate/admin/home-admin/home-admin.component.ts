@@ -20,6 +20,7 @@ export class HomeAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.email = this.authService.getUserEmail();
+    this.router.navigate(["/home/admin/calendar"]);
   }
 
   public logout() {
