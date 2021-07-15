@@ -28,46 +28,50 @@
   </div>
 </form>
 
-<!--Zajęcia oczekujące (zgłoszone lub zaakceptowane)-->
-<table class="table table-bordered" style="margin-top: 5%">
-  <thead class="thead-dark text-truncate">
-  <tr>
-    <th scope="col" style="width: 300px"> Instruktor</th>
-    <th scope="col" style="width: 250px"> Status</th>
-    <th scope="col" style="width: 200px"> Rozpoczęcie</th>
-    <th scope="col" style="width: 200px"> Zakończenie</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let lesson of waitingLessons" style="background-color: lightyellow">
-    <td style="width: 300px">{{utils.convertPersonToText(lesson.employee)}}</td>
-    <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
-    <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
-  </tr>
-  </tbody>
-</table>
+<div [hidden]="waitingLessons.length == 0 &&
+     failedLessons.length == 0 && passedLessons.length == 0">
 
-<!--Zajęcia niezrealizowane lub odrzucone-->
-<table class="table table-bordered">
-  <tbody>
-  <tr *ngFor="let lesson of failedLessons" style="background-color: #ffeaea">
-    <td style="width: 300px">{{utils.convertPersonToText(lesson.employee)}}</td>
-    <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
-    <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
-  </tr>
-  </tbody>
-</table>
+  <!--Zajęcia oczekujące (zgłoszone lub zaakceptowane)-->
+  <table class="table table-bordered" style="margin-top: 5%">
+    <thead class="thead-dark text-truncate">
+    <tr>
+      <th scope="col" style="width: 300px"> Instruktor</th>
+      <th scope="col" style="width: 250px"> Status</th>
+      <th scope="col" style="width: 200px"> Rozpoczęcie</th>
+      <th scope="col" style="width: 200px"> Zakończenie</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let lesson of waitingLessons" style="background-color: lightyellow">
+      <td style="width: 300px">{{utils.convertPersonToText(lesson.employee)}}</td>
+      <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
+      <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
+      <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
+    </tr>
+    </tbody>
+  </table>
 
-<!--Zajęcia zrealizowane-->
-<table class="table table-bordered">
-  <tbody>
-  <tr *ngFor="let lesson of passedLessons" style="background-color: #d8ffd6">
-    <td style="width: 300px">{{utils.convertPersonToText(lesson.employee)}}</td>
-    <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
-    <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
-    <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
-  </tr>
-  </tbody>
-</table>
+  <!--Zajęcia niezrealizowane lub odrzucone-->
+  <table class="table table-bordered">
+    <tbody>
+    <tr *ngFor="let lesson of failedLessons" style="background-color: #ffeaea">
+      <td style="width: 300px">{{utils.convertPersonToText(lesson.employee)}}</td>
+      <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
+      <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
+      <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
+    </tr>
+    </tbody>
+  </table>
+
+  <!--Zajęcia zrealizowane-->
+  <table class="table table-bordered">
+    <tbody>
+    <tr *ngFor="let lesson of passedLessons" style="background-color: #d8ffd6">
+      <td style="width: 300px">{{utils.convertPersonToText(lesson.employee)}}</td>
+      <td style="width: 250px">{{utils.translateLessonStatus(lesson.lessonStatus)}}</td>
+      <td style="width: 200px">{{utils.convertEventDateToText(lesson.startTime)}}</td>
+      <td style="width: 200px">{{utils.convertEventDateToText(lesson.endTime)}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

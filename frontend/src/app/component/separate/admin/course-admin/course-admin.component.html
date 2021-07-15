@@ -13,6 +13,9 @@
   </tr>
   </thead>
   <tbody>
+  <tr *ngIf="resultMap.size == 0">
+    <td colspan="6">Brak danych do wyświetlenia</td>
+  </tr>
   <tr *ngFor="let entry of resultMap | keyvalue">
     <td style="width: 250px">{{entry.key}}</td>
     <td style="width: 100px">{{entry.value.category}}</td>

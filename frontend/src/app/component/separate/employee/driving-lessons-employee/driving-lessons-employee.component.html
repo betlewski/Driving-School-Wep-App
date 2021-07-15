@@ -13,6 +13,11 @@
         <th scope="col" style="width: 230px"> Zmiana statusu</th>
       </tr>
       </thead>
+      <tbody *ngIf="requestedLessons.length == 0 && activeLessons.length == 0">
+      <tr>
+        <td colspan="5">Brak danych do wyświetlenia</td>
+      </tr>
+      </tbody>
     </table>
     <!--Zajęcia oczekujące na decyzję (zgłoszone)-->
     <table class="table table-bordered">
